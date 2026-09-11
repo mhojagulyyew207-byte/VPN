@@ -1,2 +1,0 @@
-vless://f4a73f39-3e9e-446c-ad8d-04a25ce2f6c3@193.233.221.252:445?encryption=mlkem768x25519plus.native.0rtt.9EoWiMcztbonbc1g14DBHOSfQrstEe0UcX74ffL5p3U&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BATG%3A%20%40TIMOXVPN
-ss://chacha20-ietf-poly1305:ERUTBCCaI7y1oAniqyD8_ld189gfQjdQ@193.233.221.252:1080#%F0%9F%87%B7%F0%9F%87%BARussia
