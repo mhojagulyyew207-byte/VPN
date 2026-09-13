@@ -1,9 +1,16 @@
-# profile-title: ARES
+# profile-title: 𝑻𝑰𝑴𝑶𝑿 𝑽𝑷𝑵
 # profile-update-interval: 1
-# subscription-userinfo: upload=3328599656; download=3328599656; total=4294967296; expire=1789430400
-# Telegram free🌍
-# Turkmenistanda işleýän mugt vpn📍
-# Egerde siz bul kody satyn alan bolsañyz Onda siz aldandyñyz🛑
-vless://ornek-uuid@server-ip:port?encryption=none&type=tcp...
-trojan://ornek-sifre@server-ip:port?security=tls...
-ss://ornek-base64-sifre@server-ip:port...
+# Date/Time: 2026-09-13 / 20:36 (Moscow)
+# Количество: 102
+# For more info and VPN-configs - visit: https://raw.githubusercontent.com/mhojagulyyew207-byte/VPN/main/BIR.txt
+
+# RU: Эта подписка может содержать Trojan/Hysteria2/Hy2 с legacy-параметрами insecure=1 или allowInsecure=1.
+# RU: Такие конфигурации могут вызывать ошибку запуска Xray-core v26.2.6 и новее в клиентах, использующих ядро Xray-core.
+# RU: Для совместимости используйте Mihomo/Sing-box для Trojan/Hysteria2/Hy2 или Xray-core v26.1.23 (последняя проверенная рабочая версия для таких конфигов).
+
+# EN: This subscription may contain Trojan/Hysteria2/Hy2 configs with legacy parameters: insecure=1 or allowInsecure=1.
+# EN: Such configs may cause Xray-core startup errors with Xray-core v26.2.6 and newer in clients that use the Xray-core engine.
+# EN: For compatibility, use Mihomo/Sing-box for Trojan/Hysteria2/Hy2 or Xray-core v26.1.23, the last confirmed working version for such configs.
+
+ss://chacha20-ietf-poly1305:DQR_yyeVE_y83SETLXvwhAY4WZvdAfcX@193.233.222.85:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7
+ss://chacha20-ietf-poly1305:DQR_yyeVE_y83SETLXvwhAY4WZvdAfcX@193.233.222.85:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
