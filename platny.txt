@@ -1,10 +1,11 @@
-#profile-title: TIMOX
+#profile-title: ARES PRIME
+#providerid SIZIN_PROVIDER_ID
 #sub-info-color: blue
-#sub-info-text: Telegram free 🌍 | ARES PRIME VPN 🚀 | Destek: Telegram
+#sub-info-text: Telegram free 🌍 | ARES PRIME VPN 🚀 | Destek için Telegram'a yazın
 #sub-info-button-text: Telegram
 #sub-info-button-link: https://t.me/kullanici_adiniz
 #support-url: https://t.me/kullanici_adiniz
 #profile-update-interval: 12
 
-vless://SIZIN-VLESS-LINKINIZ
-vless://SIZIN-IKINCI-LINKINIZ
+vless://...
+vless://...
