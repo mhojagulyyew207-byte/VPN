@@ -1,0 +1,9 @@
+# profile-title: ARES
+# profile-update-interval: 1
+# subscription-userinfo: upload=3328599656; download=3328599656; total=4294967296; expire=1789430400
+# Telegram free🌍
+# Turkmenistanda işleýän mugt vpn📍
+# Egerde siz bul kody satyn alan bolsañyz Onda siz aldandyñyz🛑
+vless://ornek-uuid@server-ip:port?encryption=none&type=tcp...
+trojan://ornek-sifre@server-ip:port?security=tls...
+ss://ornek-base64-sifre@server-ip:port...
