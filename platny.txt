@@ -1,10 +1,11 @@
-profile-title: ARES
-subscription-userinfo: upload=0; download=3332221440; total=4294967296; expire=1790951622
-sub-info-color: blue
-sub-info-text: Telegram free - Türkmenistan'da çalışan VPN.
-sub-info-button-text: Telegram
-sub-info-button-link: https://t.me/kullanici_adiniz
-support-url: https://t.me/kullanici_adiniz
+#profile-title: ARES PRIME
+#sub-info-color: blue
+#sub-info-text: Telegram ücretsiz VPN 🌍 | Türkmenistan'da çalışan hızlı VPN 🚀 | Destek için Telegram'a yazın
+#sub-info-button-text: Telegram
+#sub-info-button-link: https://t.me/kullanici_adiniz
+#subscription-userinfo: upload=0; download=0; total=4294967296; expire=1792000000
+#support-url: https://t.me/kullanici_adiniz
+#profile-update-interval: 12
 
-ss://chacha20-ietf-poly1305:DQR_yyeVE_y83SETLXvwhAY4WZvdAfcX@193.233.222.85:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7
-ss://chacha20-ietf-poly1305:DQR_yyeVE_y83SETLXvwhAY4WZvdAfcX@193.233.222.85:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+vless://SIZIN-VLESS-LINKINIZ
+vless://SIZIN-IKINCI-LINKINIZ
