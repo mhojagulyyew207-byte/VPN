@@ -1,6 +1,6 @@
-#profile-title: ARES PRIME
+#profile-title: 
 #subscription-userinfo: upload=0; download=0; total=4294967296; expire=1792000000
-#support-url: https://t.me/kullanici_adiniz
+#support-url: https://t.me/timoxvpn
 #profile-update-interval: 12
 
 vless://...
