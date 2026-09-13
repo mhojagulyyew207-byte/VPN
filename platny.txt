@@ -1,9 +1,8 @@
-#profile-title: ARES PRIME
+#profile-title: TIMOX
 #sub-info-color: blue
-#sub-info-text: Telegram ücretsiz VPN 🌍 | Türkmenistan'da çalışan hızlı VPN 🚀 | Destek için Telegram'a yazın
+#sub-info-text: Telegram free 🌍 | ARES PRIME VPN 🚀 | Destek: Telegram
 #sub-info-button-text: Telegram
 #sub-info-button-link: https://t.me/kullanici_adiniz
-#subscription-userinfo: upload=0; download=0; total=4294967296; expire=1792000000
 #support-url: https://t.me/kullanici_adiniz
 #profile-update-interval: 12
 
