@@ -1,5 +1,5 @@
 #profile-title: 𝑻𝑰𝑴𝑶𝑿
-#sub-info-color: blue
+#sub-info-color: green
 #sub-info-text: TIMOX
 #sub-info-button-text: Telegram
 #sub-info-button-link: https://t.me/timoxvpn
