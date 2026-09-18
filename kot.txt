@@ -1,0 +1,9 @@
+#profile-title: TIMOX premium
+#providerid GERCEK_PROVIDER_ID
+#subscription-userinfo: upload=0; download=0; total=10737418240; expire=1792000000
+#sub-info-color: blue
+#sub-info-text: ⚡ TIMOX VPN - hizli ve guvenilir VPN | Türkmenistan kullanicilari icin! ⚡
+#profile-update-interval: 12
+
+vless://...
+vless://...
