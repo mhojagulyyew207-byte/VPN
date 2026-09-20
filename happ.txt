@@ -7,4 +7,4 @@
 #support-url: https://t.me/timoxvpn
 #profile-update-interval: 12
 
-vless://51de371f-374b-4756-bfd3-b1687b11d421@193.233.216.114:445?encryption=mlkem768x25519plus.native.0rtt.zdrYz-WQNWRaITmw1TG6UxVfTkN1IgUe0Fp3g8WZoxo&security=none&type=tcp&headerType=none#täze kod yasalyar...🖋
+vless://51de371f-374b-4756-bfd3-b1687b11d421@193.23.216.114:445?encryption=mlkem768x25519plus.native.0rtt.zdrYz-WQNWRaITmw1TG6UxVfTkN1IgUe0Fp3g8WZoxo&security=none&type=tcp&headerType=none#täze kod yasalyar...🖋
