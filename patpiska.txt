@@ -1,6 +1,6 @@
 #profile-title: 𝑻𝑰𝑴𝑶𝑿🚀
 #sub-info-color: green
-#sub-info-text: 𝑻𝑰𝑴𝑶𝑿
+#sub-info-text: 𝑻𝑰𝑴𝑶𝑿 𝙋𝙖𝙩𝙥𝙞𝙨𝙠𝙖
 #sub-info-button-text: Telegram
 #sub-info-button-link: https://t.me/timoxvpn
 #subscription-userinfo: upload=0; download=0; total=10737418240; expire=1792000000
