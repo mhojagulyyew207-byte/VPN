@@ -1,0 +1,7 @@
+#profile-title: TIMOX 🚀
+#subscription-userinfo: upload=0; download=0; total=10737418240; expire=1792000000
+#announce: ⚡ TIMOX VPN — Hızlı ve güvenilir VPN | Türkmenistan kullanıcıları için! ⚡
+#profile-update-interval: 12
+
+ss://...
+vless://...
