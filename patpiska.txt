@@ -1,4 +1,4 @@
-#profile-title: 𝑻𝑰𝑴𝑶𝑿 𝒑𝒓𝒆𝒎𝒊𝒖𝒎
+#profile-title: 𝑻𝑰𝑴𝑶𝑿🚀
 #sub-info-color: green
 #sub-info-text: 𝑻𝑰𝑴𝑶𝑿
 #sub-info-button-text: Telegram
