@@ -1,0 +1,11 @@
+#profile-title: 𝑻𝑰𝑴𝑶𝑿🚀
+#subscription-userinfo: upload=0; download=0; total=0; expire=0
+#announce: Telegram: @TIMOXVPN
+#support-url: https://t.me/timoxvpn
+#profile-web-page-url: https://t.me/timoxvpn
+#profile-update-interval: 12
+
+vless://549daeaf-9a02-4058-9685-3c98d44fbb7f@193.233.223.17:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BATG%3A%20TIMOXVPN
+ss://chacha20-ietf-poly1305:xX9K_O8wfOMh72Qck-DCwr-yL27ugsZ8@193.233.223.17:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%91%B9%F0%9D%92%96%F0%9D%92%94%F0%9D%92%94%F0%9D%92%8A%F0%9D%92%82%20%2F%20%F0%9D%91%B4%F0%9D%92%90%F0%9D%92%94%F0%9D%92%84%F0%9D%92%90%F0%9D%92%97%20%2F%20%F0%9D%91%AE%F0%9D%92%82%F0%9D%92%8E%F0%9D%92%86%F0%9F%8E%AE
+ss://chacha20-ietf-poly1305:xX9K_O8wfOMh72Qck-DCwr-yL27ugsZ8@193.233.223.17:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%91%B6%CC%88%F0%9D%92%9B%F0%9D%92%83%F0%9D%92%86%F0%9D%92%8C%F0%9D%92%8A%F0%9D%92%94%F0%9D%92%95%F0%9D%92%82%F0%9D%92%8F%20%2F%20%F0%9D%91%AB%F0%9D%92%82%F0%9D%92%94%F0%9D%92%89%F0%9D%92%8C%F0%9D%92%86%F0%9D%92%8F%F0%9D%92%95%20%2F%20%F0%9D%91%AE%F0%9D%92%82%F0%9D%92%8E%F0%9D%92%86%F0%9F%8E%AE
+vless://549daeaf-9a02-4058-9685-3c98d44fbb7f@193.233.223.17:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%BA%F0%9F%87%B8%F0%9D%91%A8%F0%9D%92%8E%F0%9D%92%86%F0%9D%92%93%F0%9D%92%8A%F0%9D%92%84%F0%9D%92%82%20%2F%20%F0%9D%91%B5%F0%9D%92%86%F0%9D%92%98%20%F0%9D%92%80%F0%9D%92%90%F0%9D%92%93%F0%9D%92%8C
