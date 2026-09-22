@@ -1,18 +1,18 @@
-# profile-title: 𝑻𝑰𝑴𝑶𝑿 𝑽𝑷𝑵
-# profile-update-interval: 1
-# Date/Time: 2026-09-13 / 20:36 (Moscow)
-# Количество: 102
-# For more info and VPN-configs - visit: https://raw.githubusercontent.com/mhojagulyyew207-byte/VPN/main/BIR.txt
+#profile-title: 𝑻𝑰𝑴𝑶𝑿🚀
+#subscription-userinfo: upload=0; download=0; total=0; expire=0
+#announce: TIMOX mugt VPN'a hoş geldiňiz!🔥 kodlar öçse obniwit ediň!🔄
+#support-url: https://t.me/timoxvpn
+#profile-web-page-url: https://t.me/timoxvpn
+#profile-update-interval: 12
 
-# RU: Эта подписка может содержать Trojan/Hysteria2/Hy2 с legacy-параметрами insecure=1 или allowInsecure=1.
-# RU: Такие конфигурации могут вызывать ошибку запуска Xray-core v26.2.6 и новее в клиентах, использующих ядро Xray-core.
-# RU: Для совместимости используйте Mihomo/Sing-box для Trojan/Hysteria2/Hy2 или Xray-core v26.1.23 (последняя проверенная рабочая версия для таких конфигов).
-
-# EN: This subscription may contain Trojan/Hysteria2/Hy2 configs with legacy parameters: insecure=1 or allowInsecure=1.
-# EN: Such configs may cause Xray-core startup errors with Xray-core v26.2.6 and newer in clients that use the Xray-core engine.
-# EN: For compatibility, use Mihomo/Sing-box for Trojan/Hysteria2/Hy2 or Xray-core v26.1.23, the last confirmed working version for such configs.
-
-vless://2d6cf912-82f8-422b-9c8f-8e7ba50551a5@193.233.222.85:445?encryption=mlkem768x25519plus.native.0rtt.9EoWiMcztbonbc1g14DBHOSfQrstEe0UcX74ffL5p3U&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BATG%3A%20%40TIMOXVPN
-ss://chacha20-ietf-poly1305:DQR_yyeVE_y83SETLXvwhAY4WZvdAfcX@193.233.222.85:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-vless://2d6cf912-82f8-422b-9c8f-8e7ba50551a5@193.233.222.85:445?encryption=mlkem768x25519plus.native.0rtt.9EoWiMcztbonbc1g14DBHOSfQrstEe0UcX74ffL5p3U&security=none&type=tcp&headerType=none#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2
-ss://chacha20-ietf-poly1305:DQR_yyeVE_y83SETLXvwhAY4WZvdAfcX@193.233.222.85:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7
+ss://chacha20-ietf-poly1305:FOiN5B0VgpOoh1eIj0gDUacd7_NgGbr3@193.233.223.147:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:FOiN5B0VgpOoh1eIj0gDUacd7_NgGbr3@193.233.223.147:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:FOiN5B0VgpOoh1eIj0gDUacd7_NgGbr3@193.233.223.147:1080#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:FOiN5B0VgpOoh1eIj0gDUacd7_NgGbr3@193.233.223.147:1080#%F0%9F%87%A6%F0%9F%87%BF%F0%9D%90%80%F0%9D%90%B3%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%9B%F0%9D%90%9A%F0%9D%90%B2%F0%9D%90%9C%F0%9D%90%9A%F0%9D%90%A7%20%7C%20Game
+ss://chacha20-ietf-poly1305:FOiN5B0VgpOoh1eIj0gDUacd7_NgGbr3@193.233.223.147:1080#%F0%9F%87%B0%F0%9F%87%BF%F0%9D%90%8A%F0%9D%90%9A%F0%9D%90%B3%F0%9D%90%9A%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+vless://9c874996-8153-4a36-8ee5-8c92824f587b@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2
+vless://9c874996-8153-4a36-8ee5-8c92824f587b@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
+vless://9c874996-8153-4a36-8ee5-8c92824f587b@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%F0%9D%90%86%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%B2
+vless://9c874996-8153-4a36-8ee5-8c92824f587b@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%B7%F0%9D%90%85%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%9C%F0%9D%90%9E
+vless://9c874996-8153-4a36-8ee5-8c92824f587b@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%A6%F0%9F%87%BF%F0%9D%90%80%F0%9D%90%B3%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%B2%F0%9D%90%9C%F0%9D%90%9A%F0%9D%90%A7
+vless://9c874996-8153-4a36-8ee5-8c92824f587b@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%BA%F0%9F%87%B8%F0%9D%90%80%F0%9D%90%A6%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%A2%F0%9D%90%9C%F0%9D%90%9A
