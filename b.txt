@@ -1,8 +1,15 @@
-#profile-title: TIMOX 🚀
+#profile-title: 𝐓𝐈𝐌𝐎𝐗🚀
 #subscription-userinfo: upload=0; download=0; total=0; expire=0
-#announce: tg: @TIMOXVPN
+#announce: tg: vless://2159b47f-e3b3-4ed1-ad83-56a9bea688e3@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
 #support-url: https://t.me/timoxvpn
 #profile-web-page-url: https://t.me/timoxvpn
 #profile-update-interval: 12
 
-happ://crypt5/fzvdCmq5kfplMtIFSrdMDD2828DYkl8TCqx+IrKN6AovNmipBjK+er/ZjzxFpL85mAtFTONE8faNY4Q/91IOaBzd4wfxoCiB3Ch6QALWMB3D2dYb59NZ0MIb++gsrgCu0k0Jann/AsJoEhq5xaxrmhaIknbHFU62HKCmKZu9IOakQbsModb0Wxa6+oF0TrNfDfFiHT1hdWg8knYSDRMXyQiDdnmfHB4SDQm8HnOmTcSlwEieffvYcAJuog5ToLPu4OgGl8TpcMwhYY0aJ61L2HepUT1yl8DzI1GAqKpfM2fp9sBuf/w/SGyvpVkVuPfo0mx/YTLloojz2Q4dNWlGLyIBqOJfshIY/05j/xRkC2Jy5IQl1gWLhABglx3m/SVTy+ZabYa+6ORa4hZcmqg3cgFlD9Tv389tRM5S4CbPAy4edleF2Q1MIpVLIU/NS6jIeKCIS4gxZ2Z6FwsDbVy+Bk//yLHj0o6BXi1GUEIM1MlQXic+8tmkgEaleCwyIhSLqrDwsPpj+cvFKqmBa2IWRzKr4hwiMo9yE6Fil32xWEpBmYoeYn+0QQGkRJ21fNLG6kXNw/E42+vfqTv6BQMOCORJ3CStmv37f7SGfrmc3wg2VjjvmSBQbl5efmtx0q4QYMstUYYY9vEpeGZ4mdd7DM7cLEBSBSWLX2vJQHkSn9F30z622rSlzu3BPX7u8CS3zmCwcN/JyYYBFUQ/aMUGD0/2/pUNOyoxuU1ZMWtEagPacUoQKZuQ+U9sBsJUvchWsMaWeR6lWaMUOlYzWOPD/0DbyY+MntnWX/uPY2eLqPPTWtKX+MsNhxFzNmZBMnleGvfI76+HlYcxFaddCPHOf4JcQmGSppXs8cstsa2SsITwFrymJnizPK6w6ntoiRwAreFmgDxsD/296QKp060JEwF0hRi8kjgtqZPN+2uLZi6eJgvdb5myvzziFaxXq+DiEBNNa1zJ1/YCSjwcOBF/EI8qRirfdtfoV7TZB3cmfog=ff
+vless://2159b47f-e3b3-4ed1-ad83-56a9bea688e3@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BA%F0%9D%90%93%F0%9D%90%86%3A%20%40TIMOXVPN
+ss://chacha20-ietf-poly1305:d0zdpksUnrWPVI9yPE09et3MlpBwDB_l@193.233.223.147:1080#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:d0zdpksUnrWPVI9yPE09et3MlpBwDB_l@193.233.223.147:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:d0zdpksUnrWPVI9yPE09et3MlpBwDB_l@193.233.223.147:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:d0zdpksUnrWPVI9yPE09et3MlpBwDB_l@193.233.223.147:1080#%F0%9F%87%B0%F0%9F%87%BF%F0%9D%90%8A%F0%9D%90%9A%F0%9D%90%B3%F0%9D%90%9A%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+vless://2159b47f-e3b3-4ed1-ad83-56a9bea688e3@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%F0%9D%90%86%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%B2
+vless://2159b47f-e3b3-4ed1-ad83-56a9bea688e3@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
+vless://2159b47f-e3b3-4ed1-ad83-56a9bea688e3@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%B7%F0%9D%90%85%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%9C%F0%9D%90%9E
