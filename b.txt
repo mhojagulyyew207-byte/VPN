@@ -1,10 +1,6 @@
 #profile-title: 𝐓𝐈𝐌𝐎𝐗🚀
 #subscription-userinfo: upload=0; download=0; total=0; expire=0
-#announce: 🎮 Dostlar, bile oýnamak isleýän bolsaňyz, maňa istek atyp bilersiňiz!🔥 📌 Istek ugratjak wagtyňyz “VPN” diýip ýazyň.👤 Adym: 『TIMOX』
-🆔 ID: 52416148190
-⭐ LVL: 56
-🎁 Kolleksiýa: 36
-🤝 Bilelikde gowy oýunlar edeliň! 🔥🎮
+#announce: 🎮 Dostlar, bile oýnamak isleýän bolsaňyz, maňa istek atyp bilersiňiz!👤 ID: 52416148190
 #support-url: https://t.me/timoxvpn
 #profile-web-page-url: https://t.me/timoxvpn
 #profile-update-interval: 12
