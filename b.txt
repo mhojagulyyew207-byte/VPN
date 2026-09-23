@@ -1,6 +1,15 @@
 #profile-title: 𝐓𝐈𝐌𝐎𝐗🚀
 #subscription-userinfo: upload=0; download=0; total=0; expire=0
-#announce: tg: vless://2159b47f-e3b3-4ed1-ad83-56a9bea688e3@193.233.223.147:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
+#announce: 🎮 Dostlar, bile oýnamak isleýän bolsaňyz, maňa istek atyp bilersiňiz! 🔥
+
+📌 Istel ugratjak wagtyňyz “VPN” diýip ýazyň.
+
+👤 Adym: 『TIMOX』
+🆔 ID: 52416148190
+⭐ LVL: 56
+🎁 Kolleksiýa: 36
+
+🤝 Bilelikde gowy oýunlar edeliň! 🔥🎮
 #support-url: https://t.me/timoxvpn
 #profile-web-page-url: https://t.me/timoxvpn
 #profile-update-interval: 12
