@@ -1,0 +1,15 @@
+#profile-title: 𝐑𝐚𝐡𝐲𝐦🚀
+#subscription-userinfo: upload=0; download=0; total=0; expire=0
+#announce: 𝐒𝐚𝐥𝐚𝐦. 𝐓𝐢𝐤𝐓𝐨𝐠𝐲 𝐬𝐲𝐠𝐲𝐫𝐭𝐲𝐚𝐧𝐣𝐚 𝐤𝐨𝐝, 𝐩𝐮𝐛𝐠𝐲 𝐲𝐚𝐫𝐲𝐚𝐧𝐣𝐚 𝐤𝐨𝐝, 𝐲𝐨𝐮𝐭𝐮𝐛𝐞𝐧𝐢 𝐠𝐨𝐫𝐤𝐮𝐳𝐲𝐚𝐧𝐣𝐚 𝐤𝐨𝐝 𝐚𝐬𝐚𝐤𝐝𝐚🤣
+#support-url: https://t.me/timoxvpn
+#profile-web-page-url: https://t.me/timoxvpn
+#profile-update-interval: 12
+
+vless://967490ee-c6b6-48ec-af88-b5674e8fb207@193.233.230.16:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BA%F0%9D%90%93%F0%9D%90%86%3A%20%40TIMOX
+ss://chacha20-ietf-poly1305:TTozPIP59J4xA2G803YjJo3srghZY1RW@193.233.230.16:1080#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:TTozPIP59J4xA2G803YjJo3srghZY1RW@193.233.230.16:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:TTozPIP59J4xA2G803YjJo3srghZY1RW@193.233.230.16:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:TTozPIP59J4xA2G803YjJo3srghZY1RW@193.233.230.16:1080#%F0%9F%87%B0%F0%9F%87%BF%F0%9D%90%8A%F0%9D%90%9A%F0%9D%90%B3%F0%9D%90%9A%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+vless://967490ee-c6b6-48ec-af88-b5674e8fb207@193.233.230.16:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
+vless://967490ee-c6b6-48ec-af88-b5674e8fb207@193.233.230.16:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%B7%F0%9D%90%85%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%9C%F0%9D%90%9E
+vless://967490ee-c6b6-48ec-af88-b5674e8fb207@193.233.230.16:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%F0%9D%90%86%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%B2
