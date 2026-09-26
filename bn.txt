@@ -1,15 +1,14 @@
-#profile-title: TIMOX VPN
+#profile-title: TIMOX VPN🚀
 #subscription-userinfo: upload=0; download=0; total=53687091200; expire=0
 #announce: 𝐭𝐞𝐥𝐞𝐠𝐫𝐚𝐦: @𝐓𝐌𝐎𝐗𝐕𝐏𝐍 (𝐦𝐮𝐠𝐭)
 #support-url: https://t.me/timoxvpn
 #profile-update-interval: 12
 
-vless://2a950d17-b563-4c6a-9485-779c20e55764@193.233.218.81:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BA%F0%9D%90%93%F0%9D%90%86%3A%20%40TIMOX
-ss://chacha20-ietf-poly1305:mJWduBLXwy09ZN-2zegVb7luLgyjVfe6@193.233.218.81:1080#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-ss://chacha20-ietf-poly1305:mJWduBLXwy09ZN-2zegVb7luLgyjVfe6@193.233.218.81:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-ss://chacha20-ietf-poly1305:mJWduBLXwy09ZN-2zegVb7luLgyjVfe6@193.233.218.81:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-ss://chacha20-ietf-poly1305:mJWduBLXwy09ZN-2zegVb7luLgyjVfe6@193.233.218.81:1080#%F0%9F%87%B0%F0%9F%87%BF%F0%9D%90%8A%F0%9D%90%9A%F0%9D%90%B3%F0%9D%90%9A%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-vless://2a950d17-b563-4c6a-9485-779c20e55764@193.233.218.81:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%F0%9D%90%86%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%B2
-vless://2a950d17-b563-4c6a-9485-779c20e55764@193.233.218.81:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
-vless://2a950d17-b563-4c6a-9485-779c20e55764@193.233.218.81:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%B7%F0%9D%90%85%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%9C%F0%9D%90%9E
-vless://b3c9b89b-b6b6-44d1-b46a-a0b7d99bb89d@46.17.44.194:48564?encryption=none&security=reality&sni=ai.android&fp=chrome&pbk=MjL1qkCDkJ3mW9NCTtUcgs-Yw_mHQNweRIvLfK07c3o&sid=cd34ce1bffe1&spx=%2Fd20ae0ff4029d24&type=grpc&mode=gun&authority=&serviceName=#%F0%9D%90%A7%F0%9D%90%9E%F0%9D%90%B0%20%F0%9D%90%AC%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%B0%F0%9D%90%9E%F0%9D%90%AB%20%F0%9D%90%A0%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+vless://4a24b73e-35b7-48a3-adaa-dfcb23665f04@193.233.223.7:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BA%F0%9D%90%93%F0%9D%90%86%3A%20%40TIMOX
+ss://chacha20-ietf-poly1305:RDJxiAjYFhZfHHYz29tWJGJ5NKsGy_2v@193.233.223.7:1080#%F0%9F%87%B9%F0%9F%87%B7%F0%9D%90%93%F0%9D%90%AE%F0%9D%90%AB%F0%9D%90%A4%F0%9D%90%9E%F0%9D%90%B2%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:RDJxiAjYFhZfHHYz29tWJGJ5NKsGy_2v@193.233.223.7:1080#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:RDJxiAjYFhZfHHYz29tWJGJ5NKsGy_2v@193.233.223.7:1080#%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+ss://chacha20-ietf-poly1305:RDJxiAjYFhZfHHYz29tWJGJ5NKsGy_2v@193.233.223.7:1080#%F0%9F%87%B0%F0%9F%87%BF%F0%9D%90%8A%F0%9D%90%9A%F0%9D%90%B3%F0%9D%90%9A%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
+vless://4a24b73e-35b7-48a3-adaa-dfcb23665f04@193.233.223.7:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%F0%9D%90%86%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%B2
+vless://4a24b73e-35b7-48a3-adaa-dfcb23665f04@193.233.223.7:445?encryption=mlkem768x25519plus.native.0rtt.h7cumKd0UK-NSljFZci1t80cHrAPfqch82dlAPrzzCs&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
+vless://bf419ba4-2713-474e-a2bb-0d10d3e8fd90@146.75.57.25:443?encryption=none&security=tls&sni=community.fastly.com&alpn=h3&fp=chrome&type=xhttp&mode=auto&host=taza1.co&path=%2F#%F0%9F%87%AB%F0%9F%87%B7%F0%9D%90%85%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%9C%F0%9D%90%9E
