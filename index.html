@@ -111,6 +111,16 @@
       display: none;
     }
 
+    .menu-badge {
+      background: #ff4757;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 5px;
+    }
+
     .dropdown-menu {
       position: absolute;
       top: 45px;
@@ -121,7 +131,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       display: none;
       flex-direction: column;
-      width: 200px;
+      width: 210px;
       z-index: 100;
       padding: 5px;
     }
@@ -136,6 +146,9 @@
       width: 100%;
       border-radius: 4px;
       font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .dropdown-menu button:hover { background: rgba(0, 210, 255, 0.1); }
@@ -386,6 +399,16 @@
       text-align: left;
       cursor: pointer;
     }
+
+    .delete-user-btn {
+      background: #ff4757;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body data-theme="dark">
@@ -417,9 +440,15 @@
         </select>
         <button onclick="toggleTheme()" id="themeMenuBtn">🌙 Gece Mode</button>
         <button onclick="openMyOrdersPage()" id="myOrdersMenuBtn" style="display:none;">📦 Siparişlerim</button>
-        <button onclick="openAdminOrdersPage()" id="adminOrdersMenuBtn" style="display:none; color:#00ff88; font-weight:bold;">📋 Oyuncu Siparişleri</button>
+        <button onclick="openAdminOrdersPage()" id="adminOrdersMenuBtn" style="display:none; color:#00ff88; font-weight:bold;">
+          <span>📋 Oyuncu Siparişleri</span>
+          <span class="menu-badge" id="ordersBadge" style="display:none;">0</span>
+        </button>
         <button onclick="openChangePassModal()" id="passMenuBtn" style="display:none;">🔑 Şifre Üýtgetmek</button>
-        <button onclick="openAdminAccountsPage()" id="adminAccountsBtn" style="display:none; color:#ffaa00; font-weight:bold;">👑 Hesaplar (Admin)</button>
+        <button onclick="openAdminAccountsPage()" id="adminAccountsBtn" style="display:none; color:#ffaa00; font-weight:bold;">
+          <span>👑 Hesaplar (Admin)</span>
+          <span class="menu-badge" id="adminMsgBadge" style="display:none;">0</span>
+        </button>
         <button onclick="logoutUser()" id="logoutBtn" style="display:none; color:#ff4757;">🚪 Çykyş Etmek</button>
       </div>
     </div>
@@ -607,6 +636,9 @@
     function updateBadge() {
       if (!loggedInUser) return;
       let badge = document.getElementById('notifBadge');
+      let adminMsgBadge = document.getElementById('adminMsgBadge');
+      let ordersBadge = document.getElementById('ordersBadge');
+      
       let totalUnread = 0;
 
       for (let key in chats) {
@@ -622,8 +654,23 @@
       if (totalUnread > 0) {
         badge.style.display = "inline-block";
         badge.innerText = totalUnread > 9 ? "9+" : totalUnread;
+        if (adminMsgBadge) {
+          adminMsgBadge.style.display = "inline-block";
+          adminMsgBadge.innerText = totalUnread > 9 ? "9+" : totalUnread;
+        }
       } else {
         badge.style.display = "none";
+        if (adminMsgBadge) adminMsgBadge.style.display = "none";
+      }
+
+      if (ordersBadge) {
+        let count = globalOrders.length;
+        if (count > 0) {
+          ordersBadge.style.display = "inline-block";
+          ordersBadge.innerText = count > 9 ? "9+" : count;
+        } else {
+          ordersBadge.style.display = "none";
+        }
       }
     }
 
@@ -793,6 +840,7 @@
         globalOrders.splice(idx, 1);
         alert("Sipariş iptal edildi ve bakiye iade olundu!");
         updateUI();
+        updateBadge();
         renderMyOrders();
       }
     }
@@ -855,13 +903,25 @@
         html += `<div class="account-card">
           <h3>Ulanyjy: ${u}</h3>
           <p><b>Häzirki Bakiye:</b> ${usr.balance} TMT</p>
-          <div style="display:flex; gap:8px;">
-            <input type="number" id="set_bal_${u}" placeholder="Bakiye miktar" style="padding:6px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
-            <button onclick="adminSetUserBalance('${u}')" style="padding:6px 12px; background:#00ff88; border:none; font-weight:bold; border-radius:4px; cursor:pointer;">Bakiyesini Sazla</button>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="number" id="set_bal_${u}" placeholder="Bakiye miktar" style="padding:6px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px; width:120px;">
+            <button onclick="adminSetUserBalance('${u}')" style="padding:6px 12px; background:#00ff88; border:none; font-weight:bold; border-radius:4px; cursor:pointer; color:#000;">Bakiyesini Sazla</button>
+            <button onclick="deleteAccount('${u}')" class="delete-user-btn">Hesaby Poz (Sil)</button>
           </div>
         </div>`;
       }
       container.innerHTML = html || "<p>Hiç hili ulanyjy ýok.</p>";
+    }
+
+    function deleteAccount(username) {
+      if (confirm(`"${username}" hesabını tamamen silmek istediğinize emin misiniz?`)) {
+        delete users[username];
+        // O kullanıcıya ait sohbetleri ve siparişleri temizle
+        globalOrders = globalOrders.filter(o => o.user !== username);
+        alert(`${username} hesabı başarıyla silindi!`);
+        renderAdminPanel();
+        updateBadge();
+      }
     }
 
     function approveBalanceReq(idx) {
@@ -895,7 +955,6 @@
       let t = dict[currentLang];
       if (!query) return;
 
-      // Kendi adını arattığında kesinlikle çıkarmayacak
       if (query === loggedInUser) {
         resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">Öz adyňyzy gözläp bilmersiňiz!</div>`;
         return;
@@ -1005,6 +1064,7 @@
       users[loggedInUser].balance -= price;
       globalOrders.push({ id: Date.now(), user: loggedInUser, item: name, price: price, nick: nick });
       updateUI();
+      updateBadge();
       alert(`Gutlaýarys! ${name} üstünlikli satyn alyndy!\nNick: ${nick}`);
     }
 
