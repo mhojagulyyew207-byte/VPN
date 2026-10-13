@@ -916,7 +916,6 @@
     function deleteAccount(username) {
       if (confirm(`"${username}" hesabını tamamen silmek istediğinize emin misiniz?`)) {
         delete users[username];
-        // O kullanıcıya ait sohbetleri ve siparişleri temizle
         globalOrders = globalOrders.filter(o => o.user !== username);
         alert(`${username} hesabı başarıyla silindi!`);
         renderAdminPanel();
@@ -1045,7 +1044,8 @@
 
     function clearChatHistory() {
       let key = getChatKey();
-      chats[key] = [];
+      chats[key] = []; // Geçmişi sıfırla
+      updateBadge();   // Sayacı anında sıfırla
       renderMessages();
       toggleChatMenu();
     }
