@@ -95,6 +95,21 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
+      position: relative;
+    }
+
+    /* Bildirim Rozeti (Sayı Kutusu) */
+    .notif-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff4757;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      display: none;
     }
 
     .dropdown-menu {
@@ -132,7 +147,6 @@
       padding: 0 15px;
     }
 
-    /* Giriş / Kayıt Ol Sekmeli Kutu */
     .auth-section {
       background: var(--card-bg);
       padding: 20px;
@@ -216,7 +230,6 @@
       width: 100%;
     }
 
-    /* Modal */
     .modal {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -244,7 +257,6 @@
       font-weight: bold;
     }
 
-    /* Admin Accounts Separate Page */
     .account-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -253,7 +265,6 @@
       margin-bottom: 12px;
     }
 
-    /* Telegram Style Chat Section */
     .search-box {
       display: flex;
       gap: 8px;
@@ -278,10 +289,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      transition: background 0.2s;
-    }
-    .search-result-card:hover {
-      background: rgba(0, 210, 255, 0.1);
     }
 
     .telegram-chat {
@@ -311,9 +318,6 @@
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
 
     .chat-messages-area {
@@ -331,7 +335,6 @@
       padding: 8px 12px;
       border-radius: 12px;
       font-size: 14px;
-      line-height: 1.4;
       word-wrap: break-word;
     }
 
@@ -339,14 +342,12 @@
       align-self: flex-end;
       background: var(--my-msg-bg);
       color: var(--my-msg-color);
-      border-bottom-right-radius: 2px;
     }
 
     .message-bubble.other-message {
       align-self: flex-start;
       background: var(--other-msg-bg);
       color: var(--other-msg-color);
-      border-bottom-left-radius: 2px;
     }
 
     .chat-footer {
@@ -363,7 +364,6 @@
       color: var(--accent-turkuaz);
       font-size: 12px;
       height: 16px;
-      padding-left: 5px;
     }
 
     .chat-dropdown {
@@ -386,11 +386,6 @@
       padding: 8px 12px;
       text-align: left;
       cursor: pointer;
-      font-size: 13px;
-    }
-    .chat-dropdown button:hover {
-      background: rgba(255, 71, 87, 0.1);
-      color: #ff4757;
     }
   </style>
 </head>
@@ -406,7 +401,10 @@
         <button class="add-balance-btn" onclick="openBalanceModal()">+</button>
       </div>
 
-      <button class="icon-btn" id="notifBtn" onclick="openChatPage()" style="display:none;">🔔</button>
+      <!-- 🔔 Bildirim Butonu & Sayacı -->
+      <button class="icon-btn" id="notifBtn" onclick="openChatPage()" style="display:none;">
+        🔔 <span class="notif-badge" id="notifBadge">0</span>
+      </button>
 
       <!-- Üç Nokta Menü -->
       <button class="menu-btn" onclick="toggleDropdown()">⋮</button>
@@ -422,7 +420,7 @@
         <button onclick="toggleTheme()" id="themeMenuBtn">🌙 Gece Mode</button>
         <button onclick="openChangePassModal()" id="passMenuBtn" style="display:none;">🔑 Şifre Üýtgetmek</button>
         <button onclick="openAdminAccountsPage()" id="adminAccountsBtn" style="display:none; color:#ffaa00; font-weight:bold;">👑 Hesaplar (Admin)</button>
-        <button onclick="logoutUser()" id="logoutBtn" style="display:none; color:#ff4757;">🚪 Çykyş Ýatmak</button>
+        <button onclick="logoutUser()" id="logoutBtn" style="display:none; color:#ff4757;">🚪 Çykyş Etmek</button>
       </div>
     </div>
   </header>
@@ -435,24 +433,22 @@
         <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Kayıt Ol</div>
       </div>
 
-      <!-- Giriş Formu -->
       <div class="auth-form" id="formLogin">
         <input type="text" id="loginUser" placeholder="Ulanyjy ady">
         <input type="password" id="loginPass" placeholder="Şifre">
-        <button onclick="handleLogin()">Giriş Yap</button>
+        <button id="btnDoLogin" onclick="handleLogin()">Giriş Yap</button>
       </div>
 
-      <!-- Kayıt Ol Formu -->
       <div class="auth-form" id="formRegister" style="display:none;">
         <input type="text" id="regUser" placeholder="Ulanyjy ady (Täze)">
         <input type="password" id="regPass" placeholder="Täze Şifre">
-        <button onclick="handleRegister()" style="background:#00ff88;">Agza Bol / Kayıt Ol</button>
+        <button id="btnDoRegister" onclick="handleRegister()" style="background:#00ff88;">Agza Bol / Kayıt Ol</button>
       </div>
     </div>
 
     <!-- Mağaza Alanı -->
     <div id="storeContent">
-      <h2 style="text-align: center;">Serwer Mağazasy</h2>
+      <h2 id="txtStoreTitle" style="text-align: center;">Serwer Mağazasy</h2>
       <p style="text-align: center; font-size: 14px; opacity: 0.8;">IP: 172.96.140.62:5159</p>
 
       <div class="ranks-grid">
@@ -469,25 +465,22 @@
 
     <!-- Admin "Hesaplar" Sayfası -->
     <div id="adminAccountsPage">
-      <h2>👑 Tükeneikli Ulanyjy Hesaplary</h2>
+      <h2 id="txtAdminTitle">👑 Tükeneikli Ulanyjy Hesaplary</h2>
       <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
       <div id="accountsListContainer"></div>
     </div>
 
     <!-- Telegram Style Chat Page -->
     <div id="chatPage">
-      <!-- Arama Ekranı (İlk Açılan) -->
       <div id="chatSearchSection">
-        <h2>🔔 Ulanyjy Agtar / Söhbetdeşlik</h2>
+        <h2 id="txtChatSearchTitle">🔔 Ulanyjy Agtar / Söhbetdeşlik</h2>
         <div class="search-box">
           <input type="text" id="searchUserInput" placeholder="Ulanyjy adyny giriziň...">
-          <button onclick="searchUser()" style="padding:10px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Aramak</button>
+          <button id="btnSearchUser" onclick="searchUser()" style="padding:10px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Aramak</button>
         </div>
-
         <div id="searchResultArea"></div>
       </div>
 
-      <!-- Telegram Tipi Mesajlaşma Ekranı -->
       <div class="telegram-chat" id="telegramChatBox" style="display:none;">
         <div class="chat-header">
           <button class="back-btn" onclick="closeTelegramChat()">← Back</button>
@@ -495,8 +488,8 @@
           <button onclick="toggleChatMenu()" style="background:transparent; border:none; color:var(--text-color); font-size:18px; cursor:pointer;">⋮</button>
           
           <div class="chat-dropdown" id="chatDropdownMenu">
-            <button onclick="clearChatHistory()">Geçmişi Sil</button>
-            <button onclick="removeFromContacts()">Rehberden Sil</button>
+            <button id="btnClearChat" onclick="clearChatHistory()">Geçmişi Sil</button>
+            <button id="btnRemoveContact" onclick="removeFromContacts()">Rehberden Sil</button>
           </div>
         </div>
 
@@ -506,7 +499,7 @@
           <div class="typing-indicator" id="typingIndicator"></div>
           <div style="display:flex; gap:8px;">
             <input type="text" id="chatInput" placeholder="Hat yaz..." oninput="handleTyping()" style="flex:1; padding:10px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:6px;">
-            <button onclick="sendChatMessage()" style="padding:10px 18px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Ugrat</button>
+            <button id="btnSendMsg" onclick="sendChatMessage()" style="padding:10px 18px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Ugrat</button>
           </div>
         </div>
       </div>
@@ -516,7 +509,7 @@
   <!-- Bakiye Modal -->
   <div class="modal" id="balanceModal">
     <div class="modal-content">
-      <h3>Bakiye Satyn Alyň</h3>
+      <h3 id="txtBuyBalanceTitle">Bakiye Satyn Alyň</h3>
       <div class="modal-option" onclick="requestBalance(1, '$1')">1 TMT - 1$</div>
       <div class="modal-option" onclick="requestBalance(5, '$5')">5 TMT - 5$</div>
       <div class="modal-option" onclick="requestBalance(10, '$10')">10 TMT - 10$</div>
@@ -529,10 +522,10 @@
   <!-- Şifre Modal -->
   <div class="modal" id="passwordModal">
     <div class="modal-content">
-      <h3>Şifre Üýtgetmek</h3>
+      <h3 id="txtChangePassTitle">Şifre Üýtgetmek</h3>
       <input type="password" id="oldPassInput" placeholder="Köne Şifre" style="width:90%; padding:8px; margin:5px 0; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
       <input type="password" id="newPassInput" placeholder="Täze Şifre" style="width:90%; padding:8px; margin:5px 0; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
-      <button onclick="changePassword()" style="background:#00ff88; color:#000; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:8px;">Üýtget</button>
+      <button id="btnDoChangePass" onclick="changePassword()" style="background:#00ff88; color:#000; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:8px;">Üýtget</button>
       <button onclick="closeModal('passwordModal')" style="margin-top:5px; background:#ff4757; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Ýap</button>
     </div>
   </div>
@@ -542,10 +535,61 @@
       "rahym": { password: "qwerty654321", balance: 100, requests: [], contacts: [] }
     };
     let chats = {};
+    let unreadCount = 0; // Okunmamış mesaj sayısı
 
     let loggedInUser = null;
     let activeChatTarget = null;
     let typingTimer = null;
+    let currentLang = "tk";
+
+    const dict = {
+      tk: {
+        login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Ulanyjy Agtar / Söhbetdeşlik",
+        searchBtn: "Aramak", storeTitle: "Serwer Mağazasy", adminTitle: "👑 Tükeneikli Ulanyjy Hesaplary",
+        buyBtn: "Satyn al", logout: "🚪 Çykyş Etmek", passMenu: "🔑 Şifre Üýtgetmek", send: "Ugrat",
+        notFound: "Ulanyjy tapylmady!", clickToChat: "Mesajlaşmak üçin basyň", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
+      },
+      tr: {
+        login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Kullanıcı Ara / Sohbet",
+        searchBtn: "Ara", storeTitle: "Sunucu Mağazası", adminTitle: "👑 Kullanıcı Hesapları",
+        buyBtn: "Satın Al", logout: "🚪 Çıkış Yap", passMenu: "🔑 Şifre Değiştir", send: "Gönder",
+        notFound: "Kullanıcı bulunamadı!", clickToChat: "Sohbet etmek için tıkla", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
+      },
+      az: {
+        login: "Daxil ol", register: "Qeydiyyat", searchTitle: "🔔 İstifadəçi Axtar / Söhbət",
+        searchBtn: "Axtar", storeTitle: "Server Mağazası", adminTitle: "👑 İstifadəçi Hesabları",
+        buyBtn: "Al", logout: "🚪 Çıxış Et", passMenu: "🔑 Şifrəni Dəyiş", send: "Göndər",
+        notFound: "İstifadəçi tapılmadı!", clickToChat: "Söhbət üçün klikləyin", clearChat: "Tarixçəni Sil", removeContact: "Rehbərdən Sil"
+      },
+      uz: {
+        login: "Kirish", register: "Ro'yxatdan o'tish", searchTitle: "🔔 Qidiruv / Chat",
+        searchBtn: "Qidirish", storeTitle: "Server Do'koni", adminTitle: "👑 Foydalanuvchi Hisoblari",
+        buyBtn: "Sotib olish", logout: "🚪 Chiqish", passMenu: "🔑 Parolni O'zgartirish", send: "Yuborish",
+        notFound: "Foydalanuvchi topilmadi!", clickToChat: "Yozishish uchun bosing", clearChat: "Tarixni O'chirish", removeContact: "O'chirish"
+      },
+      ru: {
+        login: "Войти", register: "Регистрация", searchTitle: "🔔 Поиск / Чат",
+        searchBtn: "Искать", storeTitle: "Магазин Сервера", adminTitle: "👑 Аккаунты Пользователей",
+        buyBtn: "Купить", logout: "🚪 Выйти", passMenu: "🔑 Сменить пароль", send: "Отправить",
+        notFound: "Пользователь не найден!", clickToChat: "Нажмите для чата", clearChat: "Очистить историю", removeContact: "Удалить контакт"
+      },
+      en: {
+        login: "Login", register: "Register", searchTitle: "🔔 Search User / Chat",
+        searchBtn: "Search", storeTitle: "Server Store", adminTitle: "👑 User Accounts",
+        buyBtn: "Buy Now", logout: "🚪 Logout", passMenu: "🔑 Change Password", send: "Send",
+        notFound: "User not found!", clickToChat: "Click to chat", clearChat: "Clear History", removeContact: "Remove Contact"
+      }
+    };
+
+    function updateBadge() {
+      let badge = document.getElementById('notifBadge');
+      if (unreadCount > 0) {
+        badge.style.display = "inline-block";
+        badge.innerText = unreadCount > 9 ? "9+" : unreadCount;
+      } else {
+        badge.style.display = "none";
+      }
+    }
 
     function toggleDropdown() {
       let menu = document.getElementById('dropdownMenu');
@@ -708,8 +752,10 @@
       }
     }
 
-    /* Telegram Style Chat Functions */
+    /* Chat Functions */
     function openChatPage() {
+      unreadCount = 0; // Chat açılınca bildirim sıfırlanır
+      updateBadge();
       hideAllPages();
       document.getElementById('chatPage').style.display = "block";
       document.getElementById('chatSearchSection').style.display = "block";
@@ -719,18 +765,20 @@
     function searchUser() {
       let query = document.getElementById('searchUserInput').value.trim().toLowerCase();
       let resArea = document.getElementById('searchResultArea');
+      let t = dict[currentLang];
       if (!query) return;
 
+      // Kendi adını yazarsa göstermez (query !== loggedInUser)
       if (users[query] && query !== loggedInUser) {
         resArea.innerHTML = `<div class="search-result-card" onclick="openTelegramChatWith('${query}')">
           <span style="font-size:20px;">👤</span>
           <div>
             <div style="font-weight:bold;">${query}</div>
-            <small style="color:#888;">Mesajlaşmak üçin basyň</small>
+            <small style="color:#888;">${t.clickToChat}</small>
           </div>
         </div>`;
       } else {
-        resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">Ulanyjy tapylmady!</div>`;
+        resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">${t.notFound}</div>`;
       }
     }
 
@@ -795,13 +843,12 @@
       chats[key] = [];
       renderMessages();
       toggleChatMenu();
-      alert("Söhbetdeşlik geçmişi arylandy!");
     }
 
     function removeFromContacts() {
       closeTelegramChat();
       toggleChatMenu();
-      alert(`${activeChatTarget} rehberden pozuldy!`);
+      activeChatTarget = null;
     }
 
     function buyItem(name, price) {
@@ -827,8 +874,25 @@
     }
 
     function changeLanguage() {
-      let currentLang = document.getElementById('langSelect').value;
-      alert(`Dil üýtgedildi: ${currentLang.toUpperCase()}`);
+      currentLang = document.getElementById('langSelect').value;
+      let t = dict[currentLang];
+
+      document.getElementById('tabLogin').innerText = t.login;
+      document.getElementById('tabRegister').innerText = t.register;
+      document.getElementById('btnDoLogin').innerText = t.login;
+      document.getElementById('btnDoRegister').innerText = t.register;
+      document.getElementById('txtStoreTitle').innerText = t.storeTitle;
+      document.getElementById('txtAdminTitle').innerText = t.adminTitle;
+      document.getElementById('txtChatSearchTitle').innerText = t.searchTitle;
+      document.getElementById('btnSearchUser').innerText = t.searchBtn;
+      document.getElementById('logoutBtn').innerText = t.logout;
+      document.getElementById('passMenuBtn').innerText = t.passMenu;
+      document.getElementById('btnSendMsg').innerText = t.send;
+      document.getElementById('btnClearChat').innerText = t.clearChat;
+      document.getElementById('btnRemoveContact').innerText = t.removeContact;
+
+      let buyBtns = document.querySelectorAll('.buy-rank-btn');
+      buyBtns.forEach(b => b.innerText = t.buyBtn);
     }
   </script>
 </body>
