@@ -1,592 +1,209 @@
 <!DOCTYPE html>
 <html lang="tk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TurkmenWix - Mağaza</title>
-  <style>
-    :root {
-      --bg-color: #0f1016;
-      --card-bg: #1a1b26;
-      --text-color: #ffffff;
-      --border-color: #2f3148;
-      --accent-turkuaz: #00d2ff;
-      --accent-white: #ffffff;
-    }
-
-    [data-theme="light"] {
-      --bg-color: #f4f5f9;
-      --card-bg: #ffffff;
-      --text-color: #222222;
-      --border-color: #d1d5db;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    /* Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-      background: var(--card-bg);
-      border-bottom: 1px solid var(--border-color);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .logo-container {
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .logo-turkmen { color: var(--accent-turkuaz); }
-    .logo-wix { color: var(--accent-white); }
-    [data-theme="light"] .logo-wix { color: #333; }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    /* Bakiye Kutusu */
-    .balance-box {
-      background: rgba(0, 210, 255, 0.1);
-      border: 1px solid var(--accent-turkuaz);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-    }
-
-    .add-balance-btn {
-      background: var(--accent-turkuaz);
-      color: #000;
-      border: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .controls select, .theme-btn, .logout-btn, .admin-nav-btn {
-      background: var(--card-bg);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .logout-btn { color: #ff4757; border-color: #ff4757; }
-    .admin-nav-btn { background: #ffaa00; color: #000; font-weight: bold; border: none; display: none; }
-
-    /* Container */
-    .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 0 15px;
-      text-align: center;
-    }
-
-    .auth-section {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      margin: 40px auto;
-      width: 100%;
-      max-width: 320px;
-    }
-
-    .auth-section input {
-      width: 90%;
-      padding: 10px;
-      margin: 8px 0;
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-
-    .auth-section button {
-      width: 90%;
-      padding: 10px;
-      margin-top: 10px;
-      background: var(--accent-turkuaz);
-      color: #000;
-      border: none;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    /* Mağaza İçeriği (Başlangıçta Gizli) */
-    #storeContent {
-      display: none;
-    }
-
-    /* Ranklar */
-    .ranks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .rank-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .rank-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-turkuaz);
-    }
-
-    .rank-name {
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--accent-turkuaz);
-      margin-bottom: 5px;
-    }
-
-    .rank-price {
-      font-size: 16px;
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
-
-    .buy-rank-btn {
-      background: #00ff88;
-      color: #000;
-      border: none;
-      padding: 8px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    /* Admin / Sipariş Paneli */
-    .admin-panel {
-      margin-top: 30px;
-      background: var(--card-bg);
-      border: 1px dashed var(--accent-turkuaz);
-      padding: 20px;
-      border-radius: 12px;
-      text-align: left;
-      display: none;
-    }
-
-    .order-item, .request-item {
-      background: rgba(255,255,255,0.03);
-      padding: 10px;
-      margin-top: 8px;
-      border-radius: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid var(--border-color);
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .delete-btn {
-      background: #ff4757;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .user-info {
-      font-size: 13px;
-      margin-bottom: 10px;
-      color: #888;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurkmenWix Mağazasy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #00ffcc;
+        }
+        .product {
+            background: #2a2a2a;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product button {
+            background: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .product button:hover {
+            background: #00b386;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #333;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+        }
+        .admin-section, .orders-section {
+            margin-top: 30px;
+            background: #252525;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .order-item {
+            background: #333;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background: #ff4444 !important;
+            color: white !important;
+        }
+    </style>
 </head>
-<body data-theme="dark">
+<body>
 
-  <header>
-    <div class="logo-container">
-      <span class="logo-turkmen">Turkmen</span><span class="logo-wix">Wix</span>
-    </div>
-    <div class="header-right">
-      <!-- Rahym'a Özel Siparişler Butonu -->
-      <button class="admin-nav-btn" id="adminNavBtn" onclick="toggleAdminPanel()">📋 Siparişler</button>
-
-      <div class="balance-box" id="headerBalanceBox" style="display: none;">
-        <span id="userDisplay">Mıhman</span>: <span id="balanceAmount">0</span> TMT
-        <button class="add-balance-btn" onclick="requestBalance()">+</button>
-      </div>
-
-      <div class="controls" style="display: flex; align-items: center; gap: 6px;">
-        <select id="langSelect" onchange="changeLanguage()">
-          <option value="tk">TM</option>
-          <option value="ru">RU</option>
-          <option value="tr">TR</option>
-          <option value="en">EN</option>
-        </select>
-        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
-        <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display: none;">Çıkış</button>
-      </div>
-    </div>
-  </header>
-
-  <div class="container">
-    <!-- Giriş / Kayıt Alanı (Başta Açık) -->
-    <div class="auth-section" id="authBox">
-      <h3 id="authTitle">Giriş Yap / Kayıt Ol</h3>
-      <div class="user-info" id="statusMsg">Ulgama girmek üçin maglumatlaryňyzy ýazyň</div>
-      <input type="text" id="usernameInput" placeholder="Kullanıcı Adı">
-      <input type="password" id="passwordInput" placeholder="Şifre">
-      <button id="loginBtn" onclick="loginOrRegister()">Giriş Yap / Kayıt Ol</button>
+<div class="container">
+    <h1>TurkmenWix Mağazasy</h1>
+    
+    <div id="shop-section">
+        <h2>Önümler</h2>
+        <input type="text" id="player-name" placeholder="Oýunçy adyňyzy ýazyň (Nick)">
+        
+        <div class="product">
+            <div><strong>100k Sunucu Parasy</strong><br>Bahasy: 5 TMT</div>
+            <button onclick="buyItem('100k Sunucu Parasy', 5)">Satyn al</button>
+        </div>
+        <div class="product">
+            <div><strong>DC Parasy</strong><br>Bahasy: 8 TMT</div>
+            <button onclick="buyItem('DC Parasy', 8)">Satyn al</button>
+        </div>
+        <div class="product">
+            <div><strong>DCB</strong><br>Bahasy: 50 TMT</div>
+            <button onclick="buyItem('DCB', 50)">Satyn al</button>
+        </div>
     </div>
 
-    <!-- Mağaza Alanı (Giriş Yapılınca Açılır) -->
-    <div id="storeContent">
-      <h2 id="storeTitle">Sunucu Rank Mağazası</h2>
-      <p style="font-size: 14px; opacity: 0.8;">IP: 172.96.140.62:5159 (PocketMine 0.14.3)</p>
-
-      <div class="ranks-grid">
-        <div class="rank-card">
-          <div class="rank-name">Fly</div>
-          <div class="rank-price">5 TMT</div>
-          <button class="buy-rank-btn" onclick="buyRank('Fly', 5)" id="buyBtn1">Satın Al</button>
-        </div>
-        <div class="rank-card">
-          <div class="rank-name">VIP</div>
-          <div class="rank-price">10 TMT</div>
-          <button class="buy-rank-btn" onclick="buyRank('VIP', 10)" id="buyBtn2">Satın Al</button>
-        </div>
-        <div class="rank-card">
-          <div class="rank-name">Creative</div>
-          <div class="rank-price">20 TMT</div>
-          <button class="buy-rank-btn" onclick="buyRank('Creative', 20)" id="buyBtn3">Satın Al</button>
-        </div>
-        <div class="rank-card">
-          <div class="rank-name">Meteo</div>
-          <div class="rank-price">30 TMT</div>
-          <button class="buy-rank-btn" onclick="buyRank('Meteo', 30)" id="buyBtn4">Satın Al</button>
-        </div>
-        <div class="rank-card">
-          <div class="rank-name">Admin</div>
-          <div class="rank-price">50 TMT</div>
-          <button class="buy-rank-btn" onclick="buyRank('Admin', 50)" id="buyBtn5">Satın Al</button>
-        </div>
-      </div>
+    <div class="orders-section">
+        <h2>Sargytlarym / Status</h2>
+        <div id="orders-list">Hiç hili sargyt ýok.</div>
     </div>
 
-    <!-- Rahym Admin Panel & Siparişler -->
-    <div class="admin-panel" id="adminPanel">
-      <h3 id="adminTitle">👑 Rahym - Bakiye İstekleri & Rank Siparişleri</h3>
-      
-      <h4>Bakiye Yükleme İstekleri:</h4>
-      <div id="requestsList">Gelen bakiye isteği yok.</div>
-
-      <h4 style="margin-top: 25px;">Oyuncu Rank Siparişleri:</h4>
-      <div id="ordersList">Henüz rank siparişi yok.</div>
+    <div class="admin-section">
+        <h2>Admin Panel</h2>
+        <div id="admin-login-box">
+            <input type="password" id="admin-pass" placeholder="Admin açar sözüni ýazyň">
+            <button onclick="adminLogin()" style="background:#00ffcc; color:#000; border:none; padding:10px; width:100%; border-radius:5px; font-weight:bold; cursor:pointer;">Giriş Et</button>
+        </div>
+        <div id="admin-panel-content" style="display:none;">
+            <p style="color: #00ffcc;">Admin hökmünde girdiňiz!</p>
+            <h3>Ähli Sargytlar (Dolandyryş)</h3>
+            <div id="admin-orders-list"></div>
+        </div>
     </div>
-  </div>
+</div>
 
-  <script>
-    let users = {
-      "rahym": { password: "qwerty654321", balance: 100 }
-    };
+<script>
+    let orders = JSON.parse(localStorage.getItem('turkmenwix_orders')) || [];
+    let isAdmin = false;
 
-    let loggedInUser = null;
-    let pendingRequests = []; // Bakiye istekleri
-    let rankOrders = [];     // Satın alınan rank siparişleri
+    function saveOrders() {
+        localStorage.setItem('turkmenwix_orders', JSON.stringify(orders));
+        renderOrders();
+    }
 
-    const translations = {
-      tk: {
-        authTitle: "Giriş Yap / Kayıt Ol",
-        statusMsg: "Ulgama girmek üçin maglumatlaryňyzy ýazyň",
-        usernamePlaceholder: "Ulanyjy ady",
-        passwordPlaceholder: "Aşakky söz (Şifre)",
-        loginBtn: "Giriş / Agza bol",
-        storeTitle: "Serwer Rank Dükanı",
-        buyBtn: "Satyn al",
-        adminTitle: "👑 Rahym - Balans Islegleri we Sargytlar",
-        noReq: "Gelen isleg ýok.",
-        insufficient: "Balansyňyz ýetmezlik edýär!",
-        enterNick: "Oýun içindäki adyňyzy (Nick) ýazyň:",
-        successBuy: "Gutlaýarys! Rank üstünlikli satyn alyndy!",
-        reqSent: "Balans haýyşy admine ugradyldy!",
-        invalidAmount: "Dogry mukdar giriziň.",
-        wrongPass: "Aşakky söz (Şifre) ýalňyş!",
-        newUserCreated: "Täze ulanyjy döredildi we giriş edildi!",
-        logout: "Çykyş"
-      },
-      tr: {
-        authTitle: "Giriş Yap / Kayıt Ol",
-        statusMsg: "Sisteme giriş yapmak için bilgilerinizi girin",
-        usernamePlaceholder: "Kullanıcı Adı",
-        passwordPlaceholder: "Şifre",
-        loginBtn: "Giriş Yap / Kayıt Ol",
-        storeTitle: "Sunucu Rank Mağazası",
-        buyBtn: "Satın Al",
-        adminTitle: "👑 Rahym - Bakiye İstekleri ve Siparişler",
-        noReq: "Gelen istek yok.",
-        insufficient: "Yetersiz bakiye!",
-        enterNick: "Oyun içi kullanıcı adınızı girin:",
-        successBuy: "Tebrikler! Rank başarıyla satın alındı!",
-        reqSent: "Bakiye talebi admin (Rahym)'a gönderildi!",
-        invalidAmount: "Geçerli bir miktar girin.",
-        wrongPass: "Hatalı şifre!",
-        newUserCreated: "Yeni hesap oluşturuldu ve giriş yapıldı!",
-        logout: "Çıkış"
-      },
-      ru: {
-        authTitle: "Вход / Регистрация",
-        statusMsg: "Введите данные для входа в систему",
-        usernamePlaceholder: "Имя пользователя",
-        passwordPlaceholder: "Пароль",
-        loginBtn: "Войти / Зарегистрироваться",
-        storeTitle: "Магазин Рангов Сервера",
-        buyBtn: "Купить",
-        adminTitle: "👑 Rahym - Запросы баланса и заказы",
-        noReq: "Запросов нет.",
-        insufficient: "Недостаточно баланса!",
-        enterNick: "Введите ваш игровой ник:",
-        successBuy: "Поздравляем! Ранг успешно куплен!",
-        reqSent: "Запрос отправлен администратору!",
-        invalidAmount: "Введите сумму.",
-        wrongPass: "Неверный пароль!",
-        newUserCreated: "Новый аккаунт создан!",
-        logout: "Выход"
-      },
-      en: {
-        authTitle: "Login / Register",
-        statusMsg: "Enter your credentials to log in",
-        usernamePlaceholder: "Username",
-        passwordPlaceholder: "Password",
-        loginBtn: "Login / Register",
-        storeTitle: "Server Rank Store",
-        buyBtn: "Buy Now",
-        adminTitle: "👑 Rahym - Balance Requests & Orders",
-        noReq: "No pending requests.",
-        insufficient: "Insufficient balance!",
-        enterNick: "Enter your in-game nickname:",
-        successBuy: "Congratulations! Rank successfully purchased!",
-        reqSent: "Balance request sent to admin!",
-        invalidAmount: "Enter a valid amount.",
-        wrongPass: "Incorrect password!",
-        newUserCreated: "New account created!",
-        logout: "Logout"
-      }
-    };
+    function buyItem(itemNama, price) {
+        let playerName = document.getElementById('player-name').value.trim();
+        if(!playerName) {
+            alert('Ilki bilen oýunçy adyňyzy ýazyň!');
+            return;
+        }
 
-    let currentLang = "tk";
+        let newOrder = {
+            id: Date.now(),
+            player: playerName,
+            item: itemNama,
+            price: price,
+            status: 'Garaşylýar'
+        };
 
-    function loginOrRegister() {
-      const uInput = document.getElementById('usernameInput').value.trim();
-      const pInput = document.getElementById('passwordInput').value.trim();
-      const t = translations[currentLang];
+        orders.push(newOrder);
+        saveOrders();
+        alert('Sargyt üstünlikli berildi!');
+        document.getElementById('player-name').value = '';
+    }
 
-      if (!uInput || !pInput) {
-        alert("Lütfen kullanıcı adı ve şifre girin!");
-        return;
-      }
+    function cancelOrder(id) {
+        orders = orders.filter(o => o.id !== id);
+        saveOrders();
+    }
 
-      const lowerU = uInput.toLowerCase();
+    function renderOrders() {
+        let listDiv = document.getElementById('orders-list');
+        let adminListDiv = document.getElementById('admin-orders-list');
+        
+        if(orders.length === 0) {
+            listDiv.innerHTML = 'Hiç hili sargyt ýok.';
+            adminListDiv.innerHTML = 'Hiç hili sargyt ýok.';
+            return;
+        }
 
-      if (users[lowerU]) {
-        if (users[lowerU].password === pInput) {
-          loggedInUser = lowerU;
+        let html = '';
+        let adminHtml = '';
+
+        orders.forEach(o => {
+            html += `<div class="order-item">
+                <span><b>${o.player}</b> - ${o.item} (${o.price} TMT)</span>
+                <button class="delete-btn" onclick="cancelOrder(${o.id})">Ýatyr (İptal)</button>
+            </div>`;
+
+            adminHtml += `<div class="order-item">
+                <span>ID: ${o.id} | <b>${o.player}</b> -> ${o.item} (${o.price} TMT)</span>
+                <button class="delete-btn" onclick="adminDeleteOrder(${o.id})">Poz (Sil)</button>
+            </div>`;
+        });
+
+        listDiv.innerHTML = html;
+        if(isAdmin) {
+            adminListDiv.innerHTML = adminHtml;
+        }
+    }
+
+    function adminLogin() {
+        let pass = document.getElementById('admin-pass').value;
+        // Admin açar sözüni bärden üýtgedip bilersiň (häzirki: admin123)
+        if(pass === 'admin123') {
+            isAdmin = true;
+            document.getElementById('admin-login-box').style.display = 'none';
+            document.getElementById('admin-panel-content').style.display = 'block';
+            renderOrders();
         } else {
-          alert(t.wrongPass);
-          return;
+            alert('Ýalňyş parol!');
         }
-      } else {
-        users[lowerU] = { password: pInput, balance: 0 };
-        loggedInUser = lowerU;
-        alert(t.newUserCreated);
-      }
-
-      document.getElementById('authBox').style.display = "none";
-      document.getElementById('storeContent').style.display = "block";
-      document.getElementById('headerBalanceBox').style.display = "flex";
-      document.getElementById('logoutBtn').style.display = "inline-block";
-
-      updateUI();
     }
 
-    function logoutUser() {
-      loggedInUser = null;
-      document.getElementById('authBox').style.display = "block";
-      document.getElementById('storeContent').style.display = "none";
-      document.getElementById('headerBalanceBox').style.display = "none";
-      document.getElementById('logoutBtn').style.display = "none";
-      document.getElementById('adminNavBtn').style.display = "none";
-      document.getElementById('adminPanel').style.display = "none";
-      document.getElementById('usernameInput').value = "";
-      document.getElementById('passwordInput').value = "";
+    function adminDeleteOrder(id) {
+        orders = orders.filter(o => o.id !== id);
+        saveOrders();
+        renderOrders();
     }
 
-    function updateUI() {
-      if (!loggedInUser) return;
+    renderOrders();
+</script>
 
-      document.getElementById('userDisplay').innerText = loggedInUser;
-      document.getElementById('balanceAmount').innerText = users[loggedInUser].balance;
-
-      if (loggedInUser === "rahym") {
-        document.getElementById('adminNavBtn').style.display = "inline-block";
-        updateAdminPanel();
-      } else {
-        document.getElementById('adminNavBtn').style.display = "none";
-        document.getElementById('adminPanel').style.display = "none";
-      }
-    }
-
-    function toggleAdminPanel() {
-      const panel = document.getElementById('adminPanel');
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-
-    function requestBalance() {
-      const t = translations[currentLang];
-      let amount = prompt("Kaç TMT bakiye yüklemek istiyorsun?");
-      amount = parseInt(amount);
-
-      if (amount && amount > 0) {
-        pendingRequests.push({ user: loggedInUser, amount: amount });
-        alert(t.reqSent);
-        if (loggedInUser === "rahym") updateAdminPanel();
-      } else {
-        alert(t.invalidAmount);
-      }
-    }
-
-    function updateAdminPanel() {
-      let reqDiv = document.getElementById('requestsList');
-      if (pendingRequests.length === 0) {
-        reqDiv.innerHTML = "Gelen bakiye isteği yok.";
-      } else {
-        let html = "";
-        pendingRequests.forEach((req, index) => {
-          html += `<div class="request-item">
-                    <span><b>${req.user}</b>: ${req.amount} TMT istiyor</span>
-                    <button onclick="customApprove(${index})" style="background:#00ff88; border:none; padding:5px 8px; border-radius:4px; cursor:pointer; font-weight:bold;">Bakiyesini Ayarla</button>
-                   </div>`;
-        });
-        reqDiv.innerHTML = html;
-      }
-
-      let ordDiv = document.getElementById('ordersList');
-      if (rankOrders.length === 0) {
-        ordDiv.innerHTML = "Henüz rank siparişi yok.";
-      } else {
-        let html = "";
-        rankOrders.forEach((ord, index) => {
-          html += `<div class="order-item">
-                    <span><b>Kullanıcı:</b> ${ord.user} | <b>Oyuncu (Nick):</b> ${ord.ingame} | <b>Rank:</b> ${ord.rank}</span>
-                    <button class="delete-btn" onclick="deleteOrder(${index})">Sil</button>
-                   </div>`;
-        });
-        ordDiv.innerHTML = html;
-      }
-    }
-
-    // İstediğin gibi Rahym hesabından dilediği miktarı serbestçe ayarlayabilme
-    function customApprove(index) {
-      let req = pendingRequests[index];
-      let customAmount = prompt(`${req.user} kullanıcısına kaç TMT bakiye tanımlamak istiyorsun?`, req.amount);
-      customAmount = parseInt(customAmount);
-
-      if (!isNaN(customAmount) && customAmount >= 0) {
-        if (users[req.user]) {
-          users[req.user].balance += customAmount;
-          alert(`${req.user} adlı kullanıcıya ${customAmount} TMT eklendi!`);
-        }
-        pendingRequests.splice(index, 1);
-        updateAdminPanel();
-        updateUI();
-      } else {
-        alert("Geçerli bir rakam girin.");
-      }
-    }
-
-    function deleteOrder(index) {
-      rankOrders.splice(index, 1);
-      updateAdminPanel();
-    }
-
-    function buyRank(rankName, price) {
-      const t = translations[currentLang];
-
-      if (users[loggedInUser].balance < price) {
-        alert(t.insufficient);
-        return;
-      }
-
-      let ingameName = prompt(t.enterNick);
-      if (!ingameName) return;
-
-      users[loggedInUser].balance -= price;
-      updateUI();
-
-      // Siparişi listeye kaydet
-      rankOrders.push({ user: loggedInUser, ingame: ingameName, rank: rankName });
-      if (loggedInUser === "rahym") updateAdminPanel();
-
-      alert(`${t.successBuy}\nOyuncu: ${ingameName}\nRank: ${rankName}\nSunucu: 172.96.140.62:5159`);
-    }
-
-    // Gece / Gündüz Emoji Modu
-    function toggleTheme() {
-      const body = document.body;
-      const themeBtn = document.getElementById('themeBtn');
-      if (body.getAttribute("data-theme") === "dark") {
-        body.setAttribute("data-theme", "light");
-        themeBtn.innerText = "☀️";
-      } else {
-        body.setAttribute("data-theme", "dark");
-        themeBtn.innerText = "🌙";
-      }
-    }
-
-    function changeLanguage() {
-      currentLang = document.getElementById('langSelect').value;
-      const t = translations[currentLang];
-
-      document.getElementById('authTitle').innerText = t.authTitle;
-      document.getElementById('statusMsg').innerText = t.statusMsg;
-      document.getElementById('usernameInput').placeholder = t.usernamePlaceholder;
-      document.getElementById('passwordInput').placeholder = t.passwordPlaceholder;
-      document.getElementById('loginBtn').innerText = t.loginBtn;
-      document.getElementById('storeTitle').innerText = t.storeTitle;
-      document.getElementById('adminTitle').innerText = t.adminTitle;
-      document.getElementById('logoutBtn').innerText = t.logout;
-
-      for (let i = 1; i <= 5; i++) {
-        document.getElementById('buyBtn' + i).innerText = t.buyBtn;
-      }
-    }
-  </script>
 </body>
 </html>
