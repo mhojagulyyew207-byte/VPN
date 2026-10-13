@@ -121,7 +121,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       display: none;
       flex-direction: column;
-      width: 190px;
+      width: 200px;
       z-index: 100;
       padding: 5px;
     }
@@ -198,7 +198,7 @@
       cursor: pointer;
     }
 
-    #storeContent, #adminAccountsPage, #chatPage, #myOrdersPage { display: none; }
+    #storeContent, #adminAccountsPage, #chatPage, #myOrdersPage, #adminOrdersPage { display: none; }
 
     .ranks-grid {
       display: grid;
@@ -400,7 +400,6 @@
         <button class="add-balance-btn" onclick="openBalanceModal()">+</button>
       </div>
 
-      <!-- 🔔 Bildirim Butonu -->
       <button class="icon-btn" id="notifBtn" onclick="openChatPage()" style="display:none;">
         🔔 <span class="notif-badge" id="notifBadge">0</span>
       </button>
@@ -418,6 +417,7 @@
         </select>
         <button onclick="toggleTheme()" id="themeMenuBtn">🌙 Gece Mode</button>
         <button onclick="openMyOrdersPage()" id="myOrdersMenuBtn" style="display:none;">📦 Siparişlerim</button>
+        <button onclick="openAdminOrdersPage()" id="adminOrdersMenuBtn" style="display:none; color:#00ff88; font-weight:bold;">📋 Oyuncu Siparişleri</button>
         <button onclick="openChangePassModal()" id="passMenuBtn" style="display:none;">🔑 Şifre Üýtgetmek</button>
         <button onclick="openAdminAccountsPage()" id="adminAccountsBtn" style="display:none; color:#ffaa00; font-weight:bold;">👑 Hesaplar (Admin)</button>
         <button onclick="logoutUser()" id="logoutBtn" style="display:none; color:#ff4757;">🚪 Çykyş Etmek</button>
@@ -470,7 +470,14 @@
       <div id="myOrdersContainer"></div>
     </div>
 
-    <!-- Admin "Hesaplar & Para Siparişleri" Sayfası -->
+    <!-- Admin Oyuncu Siparişleri Sayfası -->
+    <div id="adminOrdersPage">
+      <h2>📋 Admin - Ähli Oyuncu Sargytlary</h2>
+      <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
+      <div id="adminAllOrdersContainer"></div>
+    </div>
+
+    <!-- Admin Hesaplar & Para Siparişleri Sayfası -->
     <div id="adminAccountsPage">
       <h2 id="txtAdminTitle">👑 Admin - Hesaplar we Para Siparişleri</h2>
       <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
@@ -550,8 +557,8 @@
     let users = {
       "rahym": { password: "qwerty654321", balance: 100, requests: [], contacts: [] }
     };
-    let chats = {}; // { "user1_user2": [{sender, msg, read}] }
-    let globalOrders = []; // Tüm ürün / rank siparişleri
+    let chats = {}; 
+    let globalOrders = []; 
 
     let loggedInUser = null;
     let activeChatTarget = null;
@@ -561,13 +568,13 @@
     const dict = {
       tk: {
         login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Ulanyjy Agtar / Söhbetdeşlik",
-        searchBtn: "Aramak", storeTitle: "Serwer Mağazasy", adminTitle: "👑 Admin - Hesaplar ve Para Siparişleri",
+        searchBtn: "Aramak", storeTitle: "Serwer Mağazasy", adminTitle: "👑 Admin - Hesaplar ve Siparişler",
         buyBtn: "Satyn al", logout: "🚪 Çykyş Etmek", passMenu: "🔑 Şifre Üýtgetmek", send: "Ugrat",
         notFound: "Ulanyjy tapylmady!", clickToChat: "Mesajlaşmak üçin basyň", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
       },
       tr: {
         login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Kullanıcı Ara / Sohbet",
-        searchBtn: "Ara", storeTitle: "Sunucu Mağazası", adminTitle: "👑 Admin - Hesaplar ve Para Siparişleri",
+        searchBtn: "Ara", storeTitle: "Sunucu Mağazası", adminTitle: "👑 Admin - Hesaplar ve Siparişler",
         buyBtn: "Satın Al", logout: "🚪 Çıkış Yap", passMenu: "🔑 Şifre Değiştir", send: "Gönder",
         notFound: "Kullanıcı bulunamadı!", clickToChat: "Sohbet etmek için tıkla", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
       },
@@ -683,6 +690,7 @@
 
       if (loggedInUser === "rahym") {
         document.getElementById('adminAccountsBtn').style.display = "block";
+        document.getElementById('adminOrdersMenuBtn').style.display = "block";
       }
       updateUI();
       updateBadge();
@@ -694,6 +702,7 @@
       document.getElementById('chatPage').style.display = "none";
       document.getElementById('authBox').style.display = "none";
       document.getElementById('myOrdersPage').style.display = "none";
+      document.getElementById('adminOrdersPage').style.display = "none";
     }
 
     function showHomePage() {
@@ -716,6 +725,7 @@
       document.getElementById('passMenuBtn').style.display = "none";
       document.getElementById('adminAccountsBtn').style.display = "none";
       document.getElementById('myOrdersMenuBtn').style.display = "none";
+      document.getElementById('adminOrdersMenuBtn').style.display = "none";
       toggleDropdown();
     }
 
@@ -787,6 +797,32 @@
       }
     }
 
+    /* Admin Ähli Oyuncu Sargytlary Sayfasy */
+    function openAdminOrdersPage() {
+      toggleDropdown();
+      hideAllPages();
+      document.getElementById('adminOrdersPage').style.display = "block";
+      renderAdminAllOrders();
+    }
+
+    function renderAdminAllOrders() {
+      let container = document.getElementById('adminAllOrdersContainer');
+      if (globalOrders.length === 0) {
+        container.innerHTML = "<p>Henüz sipariş yok.</p>";
+        return;
+      }
+      let html = "";
+      globalOrders.forEach(o => {
+        html += `<div class="order-card">
+          <p><b>Önüm (Fly vb.):</b> <span style="color:var(--accent-turkuaz);">${o.item}</span></p>
+          <p><b>Oýunçy Ady (Nick):</b> ${o.nick}</p>
+          <p><b>Sitedeki Ulanyjy Ady:</b> ${o.user}</p>
+          <p><b>Bahasy:</b> ${o.price} TMT</p>
+        </div>`;
+      });
+      container.innerHTML = html;
+    }
+
     /* Admin Accounts & Balance Orders Page */
     function openAdminAccountsPage() {
       toggleDropdown();
@@ -796,7 +832,6 @@
     }
 
     function renderAdminPanel() {
-      // Para Siparişleri
       let reqContainer = document.getElementById('adminBalanceOrdersContainer');
       let reqs = users['rahym'].requests;
       if (reqs.length === 0) {
@@ -812,7 +847,6 @@
         reqContainer.innerHTML = rHtml;
       }
 
-      // Kullanıcılar Listesi
       let container = document.getElementById('accountsListContainer');
       let html = "";
       for (let u in users) {
@@ -861,7 +895,13 @@
       let t = dict[currentLang];
       if (!query) return;
 
-      if (users[query] && query !== loggedInUser) {
+      // Kendi adını arattığında kesinlikle çıkarmayacak
+      if (query === loggedInUser) {
+        resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">Öz adyňyzy gözläp bilmersiňiz!</div>`;
+        return;
+      }
+
+      if (users[query]) {
         let key = [loggedInUser, query].sort().join('_');
         let unread = (chats[key] || []).filter(m => m.sender !== loggedInUser && !m.read).length;
 
@@ -886,7 +926,6 @@
       document.getElementById('telegramChatBox').style.display = "flex";
       document.getElementById('chatTitleUser').innerText = targetUser;
 
-      // Okundu olarak işaretle
       let key = getChatKey();
       if (chats[key]) {
         chats[key].forEach(m => { if (m.sender !== loggedInUser) m.read = true; });
