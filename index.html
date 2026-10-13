@@ -98,7 +98,6 @@
       position: relative;
     }
 
-    /* Bildirim Rozeti (Sayı Kutusu) */
     .notif-badge {
       position: absolute;
       top: -5px;
@@ -199,7 +198,7 @@
       cursor: pointer;
     }
 
-    #storeContent, #adminAccountsPage, #chatPage { display: none; }
+    #storeContent, #adminAccountsPage, #chatPage, #myOrdersPage { display: none; }
 
     .ranks-grid {
       display: grid;
@@ -257,7 +256,7 @@
       font-weight: bold;
     }
 
-    .account-card {
+    .account-card, .order-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 10px;
@@ -284,11 +283,11 @@
       border: 1px solid var(--accent-turkuaz);
       padding: 12px;
       border-radius: 8px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
     }
 
     .telegram-chat {
@@ -315,7 +314,7 @@
       background: transparent;
       color: var(--accent-turkuaz);
       border: none;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -401,7 +400,7 @@
         <button class="add-balance-btn" onclick="openBalanceModal()">+</button>
       </div>
 
-      <!-- 🔔 Bildirim Butonu & Sayacı -->
+      <!-- 🔔 Bildirim Butonu -->
       <button class="icon-btn" id="notifBtn" onclick="openChatPage()" style="display:none;">
         🔔 <span class="notif-badge" id="notifBadge">0</span>
       </button>
@@ -418,6 +417,7 @@
           <option value="en">EN</option>
         </select>
         <button onclick="toggleTheme()" id="themeMenuBtn">🌙 Gece Mode</button>
+        <button onclick="openMyOrdersPage()" id="myOrdersMenuBtn" style="display:none;">📦 Siparişlerim</button>
         <button onclick="openChangePassModal()" id="passMenuBtn" style="display:none;">🔑 Şifre Üýtgetmek</button>
         <button onclick="openAdminAccountsPage()" id="adminAccountsBtn" style="display:none; color:#ffaa00; font-weight:bold;">👑 Hesaplar (Admin)</button>
         <button onclick="logoutUser()" id="logoutBtn" style="display:none; color:#ff4757;">🚪 Çykyş Etmek</button>
@@ -426,7 +426,7 @@
   </header>
 
   <div class="container">
-    <!-- Giriş / Kayıt Sekmeli Kutu -->
+    <!-- Giriş / Kayıt -->
     <div class="auth-section" id="authBox">
       <div class="auth-tabs">
         <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Giriş Yap</div>
@@ -463,17 +463,33 @@
       </div>
     </div>
 
-    <!-- Admin "Hesaplar" Sayfası -->
-    <div id="adminAccountsPage">
-      <h2 id="txtAdminTitle">👑 Tükeneikli Ulanyjy Hesaplary</h2>
+    <!-- Oyuncu Siparişlerim Sayfası -->
+    <div id="myOrdersPage">
+      <h2>📦 Meniň Sargytlarym</h2>
       <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
+      <div id="myOrdersContainer"></div>
+    </div>
+
+    <!-- Admin "Hesaplar & Para Siparişleri" Sayfası -->
+    <div id="adminAccountsPage">
+      <h2 id="txtAdminTitle">👑 Admin - Hesaplar we Para Siparişleri</h2>
+      <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
+      
+      <h3 style="margin-top:20px; color:var(--accent-turkuaz);">Gelen Para / Bakiye Siparişleri</h3>
+      <div id="adminBalanceOrdersContainer"></div>
+
+      <h3 style="margin-top:30px; color:var(--accent-turkuaz);">Tükeneikli Ulanyjy Hesaplary</h3>
       <div id="accountsListContainer"></div>
     </div>
 
-    <!-- Telegram Style Chat Page -->
+    <!-- Chat Page -->
     <div id="chatPage">
       <div id="chatSearchSection">
-        <h2 id="txtChatSearchTitle">🔔 Ulanyjy Agtar / Söhbetdeşlik</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+          <button class="back-btn" onclick="showHomePage()">← Back (Geri)</button>
+          <h2 id="txtChatSearchTitle" style="margin:0;">🔔 Ulanyjy Agtar / Söhbetdeşlik</h2>
+          <div></div>
+        </div>
         <div class="search-box">
           <input type="text" id="searchUserInput" placeholder="Ulanyjy adyny giriziň...">
           <button id="btnSearchUser" onclick="searchUser()" style="padding:10px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Aramak</button>
@@ -534,8 +550,8 @@
     let users = {
       "rahym": { password: "qwerty654321", balance: 100, requests: [], contacts: [] }
     };
-    let chats = {};
-    let unreadCount = 0; // Okunmamış mesaj sayısı
+    let chats = {}; // { "user1_user2": [{sender, msg, read}] }
+    let globalOrders = []; // Tüm ürün / rank siparişleri
 
     let loggedInUser = null;
     let activeChatTarget = null;
@@ -545,47 +561,60 @@
     const dict = {
       tk: {
         login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Ulanyjy Agtar / Söhbetdeşlik",
-        searchBtn: "Aramak", storeTitle: "Serwer Mağazasy", adminTitle: "👑 Tükeneikli Ulanyjy Hesaplary",
+        searchBtn: "Aramak", storeTitle: "Serwer Mağazasy", adminTitle: "👑 Admin - Hesaplar ve Para Siparişleri",
         buyBtn: "Satyn al", logout: "🚪 Çykyş Etmek", passMenu: "🔑 Şifre Üýtgetmek", send: "Ugrat",
         notFound: "Ulanyjy tapylmady!", clickToChat: "Mesajlaşmak üçin basyň", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
       },
       tr: {
         login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Kullanıcı Ara / Sohbet",
-        searchBtn: "Ara", storeTitle: "Sunucu Mağazası", adminTitle: "👑 Kullanıcı Hesapları",
+        searchBtn: "Ara", storeTitle: "Sunucu Mağazası", adminTitle: "👑 Admin - Hesaplar ve Para Siparişleri",
         buyBtn: "Satın Al", logout: "🚪 Çıkış Yap", passMenu: "🔑 Şifre Değiştir", send: "Gönder",
         notFound: "Kullanıcı bulunamadı!", clickToChat: "Sohbet etmek için tıkla", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
       },
       az: {
         login: "Daxil ol", register: "Qeydiyyat", searchTitle: "🔔 İstifadəçi Axtar / Söhbət",
-        searchBtn: "Axtar", storeTitle: "Server Mağazası", adminTitle: "👑 İstifadəçi Hesabları",
+        searchBtn: "Axtar", storeTitle: "Server Mağazası", adminTitle: "👑 Admin - Hesablar və Sifarişlər",
         buyBtn: "Al", logout: "🚪 Çıxış Et", passMenu: "🔑 Şifrəni Dəyiş", send: "Göndər",
         notFound: "İstifadəçi tapılmadı!", clickToChat: "Söhbət üçün klikləyin", clearChat: "Tarixçəni Sil", removeContact: "Rehbərdən Sil"
       },
       uz: {
         login: "Kirish", register: "Ro'yxatdan o'tish", searchTitle: "🔔 Qidiruv / Chat",
-        searchBtn: "Qidirish", storeTitle: "Server Do'koni", adminTitle: "👑 Foydalanuvchi Hisoblari",
+        searchBtn: "Qidirish", storeTitle: "Server Do'koni", adminTitle: "👑 Admin - Hisoblar",
         buyBtn: "Sotib olish", logout: "🚪 Chiqish", passMenu: "🔑 Parolni O'zgartirish", send: "Yuborish",
         notFound: "Foydalanuvchi topilmadi!", clickToChat: "Yozishish uchun bosing", clearChat: "Tarixni O'chirish", removeContact: "O'chirish"
       },
       ru: {
         login: "Войти", register: "Регистрация", searchTitle: "🔔 Поиск / Чат",
-        searchBtn: "Искать", storeTitle: "Магазин Сервера", adminTitle: "👑 Аккаунты Пользователей",
+        searchBtn: "Искать", storeTitle: "Магазин Сервера", adminTitle: "👑 Аккаунты и Запросы",
         buyBtn: "Купить", logout: "🚪 Выйти", passMenu: "🔑 Сменить пароль", send: "Отправить",
         notFound: "Пользователь не найден!", clickToChat: "Нажмите для чата", clearChat: "Очистить историю", removeContact: "Удалить контакт"
       },
       en: {
         login: "Login", register: "Register", searchTitle: "🔔 Search User / Chat",
-        searchBtn: "Search", storeTitle: "Server Store", adminTitle: "👑 User Accounts",
+        searchBtn: "Search", storeTitle: "Server Store", adminTitle: "👑 Admin - Accounts & Orders",
         buyBtn: "Buy Now", logout: "🚪 Logout", passMenu: "🔑 Change Password", send: "Send",
         notFound: "User not found!", clickToChat: "Click to chat", clearChat: "Clear History", removeContact: "Remove Contact"
       }
     };
 
     function updateBadge() {
+      if (!loggedInUser) return;
       let badge = document.getElementById('notifBadge');
-      if (unreadCount > 0) {
+      let totalUnread = 0;
+
+      for (let key in chats) {
+        if (key.includes(loggedInUser)) {
+          chats[key].forEach(m => {
+            if (m.sender !== loggedInUser && !m.read) {
+              totalUnread++;
+            }
+          });
+        }
+      }
+
+      if (totalUnread > 0) {
         badge.style.display = "inline-block";
-        badge.innerText = unreadCount > 9 ? "9+" : unreadCount;
+        badge.innerText = totalUnread > 9 ? "9+" : totalUnread;
       } else {
         badge.style.display = "none";
       }
@@ -650,11 +679,13 @@
       document.getElementById('logoutBtn').style.display = "block";
       document.getElementById('notifBtn').style.display = "inline-block";
       document.getElementById('passMenuBtn').style.display = "block";
+      document.getElementById('myOrdersMenuBtn').style.display = "block";
 
       if (loggedInUser === "rahym") {
         document.getElementById('adminAccountsBtn').style.display = "block";
       }
       updateUI();
+      updateBadge();
     }
 
     function hideAllPages() {
@@ -662,6 +693,7 @@
       document.getElementById('adminAccountsPage').style.display = "none";
       document.getElementById('chatPage').style.display = "none";
       document.getElementById('authBox').style.display = "none";
+      document.getElementById('myOrdersPage').style.display = "none";
     }
 
     function showHomePage() {
@@ -671,6 +703,7 @@
       } else {
         document.getElementById('authBox').style.display = "block";
       }
+      updateBadge();
     }
 
     function logoutUser() {
@@ -682,6 +715,7 @@
       document.getElementById('notifBtn').style.display = "none";
       document.getElementById('passMenuBtn').style.display = "none";
       document.getElementById('adminAccountsBtn').style.display = "none";
+      document.getElementById('myOrdersMenuBtn').style.display = "none";
       toggleDropdown();
     }
 
@@ -713,49 +747,108 @@
       }
     }
 
-    /* Admin Accounts Page */
+    /* Oyuncu Siparişlerim Sayfası */
+    function openMyOrdersPage() {
+      toggleDropdown();
+      hideAllPages();
+      document.getElementById('myOrdersPage').style.display = "block";
+      renderMyOrders();
+    }
+
+    function renderMyOrders() {
+      let container = document.getElementById('myOrdersContainer');
+      let myOrders = globalOrders.filter(o => o.user === loggedInUser);
+
+      if (myOrders.length === 0) {
+        container.innerHTML = "<p>Hiç hili sargyt ýok.</p>";
+        return;
+      }
+
+      let html = "";
+      myOrders.forEach(o => {
+        html += `<div class="order-card">
+          <p><b>Önüm / Rank:</b> ${o.item} (${o.price} TMT)</p>
+          <p><b>Nick:</b> ${o.nick}</p>
+          <button onclick="cancelOrder(${o.id})" style="background:#ff4757; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Siparişi İptal Et & İade Al</button>
+        </div>`;
+      });
+      container.innerHTML = html;
+    }
+
+    function cancelOrder(id) {
+      let idx = globalOrders.findIndex(o => o.id === id);
+      if (idx !== -1) {
+        let ord = globalOrders[idx];
+        users[ord.user].balance += ord.price;
+        globalOrders.splice(idx, 1);
+        alert("Sipariş iptal edildi ve bakiye iade olundu!");
+        updateUI();
+        renderMyOrders();
+      }
+    }
+
+    /* Admin Accounts & Balance Orders Page */
     function openAdminAccountsPage() {
       toggleDropdown();
       hideAllPages();
       document.getElementById('adminAccountsPage').style.display = "block";
-      renderAccountsList();
+      renderAdminPanel();
     }
 
-    function renderAccountsList() {
+    function renderAdminPanel() {
+      // Para Siparişleri
+      let reqContainer = document.getElementById('adminBalanceOrdersContainer');
+      let reqs = users['rahym'].requests;
+      if (reqs.length === 0) {
+        reqContainer.innerHTML = "<p style='color:#888;'>Gelen para siparişi yok.</p>";
+      } else {
+        let rHtml = "";
+        reqs.forEach((r, idx) => {
+          rHtml += `<div class="order-card">
+            <p><b>Ulanyjy:</b> ${r.user} | <b>İsteg:</b> ${r.tmt} TMT (${r.usd})</p>
+            <button onclick="approveBalanceReq(${idx})" style="background:#00ff88; color:#000; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Onayla & Bakiyesini Ver</button>
+          </div>`;
+        });
+        reqContainer.innerHTML = rHtml;
+      }
+
+      // Kullanıcılar Listesi
       let container = document.getElementById('accountsListContainer');
       let html = "";
       for (let u in users) {
         if (u === "rahym") continue;
         let usr = users[u];
-        let reqs = usr.requests.length > 0 ? usr.requests.map(r => `${r.tmt} TMT (${r.usd})`).join(', ') : 'Sipariş Ýok';
-        
         html += `<div class="account-card">
           <h3>Ulanyjy: ${u}</h3>
           <p><b>Häzirki Bakiye:</b> ${usr.balance} TMT</p>
-          <p><b>Sipariş Edilen Miktar:</b> <span style="color:#00d2ff; font-weight:bold;">${reqs}</span></p>
           <div style="display:flex; gap:8px;">
-            <input type="number" id="set_bal_${u}" placeholder="Gereklik Bakiye" style="padding:6px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
-            <button onclick="adminSetUserBalance('${u}')" style="padding:6px 12px; background:#00ff88; border:none; font-weight:bold; border-radius:4px; cursor:pointer;">Bakiyesini Onayla / Sazla</button>
+            <input type="number" id="set_bal_${u}" placeholder="Bakiye miktar" style="padding:6px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
+            <button onclick="adminSetUserBalance('${u}')" style="padding:6px 12px; background:#00ff88; border:none; font-weight:bold; border-radius:4px; cursor:pointer;">Bakiyesini Sazla</button>
           </div>
         </div>`;
       }
       container.innerHTML = html || "<p>Hiç hili ulanyjy ýok.</p>";
     }
 
+    function approveBalanceReq(idx) {
+      let r = users['rahym'].requests[idx];
+      users[r.user].balance += r.tmt;
+      users['rahym'].requests.splice(idx, 1);
+      alert(`${r.user} kullanıcısına ${r.tmt} TMT eklendi!`);
+      renderAdminPanel();
+    }
+
     function adminSetUserBalance(u) {
       let val = parseInt(document.getElementById(`set_bal_${u}`).value);
       if (!isNaN(val)) {
         users[u].balance = val;
-        users[u].requests = []; 
-        alert(`${u} ulanyjysynyň bakiyesi ${val} TMT kilde sazlandy!`);
-        renderAccountsList();
+        alert(`${u} balansy ${val} TMT kilde sazlandy!`);
+        renderAdminPanel();
       }
     }
 
     /* Chat Functions */
     function openChatPage() {
-      unreadCount = 0; // Chat açılınca bildirim sıfırlanır
-      updateBadge();
       hideAllPages();
       document.getElementById('chatPage').style.display = "block";
       document.getElementById('chatSearchSection').style.display = "block";
@@ -768,14 +861,19 @@
       let t = dict[currentLang];
       if (!query) return;
 
-      // Kendi adını yazarsa göstermez (query !== loggedInUser)
       if (users[query] && query !== loggedInUser) {
+        let key = [loggedInUser, query].sort().join('_');
+        let unread = (chats[key] || []).filter(m => m.sender !== loggedInUser && !m.read).length;
+
         resArea.innerHTML = `<div class="search-result-card" onclick="openTelegramChatWith('${query}')">
-          <span style="font-size:20px;">👤</span>
-          <div>
-            <div style="font-weight:bold;">${query}</div>
-            <small style="color:#888;">${t.clickToChat}</small>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:20px;">👤</span>
+            <div>
+              <div style="font-weight:bold;">${query}</div>
+              <small style="color:#888;">${t.clickToChat}</small>
+            </div>
           </div>
+          ${unread > 0 ? `<span style="background:#ff4757; color:#fff; padding:2px 8px; border-radius:10px; font-size:12px; font-weight:bold;">${unread}</span>` : ''}
         </div>`;
       } else {
         resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">${t.notFound}</div>`;
@@ -787,6 +885,13 @@
       document.getElementById('chatSearchSection').style.display = "none";
       document.getElementById('telegramChatBox').style.display = "flex";
       document.getElementById('chatTitleUser').innerText = targetUser;
+
+      // Okundu olarak işaretle
+      let key = getChatKey();
+      if (chats[key]) {
+        chats[key].forEach(m => { if (m.sender !== loggedInUser) m.read = true; });
+      }
+      updateBadge();
       renderMessages();
     }
 
@@ -794,6 +899,7 @@
       document.getElementById('telegramChatBox').style.display = "none";
       document.getElementById('chatSearchSection').style.display = "block";
       activeChatTarget = null;
+      updateBadge();
     }
 
     function toggleChatMenu() {
@@ -826,9 +932,10 @@
       let key = getChatKey();
       if (!chats[key]) chats[key] = [];
 
-      chats[key].push({ sender: loggedInUser, msg: msg });
+      chats[key].push({ sender: loggedInUser, msg: msg, read: false });
       input.value = "";
       renderMessages();
+      updateBadge();
     }
 
     function handleTyping() {
@@ -857,6 +964,7 @@
       if (!nick) return;
 
       users[loggedInUser].balance -= price;
+      globalOrders.push({ id: Date.now(), user: loggedInUser, item: name, price: price, nick: nick });
       updateUI();
       alert(`Gutlaýarys! ${name} üstünlikli satyn alyndy!\nNick: ${nick}`);
     }
