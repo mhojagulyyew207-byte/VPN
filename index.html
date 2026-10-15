@@ -560,7 +560,10 @@
 
     <!-- Admin Oyuncu Siparişleri Sayfası -->
     <div id="adminOrdersPage">
-      <h2>📋 Admin - Ähli Oyuncu Sargytlary</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+        <h2>📋 Admin - Ähli Oyuncu Sargytlary</h2>
+        <button onclick="clearAllOrders()" style="background:#ff4757; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer;">🗑️ Geçmişi Sil</button>
+      </div>
       <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
       <div id="adminAllOrdersContainer"></div>
     </div>
@@ -929,14 +932,34 @@
       }
       let html = "";
       globalOrders.forEach(o => {
-        html += `<div class="order-card">
-          <p><b>Önüm (Fly vb.):</b> <span style="color:var(--accent-turkuaz);">${o.item}</span></p>
-          <p><b>Oýunçy Ady (Nick):</b> ${o.nick}</p>
-          <p><b>Sitedeki Ulanyjy Ady:</b> ${o.user}</p>
-          <p><b>Bahasy:</b> ${o.price} TMT</p>
+        html += `<div class="order-card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <p><b>Önüm:</b> <span style="color:var(--accent-turkuaz);">${o.item}</span> (${o.price} TMT)</p>
+            <p><b>Oyuncu Adı (Nick):</b> ${o.nick}</p>
+            <p><b>Site Kullanıcı Adı:</b> ${o.user}</p>
+          </div>
+          <button onclick="acceptOrder(${o.id})" style="background:#00ff88; color:#000; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Kabul Et</button>
         </div>`;
       });
       container.innerHTML = html;
+    }
+
+    function acceptOrder(id) {
+      let idx = globalOrders.findIndex(o => o.id === id);
+      if (idx !== -1) {
+        globalOrders.splice(idx, 1);
+        alert("Sipariş kabul edildi ve listeden kaldırıldı!");
+        renderAdminAllOrders();
+        updateBadge();
+      }
+    }
+
+    function clearAllOrders() {
+      if (confirm("Bütün oyuncu siparişleri geçmişini silmek istediğinize emin misiniz?")) {
+        globalOrders = [];
+        renderAdminAllOrders();
+        updateBadge();
+      }
     }
 
     /* Admin Accounts & Balance Orders Page */
@@ -1133,7 +1156,7 @@
       globalOrders.push({ id: Date.now(), user: loggedInUser, item: name, price: price, nick: nick });
       updateUI();
       updateBadge();
-      alert(`Gutlaýarys! ${name} üstünlikli satyn alyndy!\nNick: ${nick}`);
+      alert("Donat sipariş edildi!. En kisa zamanda gönderilecek!.");
     }
 
     function changeTheme(themeName) {
