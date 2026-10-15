@@ -27,6 +27,49 @@
       --other-msg-color: #000000;
     }
 
+    [data-theme="purple"] {
+      --bg-color: #12081c;
+      --card-bg: #1f1033;
+      --text-color: #f3e8ff;
+      --border-color: #4c1d95;
+      --accent-turkuaz: #c084fc;
+      --other-msg-bg: #2e1065;
+    }
+
+    [data-theme="cyber"] {
+      --bg-color: #050505;
+      --card-bg: #111111;
+      --text-color: #00ffcc;
+      --border-color: #00ffcc;
+      --accent-turkuaz: #00ffcc;
+      --other-msg-bg: #222222;
+    }
+
+    /* Yükleniyor Ekranı */
+    #loader {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #0f1016;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: #00d2ff;
+      font-size: 24px;
+      font-weight: bold;
+      transition: opacity 0.5s ease;
+    }
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.1);
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      border-left-color: #00d2ff;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -54,7 +97,6 @@
     }
     .logo-turkmen { color: var(--accent-turkuaz); }
     .logo-wix { color: var(--accent-white); }
-    [data-theme="light"] .logo-wix { color: #333; }
 
     .header-right {
       display: flex;
@@ -131,7 +173,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       display: none;
       flex-direction: column;
-      width: 210px;
+      width: 220px;
       z-index: 100;
       padding: 5px;
     }
@@ -161,11 +203,12 @@
 
     .auth-section {
       background: var(--card-bg);
-      padding: 20px;
+      padding: 25px;
       border-radius: 12px;
       border: 1px solid var(--border-color);
       margin: 40px auto;
-      max-width: 340px;
+      max-width: 360px;
+      text-align: center;
     }
 
     .auth-tabs {
@@ -413,6 +456,12 @@
 </head>
 <body data-theme="dark">
 
+  <!-- Yükleniyor Ekranı -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <div>TurkmenWix Yüklenýär...</div>
+  </div>
+
   <header>
     <div class="logo-container" onclick="showHomePage()">
       <span class="logo-turkmen">Turkmen</span><span class="logo-wix">Wix</span>
@@ -438,7 +487,12 @@
           <option value="ru">RU</option>
           <option value="en">EN</option>
         </select>
-        <button onclick="toggleTheme()" id="themeMenuBtn">🌙 Gece Mode</button>
+        <select id="themeSelect" onchange="changeTheme(this.value)">
+          <option value="dark">🌙 Koyu Mode</option>
+          <option value="light">☀️ Açık Mode</option>
+          <option value="purple">💜 Mor Tema</option>
+          <option value="cyber">🟢 Cyberpunk</option>
+        </select>
         <button onclick="openMyOrdersPage()" id="myOrdersMenuBtn" style="display:none;">📦 Siparişlerim</button>
         <button onclick="openAdminOrdersPage()" id="adminOrdersMenuBtn" style="display:none; color:#00ff88; font-weight:bold;">
           <span>📋 Oyuncu Siparişleri</span>
@@ -457,6 +511,9 @@
   <div class="container">
     <!-- Giriş / Kayıt -->
     <div class="auth-section" id="authBox">
+      <h2 style="margin-top:0; color:var(--accent-turkuaz);">Hoş Geldiňiz!</h2>
+      <p style="font-size:13px; color:#888; margin-bottom:20px;">Dwam etmek üçin agza boluň ýa-da giriň.</p>
+      
       <div class="auth-tabs">
         <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Giriş Yap</div>
         <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Kayıt Ol</div>
@@ -481,14 +538,16 @@
       <p style="text-align: center; font-size: 14px; opacity: 0.8;">IP: 172.96.140.62:5159</p>
 
       <div class="ranks-grid">
-        <div class="rank-card"><div class="rank-name">Fly</div><div class="rank-price">5 TMT</div><button class="buy-rank-btn" onclick="buyItem('Fly', 5)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">VIP</div><div class="rank-price">10 TMT</div><button class="buy-rank-btn" onclick="buyItem('VIP', 10)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Creative</div><div class="rank-price">20 TMT</div><button class="buy-rank-btn" onclick="buyItem('Creative', 20)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Meteo</div><div class="rank-price">30 TMT</div><button class="buy-rank-btn" onclick="buyItem('Meteo', 30)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Admin</div><div class="rank-price">50 TMT</div><button class="buy-rank-btn" onclick="buyItem('Admin', 50)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">100k Sunucu Parasy</div><div class="rank-price">5 TMT</div><button class="buy-rank-btn" onclick="buyItem('100k Sunucu Parasy', 5)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">DC</div><div class="rank-price">8 TMT</div><button class="buy-rank-btn" onclick="buyItem('DC', 8)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">DCB</div><div class="rank-price">50 TMT</div><button class="buy-rank-btn" onclick="buyItem('DCB', 50)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">Fly</div><div class="rank-price">3 TMT</div><button class="buy-rank-btn" onclick="buyItem('Fly', 3)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">VIP</div><div class="rank-price">5 TMT</div><button class="buy-rank-btn" onclick="buyItem('VIP', 5)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">Creative</div><div class="rank-price">10 TMT</div><button class="buy-rank-btn" onclick="buyItem('Creative', 10)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">Meteorolog</div><div class="rank-price">15 TMT</div><button class="buy-rank-btn" onclick="buyItem('Meteorolog', 15)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">Admin</div><div class="rank-price">25 TMT</div><button class="buy-rank-btn" onclick="buyItem('Admin', 25)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">Operator</div><div class="rank-price">35 TMT</div><button class="buy-rank-btn" onclick="buyItem('Operator', 35)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">Helper</div><div class="rank-price">50 TMT</div><button class="buy-rank-btn" onclick="buyItem('Helper', 50)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">DC</div><div class="rank-price">2 TMT</div><button class="buy-rank-btn" onclick="buyItem('DC', 2)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">DCB</div><div class="rank-price">20 TMT</div><button class="buy-rank-btn" onclick="buyItem('DCB', 20)">Satyn al</button></div>
+        <div class="rank-card"><div class="rank-name">100k Sunucu Parası</div><div class="rank-price">4 TMT</div><button class="buy-rank-btn" onclick="buyItem('100k Sunucu Parası', 4)">Satyn al</button></div>
       </div>
     </div>
 
@@ -583,6 +642,15 @@
   </div>
 
   <script>
+    // Yükleniyor ekranı simülasyonu
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        let loader = document.getElementById('loader');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 500);
+      }, 1500);
+    });
+
     let users = {
       "rahym": { password: "qwerty654321", balance: 100, requests: [], contacts: [] }
     };
@@ -1044,8 +1112,8 @@
 
     function clearChatHistory() {
       let key = getChatKey();
-      chats[key] = []; // Geçmişi sıfırla
-      updateBadge();   // Sayacı anında sıfırla
+      chats[key] = [];
+      updateBadge();
       renderMessages();
       toggleChatMenu();
     }
@@ -1068,16 +1136,8 @@
       alert(`Gutlaýarys! ${name} üstünlikli satyn alyndy!\nNick: ${nick}`);
     }
 
-    function toggleTheme() {
-      let body = document.body;
-      let btn = document.getElementById('themeMenuBtn');
-      if (body.getAttribute("data-theme") === "dark") {
-        body.setAttribute("data-theme", "light");
-        btn.innerText = "☀️ Gündüz Mode";
-      } else {
-        body.setAttribute("data-theme", "dark");
-        btn.innerText = "🌙 Gece Mode";
-      }
+    function changeTheme(themeName) {
+      document.body.setAttribute("data-theme", themeName);
     }
 
     function changeLanguage() {
