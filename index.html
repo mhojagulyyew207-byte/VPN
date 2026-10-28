@@ -240,23 +240,40 @@
         var selectedLimit = '5GB';
         var selectedExpire = '1gün';
 
-        // EĞER URL'DE ?sub= VARSA SAYFAYI HİÇ ÇİZMEDEN SAF PLAIN TEXT OLARAK VER
-        window.addEventListener('DOMContentLoaded', function() {
-            var urlParams = new URLSearchParams(window.location.search);
-            var subId = urlParams.get('sub');
-            if (subId) {
-                var savedData = localStorage.getItem('timox_subs');
-                if (savedData) subscriptionsData = JSON.parse(savedData);
-                var sub = subscriptionsData.find(s => s.id == subId);
+        // Eskisi gibi Raw GitHub formatında bağlantı üretecek yapı
+        function parseLimitToBytes(limitStr) {
+            if (limitStr === '5GB') return 5 * 1024 * 1024 * 1024;
+            if (limitStr === '10GB') return 10 * 1024 * 1024 * 1024;
+            if (limitStr === '50GB') return 50 * 1024 * 1024 * 1024;
+            if (limitStr === '100GB') return 100 * 1024 * 1024 * 1024;
+            return 0;
+        }
 
-                // Tarayıcının HTML gövdesini tamamen sıfırlayıp ham metne çeviriyoruz (Happ VPN hatasız okur)
-                document.documentElement.innerHTML = "";
-                document.open();
-                document.write(sub ? generateHappVpnHeader(sub) : "#profile-title: subscription disabled\n#announce: Subscription not found\nvless://error-404");
-                document.close();
-                return;
+        function parseExpireToTimestamp(expireStr) {
+            var now = Math.floor(Date.now() / 1000);
+            var days = 1;
+            if (expireStr === '3gün') days = 3;
+            if (expireStr === '7gün') days = 7;
+            if (expireStr === '30gün') days = 30;
+            return now + (days * 86400);
+        }
+
+        function generateHappVpnHeader(sub) {
+            if (!sub.active) {
+                return `#profile-title: subscription disabled\n#subscription-userinfo: upload=0; download=0; total=0; expire=0\n#announce: Subscription is inactive\n#support-url: https://t.me/Rahym2011\n#profile-web-page-url: https://t.me/timoxvpn\n#profile-update-interval: 24\n\nvless://disabled-node-config-disconnected`;
             }
-        });
+            var totalBytes = parseLimitToBytes(sub.limit);
+            var expireTime = parseExpireToTimestamp(sub.expire);
+
+            var header = `#profile-title: ${sub.vpnName || sub.name}\n`;
+            header += `#subscription-userinfo: upload=0; download=${sub.downloadedBytes}; total=${totalBytes}; expire=${expireTime}\n`;
+            header += `#announce: ${sub.desc || 'Kodlar işlemese 10minut garasyp Obnawit ediň!'}\n`;
+            header += `#support-url: ${sub.supportUrl || 'https://t.me/Rahym2011'}\n`;
+            header += `#profile-web-page-url: ${sub.webUrl || 'https://t.me/timoxvpn'}\n`;
+            header += `#profile-update-interval: 24\n\n`;
+            header += sub.rawCodes;
+            return header;
+        }
 
         setInterval(function() {
             subscriptionsData.forEach(sub => {
@@ -391,40 +408,6 @@
         function selectLimit(val, el) { selectedLimit = val; var pills = el.parentElement.children; for(let p of pills) p.classList.remove('active'); el.classList.add('active'); }
         function selectExpire(val, el) { selectedExpire = val; var pills = el.parentElement.children; for(let p of pills) p.classList.remove('active'); el.classList.add('active'); }
 
-        function parseLimitToBytes(limitStr) {
-            if (limitStr === '5GB') return 5 * 1024 * 1024 * 1024;
-            if (limitStr === '10GB') return 10 * 1024 * 1024 * 1024;
-            if (limitStr === '50GB') return 50 * 1024 * 1024 * 1024;
-            if (limitStr === '100GB') return 100 * 1024 * 1024 * 1024;
-            return 0;
-        }
-
-        function parseExpireToTimestamp(expireStr) {
-            var now = Math.floor(Date.now() / 1000);
-            var days = 1;
-            if (expireStr === '3gün') days = 3;
-            if (expireStr === '7gün') days = 7;
-            if (expireStr === '30gün') days = 30;
-            return now + (days * 86400);
-        }
-
-        function generateHappVpnHeader(sub) {
-            if (!sub.active) {
-                return `#profile-title: subscription disabled\n#announce: Subscription is inactive\nvless://disabled-node-config-disconnected`;
-            }
-            var totalBytes = parseLimitToBytes(sub.limit);
-            var expireTime = parseExpireToTimestamp(sub.expire);
-
-            var header = `#profile-title: ${sub.vpnName || sub.name}\n`;
-            header += `#subscription-userinfo: upload=0; download=${sub.downloadedBytes}; total=${totalBytes}; expire=${expireTime}\n`;
-            if (sub.desc) header += `#announce: ${sub.desc}\n`;
-            if (sub.supportUrl) header += `#support-url: ${sub.supportUrl}\n`;
-            if (sub.webUrl) header += `#profile-web-page-url: ${sub.webUrl}\n`;
-            header += `#profile-update-interval: 24\n\n`;
-            header += sub.rawCodes;
-            return header;
-        }
-
         function saveSubscription() {
             var editId = document.getElementById('editSubId').value;
             var name = document.getElementById('subNameInput').value.trim() || "VIP Abonelik";
@@ -440,10 +423,12 @@
                     sub.name = name; sub.vpnName = vpnName; sub.webUrl = webUrl;
                     sub.supportUrl = supportUrl; sub.desc = desc; sub.rawCodes = rawCodes;
                     sub.limit = selectedLimit; sub.expire = selectedExpire;
+                    sub.subLink = "https://raw.githubusercontent.com/mhojagulyyew207-byte/VPN/main/subs/sub_" + sub.id + ".txt";
                 }
             } else {
                 var newId = Date.now();
-                var subLink = "https://mhojagulyyew207-byte.github.io/VPN/index.html?sub=" + newId;
+                // Eskisi gibi tam istediğin raw.githubusercontent.com bağlantı formatı:
+                var subLink = "https://raw.githubusercontent.com/mhojagulyyew207-byte/VPN/main/subs/sub_" + newId + ".txt";
 
                 var newSub = {
                     id: newId, name: name, vpnName: vpnName, webUrl: webUrl, supportUrl: supportUrl,
@@ -479,8 +464,13 @@
         function copySubLink(subId) {
             var sub = subscriptionsData.find(s => s.id === subId);
             if (sub) {
+                // Kopyalandığında Happ VPN'in tam tanıdığı format panoya gider
+                var formattedContent = generateHappVpnHeader(sub);
+                
+                // İstersen doğrudan linki, istersen içeriği kopyalayabilirsin. 
+                // Happ VPN link üzerinden okuyacağı için raw linkini kopyalıyoruz:
                 navigator.clipboard.writeText(sub.subLink);
-                alert("Abonelik Bağlantısı Kopyalandı:\n" + sub.subLink);
+                alert("Raw GitHub Bağlantısı Kopyalandı:\n" + sub.subLink + "\n\n(Bu bağlantıyı Happ VPN doğrudan kusursuz tanır!)");
             }
         }
 
