@@ -5,142 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TIMOXVPN</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: #050505 !important;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            user-select: none;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        #loadingScreen, #transitionScreen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #050505 !important;
-            z-index: 99;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #050505 !important; color: #ffffff; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; user-select: none; position: relative; overflow-x: hidden; }
+        #loadingScreen, #transitionScreen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505 !important; z-index: 99; }
         #transitionScreen { display: none; }
-
-        .spinner {
-            width: 44px; height: 44px;
-            border: 4px solid rgba(255, 255, 255, 0.15);
-            border-left-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
+        .spinner { width: 44px; height: 44px; border: 4px solid rgba(255, 255, 255, 0.15); border-left-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loading-text { color: #ffffff; font-size: 15px; letter-spacing: 0.5px; }
-
-        #authContainer {
-            display: none; width: 100%; max-width: 320px;
-            flex-direction: column; align-items: center; z-index: 10;
-        }
-
+        #authContainer { display: none; width: 100%; max-width: 320px; flex-direction: column; align-items: center; z-index: 10; }
         .logo { font-size: 28px; font-weight: 800; letter-spacing: 1px; margin-bottom: 24px; }
-        .logo-blue { color: #3b82f6; }
-        .logo-white { color: #ffffff; }
-
+        .logo-blue { color: #3b82f6; } .logo-white { color: #ffffff; }
         .form-box { width: 100%; display: flex; flex-direction: column; gap: 14px; }
         .input-group { display: flex; flex-direction: column; gap: 6px; }
         .input-group label { font-size: 12px; color: #a1a1aa; }
-
         .password-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
         .password-wrapper input { padding-right: 40px !important; }
-
-        .eye-btn {
-            position: absolute; right: 12px; background: none; border: none; color: #a1a1aa;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px;
-        }
+        .eye-btn { position: absolute; right: 12px; background: none; border: none; color: #a1a1aa; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; }
         .eye-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-        .input-group input, .input-group textarea {
-            width: 100%; background-color: #121214; border: 1px solid #27272a;
-            border-radius: 8px; padding: 12px; font-size: 14px; color: #ffffff; outline: none;
-        }
+        .input-group input, .input-group textarea { width: 100%; background-color: #121214; border: 1px solid #27272a; border-radius: 8px; padding: 12px; font-size: 14px; color: #ffffff; outline: none; }
         .input-group input:focus, .input-group textarea:focus { border-color: #3b82f6; }
-
-        .btn-submit {
-            width: 100%; background-color: #2563eb !important; color: #ffffff !important;
-            border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 6px;
-        }
+        .btn-submit { width: 100%; background-color: #2563eb !important; color: #ffffff !important; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 6px; }
         .btn-submit:active { background-color: #1d4ed8 !important; }
-
         .switch-text { text-align: center; font-size: 12px; color: #ffffff; margin-top: 4px; }
         .switch-btn { background: none; border: none; color: #3b82f6; font-weight: 600; cursor: pointer; margin-left: 4px; font-size: 12px; }
         .error-message { color: #ef4444; font-size: 12px; text-align: center; margin-top: 4px; font-weight: 500; display: none; }
-
-        #dashboardContainer {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000 !important; flex-direction: column; padding: 20px 16px;
-            z-index: 20; overflow-y: auto;
-        }
-
+        #dashboardContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000000 !important; flex-direction: column; padding: 20px 16px; z-index: 20; overflow-y: auto; }
         .top-bar { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 24px; position: relative; }
         .icon-btn { width: 40px; height: 40px; background-color: #121214; border: 1px solid #27272a; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; }
-
         .lang-container { position: relative; }
         .lang-btn { height: 40px; padding: 0 14px; background-color: #121214; border: 1px solid #27272a; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; font-weight: 600; font-size: 13px; }
         .lang-dropdown { display: none; position: absolute; right: 0; top: 48px; background-color: #121214; border: 1px solid #27272a; border-radius: 12px; overflow: hidden; width: 90px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 30; }
         .lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; color: #a1a1aa; cursor: pointer; text-align: center; border-bottom: 1px solid #1c1c20; }
         .lang-option:hover, .lang-option.active { background-color: #27272a; color: #ffffff; }
-
         .header-title-box { width: 100%; margin-bottom: 20px; }
         .main-title { font-size: 28px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin-bottom: 4px; }
         .sub-title { font-size: 14px; color: #71717a; font-weight: 400; }
-
-        .new-sub-btn {
-            width: 100%; background-color: #ffffff !important; color: #000000 !important;
-            font-weight: 700; font-size: 16px; padding: 14px; border-radius: 14px;
-            display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-bottom: 20px;
-        }
-
+        .new-sub-btn { width: 100%; background-color: #ffffff !important; color: #000000 !important; font-weight: 700; font-size: 16px; padding: 14px; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-bottom: 20px; }
         .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 20px; }
         .card-box { background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
         .card-header { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #a1a1aa; font-weight: 500; }
         .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-        .dot-blue { background-color: #3b82f6; }
-        .dot-green { background-color: #22c55e; }
-        .dot-orange { background-color: #f97316; }
-        .dot-purple { background-color: #a855f7; }
-
+        .dot-blue { background-color: #3b82f6; } .dot-green { background-color: #22c55e; } .dot-orange { background-color: #f97316; } .dot-purple { background-color: #a855f7; }
         .card-footer { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 16px; }
         .card-number { font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1; }
         .card-icon-box { width: 34px; height: 34px; background-color: #141417; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-
         .all-subs-section { width: 100%; margin-top: 10px; }
         .all-subs-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .all-subs-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: #ffffff; }
         .update-btn { background-color: #121214; border: 1px solid #27272a; border-radius: 8px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: #a1a1aa; display: flex; align-items: center; gap: 6px; cursor: pointer; }
-
         .sub-item-card { background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
         .sub-info { display: flex; flex-direction: column; gap: 4px; }
         .sub-name { font-size: 15px; font-weight: 700; color: #ffffff; }
         .sub-details { font-size: 12px; color: #71717a; }
-
         .sub-actions { display: flex; align-items: center; gap: 6px; }
         .action-icon-btn { width: 32px; height: 32px; background-color: #141417; border: 1px solid #27272a; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #a1a1aa; }
         .action-icon-btn.delete:hover { border-color: #ef4444; color: #ef4444; }
-
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; margin-left: 2px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #dc2626; transition: .3s; border-radius: 22px; }
@@ -162,13 +81,11 @@
         .select-button-group { display: flex; gap: 8px; flex-wrap: wrap; }
         .select-pill { background-color: #121214; border: 1px solid #27272a; border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #a1a1aa; cursor: pointer; font-weight: 600; }
         .select-pill.active { background-color: #2563eb; border-color: #2563eb; color: #ffffff; }
-
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- YAN MENÜ -->
     <div id="sideDrawer">
         <div class="drawer-overlay" onclick="closeDrawer()"></div>
         <div class="drawer-content">
@@ -193,7 +110,6 @@
         </div>
     </div>
 
-    <!-- EKRANLAR -->
     <div id="loadingScreen"><div class="spinner"></div><p class="loading-text" id="txtLoading">Yükleniyor...</p></div>
     <div id="transitionScreen"><div class="spinner"></div><p class="loading-text" id="transitionText">Kontrol ediliyor...</p></div>
 
@@ -271,7 +187,6 @@
         </div>
     </div>
 
-    <!-- YENİ ABONELİK SAYFASI -->
     <div id="createSubPage">
         <div class="top-bar">
             <div class="icon-btn" onclick="closeCreateSubPage()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
@@ -325,39 +240,29 @@
         var selectedLimit = '5GB';
         var selectedExpire = '1gün';
 
-        // SAYFA YÜKLENİRKEN ?sub= KONTROLÜ (HAPP VPN DOĞRUDAN METİN OKUR)
-        window.addEventListener('load', function() {
+        // EĞER URL'DE ?sub= VARSA SAYFAYI HİÇ ÇİZMEDEN SAF PLAIN TEXT OLARAK VER
+        window.addEventListener('DOMContentLoaded', function() {
             var urlParams = new URLSearchParams(window.location.search);
             var subId = urlParams.get('sub');
             if (subId) {
-                // Tarayıcıdaki verileri localStorage'dan çekmeye çalış veya varsayılan göster
                 var savedData = localStorage.getItem('timox_subs');
-                if (savedData) {
-                    subscriptionsData = JSON.parse(savedData);
-                }
+                if (savedData) subscriptionsData = JSON.parse(savedData);
                 var sub = subscriptionsData.find(s => s.id == subId);
-                
-                // HTML'i tamamen temizle ve sadece Happ VPN formatında saf metin bas (Unknown content type hatasını önler)
+
+                // Tarayıcının HTML gövdesini tamamen sıfırlayıp ham metne çeviriyoruz (Happ VPN hatasız okur)
+                document.documentElement.innerHTML = "";
                 document.open();
-                document.write('<pre style="background:#050505; color:#00ff00; font-family:monospace; padding:20px; word-break:break-all; white-space:pre-wrap;">');
-                if (sub) {
-                    document.write(generateHappVpnHeader(sub));
-                } else {
-                    document.write("#profile-title: subscription disabled\n#announce: Subscription not found or deleted\nvless://error-404-not-found");
-                }
-                document.write('</pre>');
+                document.write(sub ? generateHappVpnHeader(sub) : "#profile-title: subscription disabled\n#announce: Subscription not found\nvless://error-404");
                 document.close();
+                return;
             }
         });
 
-        // Saniyede 1MB canlı simülasyon
         setInterval(function() {
             subscriptionsData.forEach(sub => {
-                if (sub.active) {
-                    sub.downloadedBytes += 1048576;
-                }
+                if (sub.active) sub.downloadedBytes += 1048576;
             });
-            if(subscriptionsData.length > 0) {
+            if (subscriptionsData.length > 0) {
                 localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
             }
         }, 1000);
