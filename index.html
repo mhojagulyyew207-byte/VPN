@@ -375,7 +375,7 @@
 
             <div class="input-group">
                 <label>VPN adı</label>
-                <input type="text" id="vpnNameInput" placeholder="Örn: Timox VLESS">
+                <input type="text" id="vpnNameInput" placeholder="Örn: TIMOX">
             </div>
 
             <div class="input-group">
@@ -390,7 +390,7 @@
 
             <div class="input-group">
                 <label>Açıklama</label>
-                <textarea id="subDescInput" rows="2" placeholder="Abonelik açıklaması..."></textarea>
+                <textarea id="subDescInput" rows="2" placeholder="Kodlar işlemese 10minut garasyp Obnawit ediň!"></textarea>
             </div>
 
             <div class="input-group">
@@ -429,6 +429,30 @@
         var subscriptionsData = [];
         var selectedLimit = '5GB';
         var selectedExpire = '1gün';
+
+        // Saniyede 1MB (1048576 Bayt) İndirme Simülasyonu Döngüsü
+        setInterval(function() {
+            subscriptionsData.forEach(sub => {
+                if (sub.active) {
+                    sub.downloadedBytes += 1048576; // Her saniye 1MB eklenir
+                }
+            });
+        }, 1000);
+
+        // SAYFA YÜKLENİRKEN URL PARAMETRESİ (GET /sub=...) KONTROLÜ
+        window.addEventListener('load', function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var subId = urlParams.get('sub');
+            if (subId) {
+                // Happ VPN gibi istemciler bu URL'e HTTP isteği attığında
+                var sub = subscriptionsData.find(s => s.id == subId);
+                if (sub) {
+                    document.body.innerText = generateHappVpnHeader(sub);
+                } else {
+                    document.body.innerText = "HTTP 404 Not Found - Subscription Deleted";
+                }
+            }
+        });
 
         var translations = {
             'TR': { loading: "Yükleniyor...", checking: "Kontrol ediliyor...", creating: "Hesap oluşturuluyor...", username: "Kullanıcı Adı", password: "Şifre", loginBtn: "Giriş Yap", registerBtn: "Kayıt Ol", noAcc: "Hesabınız yok mu?", hasAcc: "Zaten hesabınız var mı?", regLink: "Kayıt ol", loginLink: "Giriş Yap", dashTitle: "Abonelikler", dashSub: "Abonelik düğümlerinizi yönetin", newSub: "Yeni abonelik", c1: "Toplam Abonelik", c2: "Aktif", c3: "Süresi Dolmak Üzere", c4: "Toplam Konfigürasyon", allSubs: "Tüm abonelikler", update: "Güncelle" },
@@ -533,7 +557,7 @@
                 var sub = subscriptionsData.find(s => s.id === subId);
                 if (sub) {
                     document.getElementById('editSubId').value = sub.id;
-                    document.getElementById('subNameInput').value = sub.vpnName || sub.name;
+                    document.getElementById('subNameInput').value = sub.name;
                     document.getElementById('vpnNameInput').value = sub.vpnName;
                     document.getElementById('webUrlInput').value = sub.webUrl;
                     document.getElementById('supportUrlInput').value = sub.supportUrl;
@@ -562,9 +586,48 @@
             el.classList.add('active');
         }
 
+        // BAYT BAZINDA LİMİT HESAPLAMA
+        function parseLimitToBytes(limitStr) {
+            if (limitStr === '5GB') return 5 * 1024 * 1024 * 1024;
+            if (limitStr === '10GB') return 10 * 1024 * 1024 * 1024;
+            if (limitStr === '50GB') return 50 * 1024 * 1024 * 1024;
+            if (limitStr === '100GB') return 100 * 1024 * 1024 * 1024;
+            return 0; // Sınırsız
+        }
+
+        // BİTİŞ ZAMANI TIMESTAMP HESAPLAMA
+        function parseExpireToTimestamp(expireStr) {
+            var now = Math.floor(Date.now() / 1000);
+            var days = 1;
+            if (expireStr === '3gün') days = 3;
+            if (expireStr === '7gün') days = 7;
+            if (expireStr === '30gün') days = 30;
+            return now + (days * 86400);
+        }
+
+        // HAPP VPN METİN FORMATI OLUŞTURUCU
+        function generateHappVpnHeader(sub) {
+            if (!sub.active) {
+                return `#profile-title: subscription disabled\n#announce: Subscription is inactive\nvless://disabled-node-config-disconnected`;
+            }
+
+            var totalBytes = parseLimitToBytes(sub.limit);
+            var expireTime = parseExpireToTimestamp(sub.expire);
+
+            var header = `#profile-title: ${sub.vpnName || sub.name}\n`;
+            header += `#subscription-userinfo: upload=0; download=${sub.downloadedBytes}; total=${totalBytes}; expire=${expireTime}\n`;
+            if (sub.desc) header += `#announce: ${sub.desc}\n`;
+            if (sub.supportUrl) header += `#support-url: ${sub.supportUrl}\n`;
+            if (sub.webUrl) header += `#profile-web-page-url: ${sub.webUrl}\n`;
+            header += `#profile-update-interval: 24\n\n`;
+            header += sub.rawCodes;
+
+            return header;
+        }
+
         function saveSubscription() {
             var editId = document.getElementById('editSubId').value;
-            var name = document.getElementById('subNameInput').value.trim() || "İsimsiz Abonelik";
+            var name = document.getElementById('subNameInput').value.trim() || "VIP Abonelik";
             var vpnName = document.getElementById('vpnNameInput').value.trim() || name;
             var webUrl = document.getElementById('webUrlInput').value.trim();
             var supportUrl = document.getElementById('supportUrlInput').value.trim();
@@ -580,15 +643,17 @@
                     sub.supportUrl = supportUrl;
                     sub.desc = desc;
                     sub.rawCodes = rawCodes;
-                    if(sub.active) sub.codes = rawCodes;
+                    sub.limit = selectedLimit;
+                    sub.expire = selectedExpire;
                 }
             } else {
-                // GitHub Pages tarzı sanal raw link üretimi
-                var randomHash = Math.random().toString(36).substring(2, 10);
-                var subLink = "https://timoxvpn.github.io/sub/" + randomHash + "/config.txt";
+                var newId = Date.now();
+                
+                // Senın Gerçek GitHub Pages Domainine Özel Bağlantı Yapısı:
+                var subLink = "https://mhojagulyyew207-byte.github.io/VPN/index.html?sub=" + newId;
 
                 var newSub = {
-                    id: Date.now(),
+                    id: newId,
                     name: name,
                     vpnName: vpnName,
                     webUrl: webUrl,
@@ -597,7 +662,7 @@
                     limit: selectedLimit,
                     expire: selectedExpire,
                     rawCodes: rawCodes,
-                    codes: rawCodes,
+                    downloadedBytes: 1048576, // 1MB Başlangıç
                     subLink: subLink,
                     active: true
                 };
@@ -614,10 +679,8 @@
                 sub.active = !sub.active;
                 if (!sub.active) {
                     sub.name = "subscription disabled";
-                    sub.codes = "vless://disabled-node-config-disconnected";
                 } else {
-                    sub.name = sub.vpnName;
-                    sub.codes = sub.rawCodes;
+                    sub.name = sub.vpnName || "Abonelik";
                 }
                 renderSubscriptions();
             }
@@ -630,10 +693,19 @@
             }
         }
 
-        // Kopyala tuşuna basınca ham kod yerine GitHub.io tarzı bağlantı kopyalanır
-        function copySubLink(link) {
-            navigator.clipboard.writeText(link);
-            alert("Abonelik bağlantısı kopyalandı:\n" + link);
+        // KOPYALAMA İŞLEVİ (HAPP VPN TARAFINDAN OKUNABİLİR DİNAMİK URL VEYA GERÇEK LINK)
+        function copySubLink(subId) {
+            var sub = subscriptionsData.find(s => s.id === subId);
+            if (sub) {
+                // Tarayıcı hafızasında doğrudan Happ VPN'in okuyabileceği canlı Data-URL / Blob yapısı
+                var content = generateHappVpnHeader(sub);
+                var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                var blobUrl = URL.createObjectURL(blob);
+
+                // Alternatif olarak doğrudan GitHub Pages URL'si kopyalatılır
+                navigator.clipboard.writeText(sub.subLink);
+                alert("Happ VPN Bağlantısı Kopyalandı:\n" + sub.subLink + "\n\nHapp VPN'e ekleyip güncelleyebilirsiniz!");
+            }
         }
 
         function renderSubscriptions() {
@@ -654,15 +726,15 @@
                         <span class="sub-details">Limit: ${sub.limit} | Süre: ${sub.expire}</span>
                     </div>
                     <div class="sub-actions">
-                        <!-- Kopyala (GitHub.io linki kopyalar) -->
-                        <div class="action-icon-btn" onclick="copySubLink('${sub.subLink}')" title="Abonelik Bağlantısını Kopyala">
+                        <!-- Kopyala -->
+                        <div class="action-icon-btn" onclick="copySubLink(${sub.id})" title="Abonelik Bağlantısını Kopyala">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         </div>
-                        <!-- Düzenle (Kalem) -->
+                        <!-- Düzenle -->
                         <div class="action-icon-btn" onclick="openCreateSubPage(${sub.id})" title="Düzenle">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         </div>
-                        <!-- Sil (Çöp Kutusu) -->
+                        <!-- Sil -->
                         <div class="action-icon-btn delete" onclick="deleteSubscription(${sub.id})" title="Sil">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         </div>
