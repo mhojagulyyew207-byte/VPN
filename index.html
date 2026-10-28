@@ -23,6 +23,7 @@
             padding: 16px;
             user-select: none;
             position: relative;
+            overflow-x: hidden;
         }
 
         /* YÜKLEME VE GEÇİŞ EKRANLARI */
@@ -33,10 +34,7 @@
             justify-content: center;
             gap: 16px;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: #050505 !important;
             z-index: 99;
         }
@@ -44,28 +42,21 @@
         #transitionScreen { display: none; }
 
         .spinner {
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border: 4px solid rgba(255, 255, 255, 0.15);
             border-left-color: #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loading-text { color: #ffffff; font-size: 15px; letter-spacing: 0.5px; }
 
         /* GİRİŞ / KAYIT EKRANI */
         #authContainer {
             display: none;
-            width: 100%;
-            max-width: 320px;
-            flex-direction: column;
-            align-items: center;
+            width: 100%; max-width: 320px;
+            flex-direction: column; align-items: center;
             z-index: 10;
         }
 
@@ -86,7 +77,7 @@
         }
         .eye-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        .input-group input, .input-group textarea, .input-group select {
+        .input-group input, .input-group textarea {
             width: 100%; background-color: #121214; border: 1px solid #27272a;
             border-radius: 8px; padding: 12px; font-size: 14px; color: #ffffff; outline: none;
         }
@@ -104,11 +95,8 @@
 
         /* HESAP İÇİ DASHBOARD EKRANI */
         #dashboardContainer {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000 !important;
-            flex-direction: column; padding: 20px 16px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000 !important; flex-direction: column; padding: 20px 16px;
             z-index: 20; overflow-y: auto;
         }
 
@@ -143,7 +131,6 @@
             font-weight: 700; font-size: 16px; padding: 14px; border-radius: 14px;
             display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-bottom: 20px;
         }
-        .new-sub-btn:active { background-color: #e4e4e7 !important; }
 
         .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 20px; }
         .card-box {
@@ -159,24 +146,16 @@
 
         .card-footer { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 16px; }
         .card-number { font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1; }
-        .card-icon-box {
-            width: 34px; height: 34px; background-color: #141417; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .card-icon-box { width: 34px; height: 34px; background-color: #141417; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
 
         .all-subs-section { width: 100%; margin-top: 10px; }
-        .all-subs-header-row {
-            display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
-        }
-        .all-subs-title {
-            display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: #ffffff;
-        }
+        .all-subs-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .all-subs-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: #ffffff; }
         .update-btn {
             background-color: #121214; border: 1px solid #27272a; border-radius: 8px;
             padding: 6px 10px; font-size: 12px; font-weight: 600; color: #a1a1aa;
             display: flex; align-items: center; gap: 6px; cursor: pointer;
         }
-        .update-btn:hover { color: #ffffff; border-color: #3b82f6; }
 
         .sub-item-card {
             background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 14px;
@@ -191,33 +170,48 @@
             width: 32px; height: 32px; background-color: #141417; border: 1px solid #27272a;
             border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #a1a1aa;
         }
-        .action-icon-btn:hover { color: #ffffff; border-color: #3b82f6; }
         .action-icon-btn.delete:hover { border-color: #ef4444; color: #ef4444; }
 
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; margin-left: 2px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #dc2626; transition: .3s; border-radius: 22px;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
-            background-color: white; transition: .3s; border-radius: 50%;
-        }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #dc2626; transition: .3s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: #22c55e; }
         input:checked + .slider:before { transform: translateX(18px); }
+
+        /* SOL YAN MENÜ PANELDİR (DRAWER) */
+        .drawer-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); z-index: 40; transition: opacity 0.3s ease;
+        }
+        .drawer-content {
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+            background-color: #0d0d0f; border-right: 1px solid #1c1c20; padding: 24px 18px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            z-index: 50; transition: left 0.3s ease;
+        }
+        .drawer-open .drawer-overlay { display: block; }
+        .drawer-open .drawer-content { left: 0; }
+
+        .drawer-section-title { font-size: 13px; font-weight: 700; color: #71717a; margin-bottom: 12px; text-transform: uppercase; }
+        .drawer-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            border-radius: 10px; background-color: #141417; border: 1px solid #27272a;
+            color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px;
+        }
+        .drawer-item:hover { border-color: #3b82f6; }
+
+        .telegram-btn {
+            background-color: #0088cc !important; border: none !important; color: #ffffff !important;
+        }
 
         #createSubPage {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #050505 !important; flex-direction: column; padding: 20px 16px; z-index: 30; overflow-y: auto;
         }
         .create-form { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; }
-        
         .select-button-group { display: flex; gap: 8px; flex-wrap: wrap; }
-        .select-pill {
-            background-color: #121214; border: 1px solid #27272a; border-radius: 8px;
-            padding: 8px 12px; font-size: 13px; color: #a1a1aa; cursor: pointer; font-weight: 600;
-        }
+        .select-pill { background-color: #121214; border: 1px solid #27272a; border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #a1a1aa; cursor: pointer; font-weight: 600; }
         .select-pill.active { background-color: #2563eb; border-color: #2563eb; color: #ffffff; }
 
         .hidden { display: none !important; }
@@ -225,6 +219,36 @@
 </head>
 <body>
 
+    <!-- YAN MENÜ (DRAWER) -->
+    <div id="sideDrawer">
+        <div class="drawer-overlay" onclick="closeDrawer()"></div>
+        <div class="drawer-content">
+            <div>
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 24px;"><span style="color:#3b82f6">TIMOX</span>VPN</h2>
+                
+                <!-- HESAP AYARLARI -->
+                <div class="drawer-section-title">Hesap Ayarları</div>
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <label>Şifre Değiştir</label>
+                    <input type="password" id="newPasswordInput" placeholder="Yeni şifrenizi girin">
+                </div>
+                <button class="btn-submit" style="margin-bottom: 24px; padding: 8px;" onclick="changePassword()">Şifreyi Güncelle</button>
+
+                <!-- YARDIM VE GERİ BİLDİRİM (TELEGRAM) -->
+                <div class="drawer-section-title">Yardım & Geri Bildirim</div>
+                <a href="https://t.me/Rahym2011" target="_blank" style="text-decoration: none;">
+                    <div class="drawer-item telegram-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                        <span>Telegram Destek Hatı</span>
+                    </div>
+                </a>
+            </div>
+
+            <div style="font-size: 11px; color: #52525b; text-align: center;">TIMOXVPN v2.0 • 2026</div>
+        </div>
+    </div>
+
+    <!-- AÇILIŞ EKRANI -->
     <div id="loadingScreen">
         <div class="spinner"></div>
         <p class="loading-text" id="txtLoading">Yükleniyor...</p>
@@ -235,34 +259,24 @@
         <p class="loading-text" id="transitionText">Kontrol ediliyor...</p>
     </div>
 
+    <!-- GİRİŞ / KAYIT -->
     <div id="authContainer">
-        <h1 class="logo">
-            <span class="logo-blue">TIMOX</span><span class="logo-white">VPN</span>
-        </h1>
+        <h1 class="logo"><span class="logo-blue">TIMOX</span><span class="logo-white">VPN</span></h1>
 
         <div id="loginForm" class="form-box">
             <div class="input-group">
                 <label id="lblUser">Kullanıcı Adı</label>
                 <input type="text" id="loginUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adınızı girin">
             </div>
-
             <div class="input-group">
                 <label id="lblPass">Şifre</label>
                 <div class="password-wrapper">
                     <input type="password" id="loginPassword" minlength="6" maxlength="20" placeholder="Şifrenizi girin">
-                    <button type="button" class="eye-btn" onclick="togglePassword('loginPassword', this)">
-                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                    </button>
+                    <button type="button" class="eye-btn" onclick="togglePassword('loginPassword', this)"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></button>
                 </div>
             </div>
-
             <button class="btn-submit" id="btnLogin" onclick="submitLogin()">Giriş Yap</button>
-
-            <p class="switch-text" id="txtNoAcc">
-                Hesabınız yok mu? 
-                <button onclick="toggleAuth('register')" class="switch-btn" id="btnRegisterTarget">Kayıt ol</button>
-            </p>
-
+            <p class="switch-text" id="txtNoAcc">Hesabınız yok mu? <button onclick="toggleAuth('register')" class="switch-btn" id="btnRegisterTarget">Kayıt ol</button></p>
             <p id="loginError" class="error-message"></p>
         </div>
 
@@ -271,32 +285,24 @@
                 <label id="lblRegUser">Kullanıcı Adı</label>
                 <input type="text" id="regUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adı oluşturun">
             </div>
-
             <div class="input-group">
                 <label id="lblRegPass">Şifre</label>
                 <div class="password-wrapper">
                     <input type="password" id="regPassword" minlength="6" maxlength="20" placeholder="Şifre oluşturun">
-                    <button type="button" class="eye-btn" onclick="togglePassword('regPassword', this)">
-                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                    </button>
+                    <button type="button" class="eye-btn" onclick="togglePassword('regPassword', this)"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></button>
                 </div>
             </div>
-
             <button class="btn-submit" id="btnRegSubmit" onclick="submitRegister()">Kayıt Ol</button>
-
-            <p class="switch-text" id="txtHasAcc">
-                Zaten hesabınız var mı? 
-                <button onclick="toggleAuth('login')" class="switch-btn" id="btnLoginTarget">Giriş Yap</button>
-            </p>
-
+            <p class="switch-text" id="txtHasAcc">Zaten hesabınız var mı? <button onclick="toggleAuth('login')" class="switch-btn" id="btnLoginTarget">Giriş Yap</button></p>
             <p id="regError" class="error-message"></p>
         </div>
     </div>
 
-    <!-- HESAP İÇİ DASHBOARD EKRANI -->
+    <!-- DASHBOARD -->
     <div id="dashboardContainer">
         <div class="top-bar">
-            <div class="icon-btn" onclick="alert('Menü açıldı')">
+            <!-- MENÜ AÇMA DÜĞMESİ -->
+            <div class="icon-btn" onclick="openDrawer()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
             </div>
             
@@ -355,7 +361,7 @@
         </div>
     </div>
 
-    <!-- YENİ ABONELİK OLUŞTURMA / DÜZENLEME SAYFASI -->
+    <!-- YENİ ABONELİK OLUŞTURMA SAYFASI -->
     <div id="createSubPage">
         <div class="top-bar">
             <div class="icon-btn" onclick="closeCreateSubPage()">
@@ -367,31 +373,11 @@
 
         <div class="create-form">
             <input type="hidden" id="editSubId" value="">
-            
-            <div class="input-group">
-                <label>Abonelik adı</label>
-                <input type="text" id="subNameInput" placeholder="Örn: VIP Paket">
-            </div>
-
-            <div class="input-group">
-                <label>VPN adı</label>
-                <input type="text" id="vpnNameInput" placeholder="Örn: TIMOX">
-            </div>
-
-            <div class="input-group">
-                <label>Web-URL</label>
-                <input type="text" id="webUrlInput" placeholder="https://...">
-            </div>
-
-            <div class="input-group">
-                <label>Support-URL</label>
-                <input type="text" id="supportUrlInput" placeholder="https://t.me/...">
-            </div>
-
-            <div class="input-group">
-                <label>Açıklama</label>
-                <textarea id="subDescInput" rows="2" placeholder="Kodlar işlemese 10minut garasyp Obnawit ediň!"></textarea>
-            </div>
+            <div class="input-group"><label>Abonelik adı</label><input type="text" id="subNameInput" placeholder="Örn: VIP Paket"></div>
+            <div class="input-group"><label>VPN adı</label><input type="text" id="vpnNameInput" placeholder="Örn: TIMOX"></div>
+            <div class="input-group"><label>Web-URL</label><input type="text" id="webUrlInput" placeholder="https://..."></div>
+            <div class="input-group"><label>Support-URL</label><input type="text" id="supportUrlInput" placeholder="https://t.me/..."></div>
+            <div class="input-group"><label>Açıklama</label><textarea id="subDescInput" rows="2" placeholder="Açıklama..."></textarea></div>
 
             <div class="input-group">
                 <label>Limit</label>
@@ -416,7 +402,7 @@
 
             <div class="input-group">
                 <label>Konfigürasyon Kodları (ss, vless, hy2, vmess, trojan)</label>
-                <textarea id="subCodesInput" rows="4" placeholder="vless://... ss://... hy2://..."></textarea>
+                <textarea id="subCodesInput" rows="4" placeholder="vless://... ss://..."></textarea>
             </div>
 
             <button class="btn-submit" onclick="saveSubscription()">Kaydet</button>
@@ -425,34 +411,31 @@
 
     <script>
         var usersDatabase = {};
+        var loggedUser = "";
         var currentLang = 'TR';
         var subscriptionsData = [];
         var selectedLimit = '5GB';
         var selectedExpire = '1gün';
 
-        // Saniyede 1MB (1048576 Bayt) İndirme Simülasyonu Döngüsü
+        // Saniyede 1MB canlı harcama simülasyonu
         setInterval(function() {
             subscriptionsData.forEach(sub => {
-                if (sub.active) {
-                    sub.downloadedBytes += 1048576; // Her saniye 1MB eklenir
-                }
+                if (sub.active) sub.downloadedBytes += 1048576;
             });
         }, 1000);
 
-        // SAYFA YÜKLENİRKEN URL PARAMETRESİ (GET /sub=...) KONTROLÜ
-        window.addEventListener('load', function() {
-            var urlParams = new URLSearchParams(window.location.search);
-            var subId = urlParams.get('sub');
-            if (subId) {
-                // Happ VPN gibi istemciler bu URL'e HTTP isteği attığında
-                var sub = subscriptionsData.find(s => s.id == subId);
-                if (sub) {
-                    document.body.innerText = generateHappVpnHeader(sub);
-                } else {
-                    document.body.innerText = "HTTP 404 Not Found - Subscription Deleted";
-                }
-            }
-        });
+        // YAN MENÜ AÇ / KAPAT
+        function openDrawer() { document.getElementById('sideDrawer').classList.add('drawer-open'); }
+        function closeDrawer() { document.getElementById('sideDrawer').classList.remove('drawer-open'); }
+
+        function changePassword() {
+            var newPass = document.getElementById('newPasswordInput').value.trim();
+            if (newPass.length < 6) { alert("Şifre en az 6 karakter olmalıdır!"); return; }
+            usersDatabase[loggedUser] = newPass;
+            alert("Şifreniz başarıyla güncellendi!");
+            document.getElementById('newPasswordInput').value = "";
+            closeDrawer();
+        }
 
         var translations = {
             'TR': { loading: "Yükleniyor...", checking: "Kontrol ediliyor...", creating: "Hesap oluşturuluyor...", username: "Kullanıcı Adı", password: "Şifre", loginBtn: "Giriş Yap", registerBtn: "Kayıt Ol", noAcc: "Hesabınız yok mu?", hasAcc: "Zaten hesabınız var mı?", regLink: "Kayıt ol", loginLink: "Giriş Yap", dashTitle: "Abonelikler", dashSub: "Abonelik düğümlerinizi yönetin", newSub: "Yeni abonelik", c1: "Toplam Abonelik", c2: "Aktif", c3: "Süresi Dolmak Üzere", c4: "Toplam Konfigürasyon", allSubs: "Tüm abonelikler", update: "Güncelle" },
@@ -473,13 +456,11 @@
             document.getElementById('btnLogin').innerText = t.loginBtn;
             document.getElementById('txtNoAcc').childNodes[0].nodeValue = t.noAcc + " ";
             document.getElementById('btnRegisterTarget').innerText = t.regLink;
-
             document.getElementById('lblRegUser').innerText = t.username;
             document.getElementById('lblRegPass').innerText = t.password;
             document.getElementById('btnRegSubmit').innerText = t.registerBtn;
             document.getElementById('txtHasAcc').childNodes[0].nodeValue = t.hasAcc + " ";
             document.getElementById('btnLoginTarget').innerText = t.loginLink;
-
             document.getElementById('dashTitle').innerText = t.dashTitle;
             document.getElementById('dashSub').innerText = t.dashSub;
             document.getElementById('btnNewSubText').innerText = t.newSub;
@@ -494,12 +475,6 @@
         function toggleLangDropdown() {
             var dropdown = document.getElementById('langDropdown');
             dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.closest('.lang-container')) {
-                document.getElementById('langDropdown').style.display = 'none';
-            }
         }
 
         setTimeout(function() {
@@ -535,6 +510,7 @@
             var password = document.getElementById('loginPassword').value.trim();
             if (!usersDatabase[username] || usersDatabase[username] !== password) { alert("Hatalı kullanıcı adı veya şifre!"); return; }
             
+            loggedUser = username;
             document.getElementById('transitionScreen').style.display = 'flex';
             setTimeout(function() {
                 document.getElementById('transitionScreen').style.display = 'none';
@@ -568,62 +544,9 @@
             document.getElementById('createSubPage').style.display = 'flex';
         }
 
-        function closeCreateSubPage() {
-            document.getElementById('createSubPage').style.display = 'none';
-        }
-
-        function selectLimit(val, el) {
-            selectedLimit = val;
-            var pills = el.parentElement.children;
-            for(let p of pills) p.classList.remove('active');
-            el.classList.add('active');
-        }
-
-        function selectExpire(val, el) {
-            selectedExpire = val;
-            var pills = el.parentElement.children;
-            for(let p of pills) p.classList.remove('active');
-            el.classList.add('active');
-        }
-
-        // BAYT BAZINDA LİMİT HESAPLAMA
-        function parseLimitToBytes(limitStr) {
-            if (limitStr === '5GB') return 5 * 1024 * 1024 * 1024;
-            if (limitStr === '10GB') return 10 * 1024 * 1024 * 1024;
-            if (limitStr === '50GB') return 50 * 1024 * 1024 * 1024;
-            if (limitStr === '100GB') return 100 * 1024 * 1024 * 1024;
-            return 0; // Sınırsız
-        }
-
-        // BİTİŞ ZAMANI TIMESTAMP HESAPLAMA
-        function parseExpireToTimestamp(expireStr) {
-            var now = Math.floor(Date.now() / 1000);
-            var days = 1;
-            if (expireStr === '3gün') days = 3;
-            if (expireStr === '7gün') days = 7;
-            if (expireStr === '30gün') days = 30;
-            return now + (days * 86400);
-        }
-
-        // HAPP VPN METİN FORMATI OLUŞTURUCU
-        function generateHappVpnHeader(sub) {
-            if (!sub.active) {
-                return `#profile-title: subscription disabled\n#announce: Subscription is inactive\nvless://disabled-node-config-disconnected`;
-            }
-
-            var totalBytes = parseLimitToBytes(sub.limit);
-            var expireTime = parseExpireToTimestamp(sub.expire);
-
-            var header = `#profile-title: ${sub.vpnName || sub.name}\n`;
-            header += `#subscription-userinfo: upload=0; download=${sub.downloadedBytes}; total=${totalBytes}; expire=${expireTime}\n`;
-            if (sub.desc) header += `#announce: ${sub.desc}\n`;
-            if (sub.supportUrl) header += `#support-url: ${sub.supportUrl}\n`;
-            if (sub.webUrl) header += `#profile-web-page-url: ${sub.webUrl}\n`;
-            header += `#profile-update-interval: 24\n\n`;
-            header += sub.rawCodes;
-
-            return header;
-        }
+        function closeCreateSubPage() { document.getElementById('createSubPage').style.display = 'none'; }
+        function selectLimit(val, el) { selectedLimit = val; var pills = el.parentElement.children; for(let p of pills) p.classList.remove('active'); el.classList.add('active'); }
+        function selectExpire(val, el) { selectedExpire = val; var pills = el.parentElement.children; for(let p of pills) p.classList.remove('active'); el.classList.add('active'); }
 
         function saveSubscription() {
             var editId = document.getElementById('editSubId').value;
@@ -637,34 +560,20 @@
             if (editId !== "") {
                 var sub = subscriptionsData.find(s => s.id == editId);
                 if (sub) {
-                    sub.name = name;
-                    sub.vpnName = vpnName;
-                    sub.webUrl = webUrl;
-                    sub.supportUrl = supportUrl;
-                    sub.desc = desc;
-                    sub.rawCodes = rawCodes;
-                    sub.limit = selectedLimit;
-                    sub.expire = selectedExpire;
+                    sub.name = name; sub.vpnName = vpnName; sub.webUrl = webUrl;
+                    sub.supportUrl = supportUrl; sub.desc = desc; sub.rawCodes = rawCodes;
+                    sub.limit = selectedLimit; sub.expire = selectedExpire;
                 }
             } else {
                 var newId = Date.now();
                 
-                // Senın Gerçek GitHub Pages Domainine Özel Bağlantı Yapısı:
+                // GitHub Pages Domaininize özel dinamik abonelik linki:
                 var subLink = "https://mhojagulyyew207-byte.github.io/VPN/index.html?sub=" + newId;
 
                 var newSub = {
-                    id: newId,
-                    name: name,
-                    vpnName: vpnName,
-                    webUrl: webUrl,
-                    supportUrl: supportUrl,
-                    desc: desc,
-                    limit: selectedLimit,
-                    expire: selectedExpire,
-                    rawCodes: rawCodes,
-                    downloadedBytes: 1048576, // 1MB Başlangıç
-                    subLink: subLink,
-                    active: true
+                    id: newId, name: name, vpnName: vpnName, webUrl: webUrl, supportUrl: supportUrl,
+                    desc: desc, limit: selectedLimit, expire: selectedExpire, rawCodes: rawCodes,
+                    downloadedBytes: 1048576, subLink: subLink, active: true
                 };
                 subscriptionsData.push(newSub);
             }
@@ -677,11 +586,7 @@
             var sub = subscriptionsData.find(s => s.id === id);
             if (sub) {
                 sub.active = !sub.active;
-                if (!sub.active) {
-                    sub.name = "subscription disabled";
-                } else {
-                    sub.name = sub.vpnName || "Abonelik";
-                }
+                sub.name = sub.active ? (sub.vpnName || "Abonelik") : "subscription disabled";
                 renderSubscriptions();
             }
         }
@@ -693,18 +598,11 @@
             }
         }
 
-        // KOPYALAMA İŞLEVİ (HAPP VPN TARAFINDAN OKUNABİLİR DİNAMİK URL VEYA GERÇEK LINK)
         function copySubLink(subId) {
             var sub = subscriptionsData.find(s => s.id === subId);
             if (sub) {
-                // Tarayıcı hafızasında doğrudan Happ VPN'in okuyabileceği canlı Data-URL / Blob yapısı
-                var content = generateHappVpnHeader(sub);
-                var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-                var blobUrl = URL.createObjectURL(blob);
-
-                // Alternatif olarak doğrudan GitHub Pages URL'si kopyalatılır
                 navigator.clipboard.writeText(sub.subLink);
-                alert("Happ VPN Bağlantısı Kopyalandı:\n" + sub.subLink + "\n\nHapp VPN'e ekleyip güncelleyebilirsiniz!");
+                alert("Abonelik Bağlantısı Kopyalandı:\n" + sub.subLink);
             }
         }
 
@@ -726,23 +624,10 @@
                         <span class="sub-details">Limit: ${sub.limit} | Süre: ${sub.expire}</span>
                     </div>
                     <div class="sub-actions">
-                        <!-- Kopyala -->
-                        <div class="action-icon-btn" onclick="copySubLink(${sub.id})" title="Abonelik Bağlantısını Kopyala">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </div>
-                        <!-- Düzenle -->
-                        <div class="action-icon-btn" onclick="openCreateSubPage(${sub.id})" title="Düzenle">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                        </div>
-                        <!-- Sil -->
-                        <div class="action-icon-btn delete" onclick="deleteSubscription(${sub.id})" title="Sil">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </div>
-                        <!-- Aç / Kapat Toggle -->
-                        <label class="switch">
-                            <input type="checkbox" ${sub.active ? 'checked' : ''} onchange="toggleSubStatus(${sub.id})">
-                            <span class="slider"></span>
-                        </label>
+                        <div class="action-icon-btn" onclick="copySubLink(${sub.id})" title="Kopyala"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></div>
+                        <div class="action-icon-btn" onclick="openCreateSubPage(${sub.id})" title="Düzenle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></div>
+                        <div class="action-icon-btn delete" onclick="deleteSubscription(${sub.id})" title="Sil"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></div>
+                        <label class="switch"><input type="checkbox" ${sub.active ? 'checked' : ''} onchange="toggleSubStatus(${sub.id})"><span class="slider"></span></label>
                     </div>
                 `;
                 listContainer.appendChild(card);
