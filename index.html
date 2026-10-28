@@ -26,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* YÜKLEME VE GEÇİŞ EKRANLARI */
         #loadingScreen, #transitionScreen {
             display: flex;
             flex-direction: column;
@@ -52,12 +51,9 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loading-text { color: #ffffff; font-size: 15px; letter-spacing: 0.5px; }
 
-        /* GİRİŞ / KAYIT EKRANI */
         #authContainer {
-            display: none;
-            width: 100%; max-width: 320px;
-            flex-direction: column; align-items: center;
-            z-index: 10;
+            display: none; width: 100%; max-width: 320px;
+            flex-direction: column; align-items: center; z-index: 10;
         }
 
         .logo { font-size: 28px; font-weight: 800; letter-spacing: 1px; margin-bottom: 24px; }
@@ -93,32 +89,18 @@
         .switch-btn { background: none; border: none; color: #3b82f6; font-weight: 600; cursor: pointer; margin-left: 4px; font-size: 12px; }
         .error-message { color: #ef4444; font-size: 12px; text-align: center; margin-top: 4px; font-weight: 500; display: none; }
 
-        /* HESAP İÇİ DASHBOARD EKRANI */
         #dashboardContainer {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #000000 !important; flex-direction: column; padding: 20px 16px;
             z-index: 20; overflow-y: auto;
         }
 
-        .top-bar {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; margin-bottom: 24px; position: relative;
-        }
-
-        .icon-btn {
-            width: 40px; height: 40px; background-color: #121214; border: 1px solid #27272a;
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff;
-        }
+        .top-bar { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 24px; position: relative; }
+        .icon-btn { width: 40px; height: 40px; background-color: #121214; border: 1px solid #27272a; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; }
 
         .lang-container { position: relative; }
-        .lang-btn {
-            height: 40px; padding: 0 14px; background-color: #121214; border: 1px solid #27272a;
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; font-weight: 600; font-size: 13px;
-        }
-        .lang-dropdown {
-            display: none; position: absolute; right: 0; top: 48px; background-color: #121214;
-            border: 1px solid #27272a; border-radius: 12px; overflow: hidden; width: 90px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 30;
-        }
+        .lang-btn { height: 40px; padding: 0 14px; background-color: #121214; border: 1px solid #27272a; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; font-weight: 600; font-size: 13px; }
+        .lang-dropdown { display: none; position: absolute; right: 0; top: 48px; background-color: #121214; border: 1px solid #27272a; border-radius: 12px; overflow: hidden; width: 90px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 30; }
         .lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; color: #a1a1aa; cursor: pointer; text-align: center; border-bottom: 1px solid #1c1c20; }
         .lang-option:hover, .lang-option.active { background-color: #27272a; color: #ffffff; }
 
@@ -133,10 +115,7 @@
         }
 
         .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 20px; }
-        .card-box {
-            background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 16px;
-            padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px;
-        }
+        .card-box { background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
         .card-header { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #a1a1aa; font-weight: 500; }
         .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
         .dot-blue { background-color: #3b82f6; }
@@ -151,25 +130,15 @@
         .all-subs-section { width: 100%; margin-top: 10px; }
         .all-subs-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .all-subs-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: #ffffff; }
-        .update-btn {
-            background-color: #121214; border: 1px solid #27272a; border-radius: 8px;
-            padding: 6px 10px; font-size: 12px; font-weight: 600; color: #a1a1aa;
-            display: flex; align-items: center; gap: 6px; cursor: pointer;
-        }
+        .update-btn { background-color: #121214; border: 1px solid #27272a; border-radius: 8px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: #a1a1aa; display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
-        .sub-item-card {
-            background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 14px;
-            padding: 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
-        }
+        .sub-item-card { background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 14px; padding: 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
         .sub-info { display: flex; flex-direction: column; gap: 4px; }
         .sub-name { font-size: 15px; font-weight: 700; color: #ffffff; }
         .sub-details { font-size: 12px; color: #71717a; }
 
         .sub-actions { display: flex; align-items: center; gap: 6px; }
-        .action-icon-btn {
-            width: 32px; height: 32px; background-color: #141417; border: 1px solid #27272a;
-            border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #a1a1aa;
-        }
+        .action-icon-btn { width: 32px; height: 32px; background-color: #141417; border: 1px solid #27272a; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #a1a1aa; }
         .action-icon-btn.delete:hover { border-color: #ef4444; color: #ef4444; }
 
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; margin-left: 2px; }
@@ -179,36 +148,16 @@
         input:checked + .slider { background-color: #22c55e; }
         input:checked + .slider:before { transform: translateX(18px); }
 
-        /* SOL YAN MENÜ PANELDİR (DRAWER) */
-        .drawer-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.7); z-index: 40; transition: opacity 0.3s ease;
-        }
-        .drawer-content {
-            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
-            background-color: #0d0d0f; border-right: 1px solid #1c1c20; padding: 24px 18px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            z-index: 50; transition: left 0.3s ease;
-        }
+        /* YAN MENÜ */
+        .drawer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 40; }
+        .drawer-content { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background-color: #0d0d0f; border-right: 1px solid #1c1c20; padding: 24px 18px; display: flex; flex-direction: column; justify-content: space-between; z-index: 50; transition: left 0.3s ease; }
         .drawer-open .drawer-overlay { display: block; }
         .drawer-open .drawer-content { left: 0; }
-
         .drawer-section-title { font-size: 13px; font-weight: 700; color: #71717a; margin-bottom: 12px; text-transform: uppercase; }
-        .drawer-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            border-radius: 10px; background-color: #141417; border: 1px solid #27272a;
-            color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px;
-        }
-        .drawer-item:hover { border-color: #3b82f6; }
+        .drawer-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; background-color: #141417; border: 1px solid #27272a; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; }
+        .telegram-btn { background-color: #0088cc !important; border: none !important; color: #ffffff !important; }
 
-        .telegram-btn {
-            background-color: #0088cc !important; border: none !important; color: #ffffff !important;
-        }
-
-        #createSubPage {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #050505 !important; flex-direction: column; padding: 20px 16px; z-index: 30; overflow-y: auto;
-        }
+        #createSubPage { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505 !important; flex-direction: column; padding: 20px 16px; z-index: 30; overflow-y: auto; }
         .create-form { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; }
         .select-button-group { display: flex; gap: 8px; flex-wrap: wrap; }
         .select-pill { background-color: #121214; border: 1px solid #27272a; border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #a1a1aa; cursor: pointer; font-weight: 600; }
@@ -219,14 +168,12 @@
 </head>
 <body>
 
-    <!-- YAN MENÜ (DRAWER) -->
+    <!-- YAN MENÜ -->
     <div id="sideDrawer">
         <div class="drawer-overlay" onclick="closeDrawer()"></div>
         <div class="drawer-content">
             <div>
                 <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 24px;"><span style="color:#3b82f6">TIMOX</span>VPN</h2>
-                
-                <!-- HESAP AYARLARI -->
                 <div class="drawer-section-title">Hesap Ayarları</div>
                 <div class="input-group" style="margin-bottom: 10px;">
                     <label>Şifre Değiştir</label>
@@ -234,40 +181,26 @@
                 </div>
                 <button class="btn-submit" style="margin-bottom: 24px; padding: 8px;" onclick="changePassword()">Şifreyi Güncelle</button>
 
-                <!-- YARDIM VE GERİ BİLDİRİM (TELEGRAM) -->
                 <div class="drawer-section-title">Yardım & Geri Bildirim</div>
                 <a href="https://t.me/Rahym2011" target="_blank" style="text-decoration: none;">
                     <div class="drawer-item telegram-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                        <span>Telegram Destek Hatı</span>
+                        <span>Telegram Destek Hattı</span>
                     </div>
                 </a>
             </div>
-
             <div style="font-size: 11px; color: #52525b; text-align: center;">TIMOXVPN v2.0 • 2026</div>
         </div>
     </div>
 
-    <!-- AÇILIŞ EKRANI -->
-    <div id="loadingScreen">
-        <div class="spinner"></div>
-        <p class="loading-text" id="txtLoading">Yükleniyor...</p>
-    </div>
+    <!-- EKRANLAR -->
+    <div id="loadingScreen"><div class="spinner"></div><p class="loading-text" id="txtLoading">Yükleniyor...</p></div>
+    <div id="transitionScreen"><div class="spinner"></div><p class="loading-text" id="transitionText">Kontrol ediliyor...</p></div>
 
-    <div id="transitionScreen">
-        <div class="spinner"></div>
-        <p class="loading-text" id="transitionText">Kontrol ediliyor...</p>
-    </div>
-
-    <!-- GİRİŞ / KAYIT -->
     <div id="authContainer">
         <h1 class="logo"><span class="logo-blue">TIMOX</span><span class="logo-white">VPN</span></h1>
-
         <div id="loginForm" class="form-box">
-            <div class="input-group">
-                <label id="lblUser">Kullanıcı Adı</label>
-                <input type="text" id="loginUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adınızı girin">
-            </div>
+            <div class="input-group"><label id="lblUser">Kullanıcı Adı</label><input type="text" id="loginUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adınızı girin"></div>
             <div class="input-group">
                 <label id="lblPass">Şifre</label>
                 <div class="password-wrapper">
@@ -281,10 +214,7 @@
         </div>
 
         <div id="registerForm" class="form-box hidden">
-            <div class="input-group">
-                <label id="lblRegUser">Kullanıcı Adı</label>
-                <input type="text" id="regUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adı oluşturun">
-            </div>
+            <div class="input-group"><label id="lblRegUser">Kullanıcı Adı</label><input type="text" id="regUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adı oluşturun"></div>
             <div class="input-group">
                 <label id="lblRegPass">Şifre</label>
                 <div class="password-wrapper">
@@ -301,11 +231,7 @@
     <!-- DASHBOARD -->
     <div id="dashboardContainer">
         <div class="top-bar">
-            <!-- MENÜ AÇMA DÜĞMESİ -->
-            <div class="icon-btn" onclick="openDrawer()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </div>
-            
+            <div class="icon-btn" onclick="openDrawer()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
             <div class="lang-container">
                 <div class="lang-btn" id="currentLangBtn" onclick="toggleLangDropdown()">TR</div>
                 <div class="lang-dropdown" id="langDropdown">
@@ -327,46 +253,28 @@
         </div>
 
         <div class="cards-grid">
-            <div class="card-box">
-                <div class="card-header"><span class="dot dot-blue"></span><span id="card1Title">Toplam Abonelik</span></div>
-                <div class="card-footer"><span class="card-number" id="totalSubCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div></div>
-            </div>
-            <div class="card-box">
-                <div class="card-header"><span class="dot dot-green"></span><span id="card2Title">Aktif</span></div>
-                <div class="card-footer"><span class="card-number" id="activeSubCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
-            </div>
-            <div class="card-box">
-                <div class="card-header"><span class="dot dot-orange"></span><span id="card3Title">Süresi Dolmak Üzere</span></div>
-                <div class="card-footer"><span class="card-number">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div>
-            </div>
-            <div class="card-box">
-                <div class="card-header"><span class="dot dot-purple"></span><span id="card4Title">Toplam Konfigürasyon</span></div>
-                <div class="card-footer"><span class="card-number" id="totalConfigsCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div></div>
-            </div>
+            <div class="card-box"><div class="card-header"><span class="dot dot-blue"></span><span id="card1Title">Toplam Abonelik</span></div><div class="card-footer"><span class="card-number" id="totalSubCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div></div></div>
+            <div class="card-box"><div class="card-header"><span class="dot dot-green"></span><span id="card2Title">Aktif</span></div><div class="card-footer"><span class="card-number" id="activeSubCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div></div>
+            <div class="card-box"><div class="card-header"><span class="dot dot-orange"></span><span id="card3Title">Süresi Dolmak Üzere</span></div><div class="card-footer"><span class="card-number">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div></div>
+            <div class="card-box"><div class="card-header"><span class="dot dot-purple"></span><span id="card4Title">Toplam Konfigürasyon</span></div><div class="card-footer"><span class="card-number" id="totalConfigsCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div></div></div>
         </div>
 
         <div class="all-subs-section">
             <div class="all-subs-header-row">
-                <div class="all-subs-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                    <span id="allSubsText">All subscriptions</span>
-                </div>
+                <div class="all-subs-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span id="allSubsText">All subscriptions</span></div>
                 <div class="update-btn" onclick="renderSubscriptions()">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                     <span id="updateBtnText">Güncelle</span>
                 </div>
             </div>
-            
             <div id="subscriptionsList"></div>
         </div>
     </div>
 
-    <!-- YENİ ABONELİK OLUŞTURMA SAYFASI -->
+    <!-- YENİ ABONELİK SAYFASI -->
     <div id="createSubPage">
         <div class="top-bar">
-            <div class="icon-btn" onclick="closeCreateSubPage()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </div>
+            <div class="icon-btn" onclick="closeCreateSubPage()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
             <h2 id="createPageTitle" style="font-size: 18px; font-weight: 700;">Yeni Abonelik</h2>
             <div style="width: 40px;"></div>
         </div>
@@ -377,7 +285,7 @@
             <div class="input-group"><label>VPN adı</label><input type="text" id="vpnNameInput" placeholder="Örn: TIMOX"></div>
             <div class="input-group"><label>Web-URL</label><input type="text" id="webUrlInput" placeholder="https://..."></div>
             <div class="input-group"><label>Support-URL</label><input type="text" id="supportUrlInput" placeholder="https://t.me/..."></div>
-            <div class="input-group"><label>Açıklama</label><textarea id="subDescInput" rows="2" placeholder="Açıklama..."></textarea></div>
+            <div class="input-group"><label>Açıklama</label><textarea id="subDescInput" rows="2" placeholder="Kodlar işlemese 10minut garasyp Obnawit ediň!"></textarea></div>
 
             <div class="input-group">
                 <label>Limit</label>
@@ -417,14 +325,43 @@
         var selectedLimit = '5GB';
         var selectedExpire = '1gün';
 
-        // Saniyede 1MB canlı harcama simülasyonu
+        // SAYFA YÜKLENİRKEN ?sub= KONTROLÜ (HAPP VPN DOĞRUDAN METİN OKUR)
+        window.addEventListener('load', function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var subId = urlParams.get('sub');
+            if (subId) {
+                // Tarayıcıdaki verileri localStorage'dan çekmeye çalış veya varsayılan göster
+                var savedData = localStorage.getItem('timox_subs');
+                if (savedData) {
+                    subscriptionsData = JSON.parse(savedData);
+                }
+                var sub = subscriptionsData.find(s => s.id == subId);
+                
+                // HTML'i tamamen temizle ve sadece Happ VPN formatında saf metin bas (Unknown content type hatasını önler)
+                document.open();
+                document.write('<pre style="background:#050505; color:#00ff00; font-family:monospace; padding:20px; word-break:break-all; white-space:pre-wrap;">');
+                if (sub) {
+                    document.write(generateHappVpnHeader(sub));
+                } else {
+                    document.write("#profile-title: subscription disabled\n#announce: Subscription not found or deleted\nvless://error-404-not-found");
+                }
+                document.write('</pre>');
+                document.close();
+            }
+        });
+
+        // Saniyede 1MB canlı simülasyon
         setInterval(function() {
             subscriptionsData.forEach(sub => {
-                if (sub.active) sub.downloadedBytes += 1048576;
+                if (sub.active) {
+                    sub.downloadedBytes += 1048576;
+                }
             });
+            if(subscriptionsData.length > 0) {
+                localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
+            }
         }, 1000);
 
-        // YAN MENÜ AÇ / KAPAT
         function openDrawer() { document.getElementById('sideDrawer').classList.add('drawer-open'); }
         function closeDrawer() { document.getElementById('sideDrawer').classList.remove('drawer-open'); }
 
@@ -448,7 +385,6 @@
             currentLang = lang;
             document.getElementById('currentLangBtn').innerText = lang;
             document.getElementById('langDropdown').style.display = 'none';
-
             var t = translations[lang];
             document.getElementById('txtLoading').innerText = t.loading;
             document.getElementById('lblUser').innerText = t.username;
@@ -516,6 +452,8 @@
                 document.getElementById('transitionScreen').style.display = 'none';
                 document.getElementById('authContainer').style.display = 'none';
                 document.getElementById('dashboardContainer').style.display = 'flex';
+                var stored = localStorage.getItem('timox_subs');
+                if(stored) subscriptionsData = JSON.parse(stored);
                 renderSubscriptions();
             }, 1000);
         }
@@ -548,6 +486,40 @@
         function selectLimit(val, el) { selectedLimit = val; var pills = el.parentElement.children; for(let p of pills) p.classList.remove('active'); el.classList.add('active'); }
         function selectExpire(val, el) { selectedExpire = val; var pills = el.parentElement.children; for(let p of pills) p.classList.remove('active'); el.classList.add('active'); }
 
+        function parseLimitToBytes(limitStr) {
+            if (limitStr === '5GB') return 5 * 1024 * 1024 * 1024;
+            if (limitStr === '10GB') return 10 * 1024 * 1024 * 1024;
+            if (limitStr === '50GB') return 50 * 1024 * 1024 * 1024;
+            if (limitStr === '100GB') return 100 * 1024 * 1024 * 1024;
+            return 0;
+        }
+
+        function parseExpireToTimestamp(expireStr) {
+            var now = Math.floor(Date.now() / 1000);
+            var days = 1;
+            if (expireStr === '3gün') days = 3;
+            if (expireStr === '7gün') days = 7;
+            if (expireStr === '30gün') days = 30;
+            return now + (days * 86400);
+        }
+
+        function generateHappVpnHeader(sub) {
+            if (!sub.active) {
+                return `#profile-title: subscription disabled\n#announce: Subscription is inactive\nvless://disabled-node-config-disconnected`;
+            }
+            var totalBytes = parseLimitToBytes(sub.limit);
+            var expireTime = parseExpireToTimestamp(sub.expire);
+
+            var header = `#profile-title: ${sub.vpnName || sub.name}\n`;
+            header += `#subscription-userinfo: upload=0; download=${sub.downloadedBytes}; total=${totalBytes}; expire=${expireTime}\n`;
+            if (sub.desc) header += `#announce: ${sub.desc}\n`;
+            if (sub.supportUrl) header += `#support-url: ${sub.supportUrl}\n`;
+            if (sub.webUrl) header += `#profile-web-page-url: ${sub.webUrl}\n`;
+            header += `#profile-update-interval: 24\n\n`;
+            header += sub.rawCodes;
+            return header;
+        }
+
         function saveSubscription() {
             var editId = document.getElementById('editSubId').value;
             var name = document.getElementById('subNameInput').value.trim() || "VIP Abonelik";
@@ -566,8 +538,6 @@
                 }
             } else {
                 var newId = Date.now();
-                
-                // GitHub Pages Domaininize özel dinamik abonelik linki:
                 var subLink = "https://mhojagulyyew207-byte.github.io/VPN/index.html?sub=" + newId;
 
                 var newSub = {
@@ -578,6 +548,7 @@
                 subscriptionsData.push(newSub);
             }
 
+            localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
             closeCreateSubPage();
             renderSubscriptions();
         }
@@ -587,6 +558,7 @@
             if (sub) {
                 sub.active = !sub.active;
                 sub.name = sub.active ? (sub.vpnName || "Abonelik") : "subscription disabled";
+                localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
                 renderSubscriptions();
             }
         }
@@ -594,6 +566,7 @@
         function deleteSubscription(id) {
             if (confirm("Bu aboneliği silmek istediğinize emin misiniz?")) {
                 subscriptionsData = subscriptionsData.filter(s => s.id !== id);
+                localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
                 renderSubscriptions();
             }
         }
