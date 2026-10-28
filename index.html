@@ -233,14 +233,13 @@
     </div>
 
     <script>
-        var usersDatabase = {};
+        var usersDatabase = JSON.parse(localStorage.getItem('timox_users') || '{}');
         var loggedUser = "";
         var currentLang = 'TR';
         var subscriptionsData = [];
         var selectedLimit = '5GB';
         var selectedExpire = '1gün';
 
-        // Eskisi gibi Raw GitHub formatında bağlantı üretecek yapı
         function parseLimitToBytes(limitStr) {
             if (limitStr === '5GB') return 5 * 1024 * 1024 * 1024;
             if (limitStr === '10GB') return 10 * 1024 * 1024 * 1024;
@@ -276,11 +275,11 @@
         }
 
         setInterval(function() {
-            subscriptionsData.forEach(sub => {
-                if (sub.active) sub.downloadedBytes += 1048576;
-            });
-            if (subscriptionsData.length > 0) {
-                localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
+            if (loggedUser) {
+                subscriptionsData.forEach(sub => {
+                    if (sub.active) sub.downloadedBytes += 1048576;
+                });
+                localStorage.setItem('timox_subs_' + loggedUser, JSON.stringify(subscriptionsData));
             }
         }, 1000);
 
@@ -291,6 +290,7 @@
             var newPass = document.getElementById('newPasswordInput').value.trim();
             if (newPass.length < 6) { alert("Şifre en az 6 karakter olmalıdır!"); return; }
             usersDatabase[loggedUser] = newPass;
+            localStorage.setItem('timox_users', JSON.stringify(usersDatabase));
             alert("Şifreniz başarıyla güncellendi!");
             document.getElementById('newPasswordInput').value = "";
             closeDrawer();
@@ -356,8 +356,12 @@
         function submitRegister() {
             var username = document.getElementById('regUsername').value.trim();
             var password = document.getElementById('regPassword').value.trim();
-            if (username.length < 4 || password.length < 6) { alert("Geçersiz kullanıcı adı veya şifre!"); return; }
+            if (username.length < 4 || password.length < 6) { alert("Kullanıcı adı en az 4, şifre en az 6 karakter olmalıdır!"); return; }
+            
             usersDatabase[username] = password;
+            localStorage.setItem('timox_users', JSON.stringify(usersDatabase));
+            
+            alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
             document.getElementById('loginUsername').value = username;
             document.getElementById('loginPassword').value = password;
             toggleAuth('login');
@@ -366,7 +370,11 @@
         function submitLogin() {
             var username = document.getElementById('loginUsername').value.trim();
             var password = document.getElementById('loginPassword').value.trim();
-            if (!usersDatabase[username] || usersDatabase[username] !== password) { alert("Hatalı kullanıcı adı veya şifre!"); return; }
+            
+            if (!usersDatabase[username] || usersDatabase[username] !== password) {
+                alert("Hatalı kullanıcı adı veya şifre!");
+                return;
+            }
             
             loggedUser = username;
             document.getElementById('transitionScreen').style.display = 'flex';
@@ -374,8 +382,10 @@
                 document.getElementById('transitionScreen').style.display = 'none';
                 document.getElementById('authContainer').style.display = 'none';
                 document.getElementById('dashboardContainer').style.display = 'flex';
-                var stored = localStorage.getItem('timox_subs');
-                if(stored) subscriptionsData = JSON.parse(stored);
+                
+                // Sadece bu kullanıcıya ait abonelikleri yükle (başka hesapların verisi karışmaz)
+                var userSubs = localStorage.getItem('timox_subs_' + loggedUser);
+                subscriptionsData = userSubs ? JSON.parse(userSubs) : [];
                 renderSubscriptions();
             }, 1000);
         }
@@ -427,7 +437,6 @@
                 }
             } else {
                 var newId = Date.now();
-                // Eskisi gibi tam istediğin raw.githubusercontent.com bağlantı formatı:
                 var subLink = "https://raw.githubusercontent.com/mhojagulyyew207-byte/VPN/main/subs/sub_" + newId + ".txt";
 
                 var newSub = {
@@ -438,7 +447,7 @@
                 subscriptionsData.push(newSub);
             }
 
-            localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
+            localStorage.setItem('timox_subs_' + loggedUser, JSON.stringify(subscriptionsData));
             closeCreateSubPage();
             renderSubscriptions();
         }
@@ -448,7 +457,7 @@
             if (sub) {
                 sub.active = !sub.active;
                 sub.name = sub.active ? (sub.vpnName || "Abonelik") : "subscription disabled";
-                localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
+                localStorage.setItem('timox_subs_' + loggedUser, JSON.stringify(subscriptionsData));
                 renderSubscriptions();
             }
         }
@@ -456,7 +465,7 @@
         function deleteSubscription(id) {
             if (confirm("Bu aboneliği silmek istediğinize emin misiniz?")) {
                 subscriptionsData = subscriptionsData.filter(s => s.id !== id);
-                localStorage.setItem('timox_subs', JSON.stringify(subscriptionsData));
+                localStorage.setItem('timox_subs_' + loggedUser, JSON.stringify(subscriptionsData));
                 renderSubscriptions();
             }
         }
@@ -464,11 +473,6 @@
         function copySubLink(subId) {
             var sub = subscriptionsData.find(s => s.id === subId);
             if (sub) {
-                // Kopyalandığında Happ VPN'in tam tanıdığı format panoya gider
-                var formattedContent = generateHappVpnHeader(sub);
-                
-                // İstersen doğrudan linki, istersen içeriği kopyalayabilirsin. 
-                // Happ VPN link üzerinden okuyacağı için raw linkini kopyalıyoruz:
                 navigator.clipboard.writeText(sub.subLink);
                 alert("Raw GitHub Bağlantısı Kopyalandı:\n" + sub.subLink + "\n\n(Bu bağlantıyı Happ VPN doğrudan kusursuz tanır!)");
             }
