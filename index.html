@@ -1,1267 +1,685 @@
 <!DOCTYPE html>
-<html lang="tk">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TurkmenWix - Mağaza</title>
-  <style>
-    :root {
-      --bg-color: #0f1016;
-      --card-bg: #1a1b26;
-      --text-color: #ffffff;
-      --border-color: #2f3148;
-      --accent-turkuaz: #00d2ff;
-      --accent-white: #ffffff;
-      --my-msg-bg: #00d2ff;
-      --my-msg-color: #000000;
-      --other-msg-bg: #2a2b3d;
-      --other-msg-color: #ffffff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIMOXVPN</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    [data-theme="light"] {
-      --bg-color: #f4f5f9;
-      --card-bg: #ffffff;
-      --text-color: #222222;
-      --border-color: #d1d5db;
-      --other-msg-bg: #e5e7eb;
-      --other-msg-color: #000000;
-    }
+        body {
+            background-color: #050505 !important;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            user-select: none;
+            position: relative;
+        }
 
-    [data-theme="purple"] {
-      --bg-color: #12081c;
-      --card-bg: #1f1033;
-      --text-color: #f3e8ff;
-      --border-color: #4c1d95;
-      --accent-turkuaz: #c084fc;
-      --other-msg-bg: #2e1065;
-    }
+        /* YÜKLEME VE GEÇİŞ EKRANLARI */
+        #loadingScreen, #transitionScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050505 !important;
+            z-index: 99;
+        }
 
-    [data-theme="cyber"] {
-      --bg-color: #050505;
-      --card-bg: #111111;
-      --text-color: #00ffcc;
-      --border-color: #00ffcc;
-      --accent-turkuaz: #00ffcc;
-      --other-msg-bg: #222222;
-    }
+        #transitionScreen { display: none; }
 
-    [data-theme="emerald"] {
-      --bg-color: #022c22;
-      --card-bg: #064e3b;
-      --text-color: #a7f3d0;
-      --border-color: #047857;
-      --accent-turkuaz: #34d399;
-      --other-msg-bg: #065f46;
-    }
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid rgba(255, 255, 255, 0.15);
+            border-left-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-    [data-theme="sunset"] {
-      --bg-color: #18181b;
-      --card-bg: #27272a;
-      --text-color: #fed7aa;
-      --border-color: #ea580c;
-      --accent-turkuaz: #fb923c;
-      --other-msg-bg: #3f3f46;
-    }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    /* Yükleniyor Ekranı */
-    #loader {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: #0f1016;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      color: #00d2ff;
-      font-size: 24px;
-      font-weight: bold;
-      transition: opacity 0.5s ease;
-    }
-    .spinner {
-      border: 4px solid rgba(255,255,255,0.1);
-      width: 50px; height: 50px;
-      border-radius: 50%;
-      border-left-color: #00d2ff;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { color: #ffffff; font-size: 15px; letter-spacing: 0.5px; }
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background 0.3s, color 0.3s;
-    }
+        /* GİRİŞ / KAYIT EKRANI */
+        #authContainer {
+            display: none;
+            width: 100%;
+            max-width: 320px;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-      background: var(--card-bg);
-      border-bottom: 1px solid var(--border-color);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+        .logo { font-size: 28px; font-weight: 800; letter-spacing: 1px; margin-bottom: 24px; }
+        .logo-blue { color: #3b82f6; }
+        .logo-white { color: #ffffff; }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      position: relative;
-    }
+        .form-box { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+        .input-group { display: flex; flex-direction: column; gap: 6px; }
+        .input-group label { font-size: 12px; color: #a1a1aa; }
 
-    .logo-container {
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .logo-turkmen { color: var(--accent-turkuaz); }
-    .logo-wix { color: var(--accent-white); }
+        .password-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
+        .password-wrapper input { padding-right: 40px !important; }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .eye-btn {
+            position: absolute; right: 12px; background: none; border: none; color: #a1a1aa;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px;
+        }
+        .eye-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-    .balance-box {
-      background: rgba(0, 210, 255, 0.1);
-      border: 1px solid var(--accent-turkuaz);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      position: relative;
-    }
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%; background-color: #121214; border: 1px solid #27272a;
+            border-radius: 8px; padding: 12px; font-size: 14px; color: #ffffff; outline: none;
+        }
+        .input-group input:focus, .input-group textarea:focus { border-color: #3b82f6; }
 
-    .add-balance-btn {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      background: var(--accent-turkuaz);
-      color: #000;
-      border: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .btn-submit {
+            width: 100%; background-color: #2563eb !important; color: #ffffff !important;
+            border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 6px;
+        }
+        .btn-submit:active { background-color: #1d4ed8 !important; }
 
-    .menu-btn {
-      background: var(--card-bg);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-    }
+        .switch-text { text-align: center; font-size: 12px; color: #ffffff; margin-top: 4px; }
+        .switch-btn { background: none; border: none; color: #3b82f6; font-weight: 600; cursor: pointer; margin-left: 4px; font-size: 12px; }
+        .error-message { color: #ef4444; font-size: 12px; text-align: center; margin-top: 4px; font-weight: 500; display: none; }
 
-    .menu-badge {
-      background: #ff4757;
-      color: white;
-      font-size: 11px;
-      font-weight: bold;
-      padding: 2px 6px;
-      border-radius: 10px;
-      margin-left: 5px;
-    }
+        /* HESAP İÇİ DASHBOARD EKRANI */
+        #dashboardContainer {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000 !important;
+            flex-direction: column; padding: 20px 16px;
+            z-index: 20; overflow-y: auto;
+        }
 
-    .dropdown-menu {
-      position: absolute;
-      top: 45px;
-      left: 0;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      display: none;
-      flex-direction: column;
-      width: 230px;
-      z-index: 100;
-      padding: 5px;
-    }
+        .top-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%; margin-bottom: 24px; position: relative;
+        }
 
-    .dropdown-menu button, .dropdown-menu select {
-      background: transparent;
-      color: var(--text-color);
-      border: none;
-      padding: 10px;
-      text-align: left;
-      cursor: pointer;
-      width: 100%;
-      border-radius: 4px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .icon-btn {
+            width: 40px; height: 40px; background-color: #121214; border: 1px solid #27272a;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff;
+        }
 
-    .dropdown-menu button:hover { background: rgba(0, 210, 255, 0.1); }
+        .lang-container { position: relative; }
+        .lang-btn {
+            height: 40px; padding: 0 14px; background-color: #121214; border: 1px solid #27272a;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; font-weight: 600; font-size: 13px;
+        }
+        .lang-dropdown {
+            display: none; position: absolute; right: 0; top: 48px; background-color: #121214;
+            border: 1px solid #27272a; border-radius: 12px; overflow: hidden; width: 90px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 30;
+        }
+        .lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; color: #a1a1aa; cursor: pointer; text-align: center; border-bottom: 1px solid #1c1c20; }
+        .lang-option:hover, .lang-option.active { background-color: #27272a; color: #ffffff; }
 
-    .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 0 15px;
-    }
+        .header-title-box { width: 100%; margin-bottom: 20px; }
+        .main-title { font-size: 28px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin-bottom: 4px; }
+        .sub-title { font-size: 14px; color: #71717a; font-weight: 400; }
 
-    .auth-section {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      margin: 40px auto;
-      max-width: 360px;
-      text-align: center;
-    }
+        .new-sub-btn {
+            width: 100%; background-color: #ffffff !important; color: #000000 !important;
+            font-weight: 700; font-size: 16px; padding: 14px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-bottom: 20px;
+        }
+        .new-sub-btn:active { background-color: #e4e4e7 !important; }
 
-    .auth-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 15px;
-    }
+        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 20px; }
+        .card-box {
+            background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 16px;
+            padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px;
+        }
+        .card-header { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #a1a1aa; font-weight: 500; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .dot-blue { background-color: #3b82f6; }
+        .dot-green { background-color: #22c55e; }
+        .dot-orange { background-color: #f97316; }
+        .dot-purple { background-color: #a855f7; }
 
-    .auth-tab {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: bold;
-      color: #888;
-    }
+        .card-footer { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 16px; }
+        .card-number { font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1; }
+        .card-icon-box {
+            width: 34px; height: 34px; background-color: #141417; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-    .auth-tab.active {
-      color: var(--accent-turkuaz);
-      border-bottom: 2px solid var(--accent-turkuaz);
-    }
+        .all-subs-section { width: 100%; margin-top: 10px; }
+        .all-subs-header-row {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+        }
+        .all-subs-title {
+            display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: #ffffff;
+        }
+        .update-btn {
+            background-color: #121214; border: 1px solid #27272a; border-radius: 8px;
+            padding: 6px 10px; font-size: 12px; font-weight: 600; color: #a1a1aa;
+            display: flex; align-items: center; gap: 6px; cursor: pointer;
+        }
+        .update-btn:hover { color: #ffffff; border-color: #3b82f6; }
 
-    .auth-form input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
+        .sub-item-card {
+            background-color: #0c0c0e; border: 1px solid #1c1c20; border-radius: 14px;
+            padding: 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+        }
+        .sub-info { display: flex; flex-direction: column; gap: 4px; }
+        .sub-name { font-size: 15px; font-weight: 700; color: #ffffff; }
+        .sub-details { font-size: 12px; color: #71717a; }
 
-    .auth-form button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background: var(--accent-turkuaz);
-      color: #000;
-      border: none;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+        .sub-actions { display: flex; align-items: center; gap: 6px; }
+        .action-icon-btn {
+            width: 32px; height: 32px; background-color: #141417; border: 1px solid #27272a;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #a1a1aa;
+        }
+        .action-icon-btn:hover { color: #ffffff; border-color: #3b82f6; }
+        .action-icon-btn.delete:hover { border-color: #ef4444; color: #ef4444; }
 
-    #storeContent, #adminAccountsPage, #chatPage, #myOrdersPage, #adminOrdersPage, #siteAboutPage { display: none; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; margin-left: 2px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #dc2626; transition: .3s; border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #22c55e; }
+        input:checked + .slider:before { transform: translateX(18px); }
 
-    .ranks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
+        #createSubPage {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #050505 !important; flex-direction: column; padding: 20px 16px; z-index: 30; overflow-y: auto;
+        }
+        .create-form { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; }
+        
+        .select-button-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .select-pill {
+            background-color: #121214; border: 1px solid #27272a; border-radius: 8px;
+            padding: 8px 12px; font-size: 13px; color: #a1a1aa; cursor: pointer; font-weight: 600;
+        }
+        .select-pill.active { background-color: #2563eb; border-color: #2563eb; color: #ffffff; }
 
-    .rank-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-    }
-
-    .rank-name { font-size: 18px; font-weight: bold; color: var(--accent-turkuaz); }
-    .rank-price { font-size: 16px; margin: 10px 0; font-weight: bold; }
-
-    .buy-rank-btn {
-      background: #00ff88;
-      color: #000;
-      border: none;
-      padding: 8px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .modal {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      width: 320px;
-      border: 1px solid var(--border-color);
-      text-align: center;
-    }
-    .modal-option {
-      background: rgba(0,210,255,0.1);
-      border: 1px solid var(--accent-turkuaz);
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .account-card, .order-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 12px;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-    .search-box input {
-      flex: 1;
-      padding: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      border-radius: 6px;
-    }
-    
-    .search-result-card {
-      background: var(--card-bg);
-      border: 1px solid var(--accent-turkuaz);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .telegram-chat {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: 480px;
-    }
-
-    .chat-header {
-      padding: 10px 15px;
-      background: rgba(0,0,0,0.2);
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .back-btn {
-      background: transparent;
-      color: var(--accent-turkuaz);
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .chat-messages-area {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-      background: var(--bg-color);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .message-bubble {
-      max-width: 70%;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      word-wrap: break-word;
-    }
-
-    .message-bubble.my-message {
-      align-self: flex-end;
-      background: var(--my-msg-bg);
-      color: var(--my-msg-color);
-    }
-
-    .message-bubble.other-message {
-      align-self: flex-start;
-      background: var(--other-msg-bg);
-      color: var(--other-msg-color);
-    }
-
-    .chat-footer {
-      padding: 10px;
-      background: var(--card-bg);
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      gap: 8px;
-      flex-direction: column;
-    }
-
-    .typing-indicator {
-      font-style: italic;
-      color: var(--accent-turkuaz);
-      font-size: 12px;
-      height: 16px;
-    }
-
-    .chat-dropdown {
-      position: absolute;
-      top: 40px;
-      right: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      display: none;
-      flex-direction: column;
-      z-index: 50;
-      width: 140px;
-    }
-
-    .chat-dropdown button {
-      background: transparent;
-      color: var(--text-color);
-      border: none;
-      padding: 8px 12px;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .delete-user-btn {
-      background: #ff4757;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+        .hidden { display: none !important; }
+    </style>
 </head>
-<body data-theme="dark">
+<body>
 
-  <!-- Yükleniyor Ekranı -->
-  <div id="loader">
-    <div class="spinner"></div>
-    <div>TurkmenWix Yüklenýär...</div>
-  </div>
-
-  <header>
-    <!-- Sol Üstte Üç Nokta Menü ve Logo -->
-    <div class="header-left">
-      <div style="position: relative;">
-        <button class="menu-btn" onclick="toggleDropdown()">⋮</button>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <select id="langSelect" onchange="changeLanguage()">
-            <option value="tk">TM</option>
-            <option value="tr">TR</option>
-            <option value="az">AZ</option>
-            <option value="uz">UZ</option>
-            <option value="ru">RU</option>
-            <option value="en">EN</option>
-          </select>
-          
-          <select id="themeSelect" onchange="changeTheme(this.value)">
-            <option value="dark">🌙 Koyu Mode</option>
-            <option value="light">☀️ Açık Mode</option>
-            <option value="purple">💜 Mor Tema</option>
-            <option value="cyber">🟢 Cyberpunk</option>
-            <option value="emerald">💎 Zümrüt</option>
-            <option value="sunset">🌅 Gün Batımı</option>
-          </select>
-
-          <button onclick="openChatPage()" id="notifMenuBtn" style="display:none;">
-            <span>🔔 Bildirimler</span>
-            <span class="menu-badge" id="notifBadge" style="display:none;">0</span>
-          </button>
-
-          <button onclick="openMyOrdersPage()" id="myOrdersMenuBtn" style="display:none;">📦 Siparişlerim</button>
-          
-          <button onclick="openAdminOrdersPage()" id="adminOrdersMenuBtn" style="display:none; color:#00ff88; font-weight:bold;">
-            <span>📋 Oyuncu Siparişleri</span>
-            <span class="menu-badge" id="ordersBadge" style="display:none;">0</span>
-          </button>
-
-          <button onclick="openAllAccountsPage()" id="allAccountsMenuBtn" style="display:none; color:#ffaa00; font-weight:bold;">👑 Tüm Hesaplar</button>
-          
-          <button onclick="openSiteAboutPage()">ℹ️ Site Hakkında</button>
-          
-          <button onclick="openAccountSettingsModal()" id="accSettingsMenuBtn" style="display:none;">⚙️ Hesap Ayarları</button>
-
-          <button onclick="logoutUser()" id="logoutBtn" style="display:none; color:#ff4757; font-weight:bold;">🚪 Çıkış Yap</button>
-        </div>
-      </div>
-
-      <div class="logo-container" onclick="showHomePage()">
-        <span class="logo-turkmen">Turkmen</span><span class="logo-wix">Wix</span>
-      </div>
+    <div id="loadingScreen">
+        <div class="spinner"></div>
+        <p class="loading-text" id="txtLoading">Yükleniyor...</p>
     </div>
 
-    <!-- Sağ Üstte Bakiye -->
-    <div class="header-right">
-      <div class="balance-box" id="headerBalanceBox" style="display: none;">
-        <span id="userDisplay">Mıhman</span>: <span id="balanceAmount">0</span> TMT
-        <button class="add-balance-btn" onclick="openBalanceModal()">+</button>
-      </div>
-    </div>
-  </header>
-
-  <div class="container">
-    <!-- Giriş / Kayıt -->
-    <div class="auth-section" id="authBox">
-      <h2 style="margin-top:0; color:var(--accent-turkuaz);">Hoş Geldiňiz!</h2>
-      <p style="font-size:13px; color:#888; margin-bottom:20px;">Dwam etmek üçin agza boluň ýa-da giriň.</p>
-      
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Giriş Yap</div>
-        <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Kayıt Ol</div>
-      </div>
-
-      <div class="auth-form" id="formLogin">
-        <input type="text" id="loginUser" placeholder="Ulanyjy ady">
-        <input type="password" id="loginPass" placeholder="Şifre">
-        <button id="btnDoLogin" onclick="handleLogin()">Giriş Yap</button>
-      </div>
-
-      <div class="auth-form" id="formRegister" style="display:none;">
-        <input type="text" id="regUser" placeholder="Ulanyjy ady (Täze)">
-        <input type="password" id="regPass" placeholder="Täze Şifre">
-        <button id="btnDoRegister" onclick="handleRegister()" style="background:#00ff88;">Agza Bol / Kayıt Ol</button>
-      </div>
+    <div id="transitionScreen">
+        <div class="spinner"></div>
+        <p class="loading-text" id="transitionText">Kontrol ediliyor...</p>
     </div>
 
-    <!-- Mağaza Alanı -->
-    <div id="storeContent">
-      <h2 id="txtStoreTitle" style="text-align: center; margin-bottom: 5px;">Serwer Mağazasy</h2>
-
-      <div class="ranks-grid">
-        <div class="rank-card"><div class="rank-name">Fly</div><div class="rank-price">3 TMT</div><button class="buy-rank-btn" onclick="buyItem('Fly', 3)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">VIP</div><div class="rank-price">5 TMT</div><button class="buy-rank-btn" onclick="buyItem('VIP', 5)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Creative</div><div class="rank-price">10 TMT</div><button class="buy-rank-btn" onclick="buyItem('Creative', 10)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Meteorolog</div><div class="rank-price">15 TMT</div><button class="buy-rank-btn" onclick="buyItem('Meteorolog', 15)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Admin</div><div class="rank-price">25 TMT</div><button class="buy-rank-btn" onclick="buyItem('Admin', 25)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Operator</div><div class="rank-price">35 TMT</div><button class="buy-rank-btn" onclick="buyItem('Operator', 35)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">Helper</div><div class="rank-price">50 TMT</div><button class="buy-rank-btn" onclick="buyItem('Helper', 50)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">DC</div><div class="rank-price">2 TMT</div><button class="buy-rank-btn" onclick="buyItem('DC', 2)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">DCB</div><div class="rank-price">20 TMT</div><button class="buy-rank-btn" onclick="buyItem('DCB', 20)">Satyn al</button></div>
-        <div class="rank-card"><div class="rank-name">100k Sunucu Parası</div><div class="rank-price">4 TMT</div><button class="buy-rank-btn" onclick="buyItem('100k Sunucu Parası', 4)">Satyn al</button></div>
-      </div>
-    </div>
-
-    <!-- Oyuncu Siparişlerim Sayfası -->
-    <div id="myOrdersPage">
-      <h2>📦 Meniň Sargytlarym</h2>
-      <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
-      <div id="myOrdersContainer"></div>
-    </div>
-
-    <!-- Admin Oyuncu Siparişleri Sayfası -->
-    <div id="adminOrdersPage">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
-        <h2>📋 Admin - Ähli Oyuncu Sargytlary</h2>
-        <button onclick="clearAllOrders()" style="background:#ff4757; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer;">🗑️ Geçmişi Sil</button>
-      </div>
-      <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
-      <div id="adminAllOrdersContainer"></div>
-    </div>
-
-    <!-- Tüm Hesaplar Sayfası (Yalnızca Admin) -->
-    <div id="adminAccountsPage">
-      <h2 style="color:var(--accent-turkuaz);">👑 Admin - Tüm Hesaplar ve Para Talepleri</h2>
-      <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
-      
-      <h3 style="margin-top:20px;">Gelen Para / Bakiye Siparişleri</h3>
-      <div id="adminBalanceOrdersContainer"></div>
-
-      <h3 style="margin-top:30px;">Kayıtlı Tüm Hesaplar</h3>
-      <div id="accountsListContainer"></div>
-    </div>
-
-    <!-- Site Hakkında Sayfası -->
-    <div id="siteAboutPage">
-      <h2>ℹ️ Site Hakkında</h2>
-      <button onclick="showHomePage()" style="margin-bottom:15px; padding:6px 12px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-color); border-radius:5px; cursor:pointer;">← Mağaza Dön</button>
-      
-      <div class="account-card">
-        <p id="siteAboutText" style="font-size:15px; line-height:1.6; white-space: pre-wrap;">TurkmenWix Mağazasına hoş geldiniz! Bu sunucu üzerinden en kaliteli rankları ve bağışları güvenle satın alabilirsiniz.</p>
-        
-        <div id="adminEditAboutBox" style="display:none; margin-top:20px;">
-          <h3>Admin - Yazıyı Düzenle</h3>
-          <textarea id="aboutTextArea" style="width:100%; height:100px; background:var(--bg-color); color:var(--text-color); border:1px solid var(--border-color); border-radius:6px; padding:10px; box-sizing:border-box;"></textarea>
-          <button onclick="saveSiteAbout()" style="margin-top:10px; background:#00ff88; color:#000; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Kaydet</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chat Page -->
-    <div id="chatPage">
-      <div id="chatSearchSection">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-          <button class="back-btn" onclick="showHomePage()">← Back (Geri)</button>
-          <h2 id="txtChatSearchTitle" style="margin:0;">🔔 Ulanyjy Agtar / Söhbetdeşlik</h2>
-          <div></div>
-        </div>
-        <div class="search-box">
-          <input type="text" id="searchUserInput" placeholder="Ulanyjy adyny giriziň...">
-          <button id="btnSearchUser" onclick="searchUser()" style="padding:10px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Aramak</button>
-        </div>
-        <div id="searchResultArea"></div>
-      </div>
-
-      <div class="telegram-chat" id="telegramChatBox" style="display:none;">
-        <div class="chat-header">
-          <button class="back-btn" onclick="closeTelegramChat()">← Back</button>
-          <span id="chatTitleUser" style="font-weight:bold; font-size:16px;">User</span>
-          <button onclick="toggleChatMenu()" style="background:transparent; border:none; color:var(--text-color); font-size:18px; cursor:pointer;">⋮</button>
-          
-          <div class="chat-dropdown" id="chatDropdownMenu">
-            <button id="btnClearChat" onclick="clearChatHistory()">Geçmişi Sil</button>
-            <button id="btnRemoveContact" onclick="removeFromContacts()">Rehberden Sil</button>
-          </div>
-        </div>
-
-        <div class="chat-messages-area" id="chatMessagesArea"></div>
-
-        <div class="chat-footer">
-          <div class="typing-indicator" id="typingIndicator"></div>
-          <div style="display:flex; gap:8px;">
-            <input type="text" id="chatInput" placeholder="Hat yaz..." oninput="handleTyping()" style="flex:1; padding:10px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:6px;">
-            <button id="btnSendMsg" onclick="sendChatMessage()" style="padding:10px 18px; background:var(--accent-turkuaz); border:none; font-weight:bold; border-radius:6px; cursor:pointer;">Ugrat</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bakiye Modal -->
-  <div class="modal" id="balanceModal">
-    <div class="modal-content">
-      <h3 id="txtBuyBalanceTitle">Bakiye Satyn Alyň</h3>
-      <div class="modal-option" onclick="requestBalance(1, '$1')">1 TMT - 1$</div>
-      <div class="modal-option" onclick="requestBalance(5, '$5')">5 TMT - 5$</div>
-      <div class="modal-option" onclick="requestBalance(10, '$10')">10 TMT - 10$</div>
-      <div class="modal-option" onclick="requestBalance(20, '$20')">20 TMT - 20$</div>
-      <div class="modal-option" onclick="requestBalance(50, '$40')">50 TMT - 40$</div>
-      <button onclick="closeModal('balanceModal')" style="margin-top:10px; background:#ff4757; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Ýap</button>
-    </div>
-  </div>
-
-  <!-- Hesap Ayarları Modal -->
-  <div class="modal" id="accountSettingsModal">
-    <div class="modal-content">
-      <h3>⚙️ Hesap Ayarları</h3>
-      <input type="text" id="newUsernameInput" placeholder="Täze Ulanyjy Ady" style="width:90%; padding:8px; margin:5px 0; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
-      <input type="password" id="oldPassInput" placeholder="Köne Şifre" style="width:90%; padding:8px; margin:5px 0; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
-      <input type="password" id="newPassInput" placeholder="Täze Şifre (İstege bağlı)" style="width:90%; padding:8px; margin:5px 0; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px;">
-      <button onclick="saveAccountSettings()" style="background:#00ff88; color:#000; border:none; padding:8px 15px; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:8px; width:90%;">Üýtgeşmeleri Sakla</button>
-      <button onclick="closeModal('accountSettingsModal')" style="margin-top:5px; background:#ff4757; color:#fff; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; width:90%;">Ýap</button>
-    </div>
-  </div>
-
-  <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        let loader = document.getElementById('loader');
-        loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
-      }, 1500);
-    });
-
-    let users = {
-      "rahym": { password: "qwerty654321", balance: 100, requests: [], contacts: [] }
-    };
-    let chats = {}; 
-    let globalOrders = []; 
-    let siteAboutContent = "TurkmenWix Mağazasına hoş geldiniz! Bu sunucu üzerinden en kaliteli rankları ve bağışları güvenle satın alabilirsiniz.";
-
-    let loggedInUser = null;
-    let activeChatTarget = null;
-    let typingTimer = null;
-    let currentLang = "tk";
-
-    const dict = {
-      tk: {
-        login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Ulanyjy Agtar / Söhbetdeşlik",
-        searchBtn: "Aramak", storeTitle: "Serwer Mağazasy", buyBtn: "Satyn al", logout: "🚪 Çykyş Etmek", send: "Ugrat",
-        notFound: "Ulanyjy tapylmady!", clickToChat: "Mesajlaşmak üçin basyň", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
-      },
-      tr: {
-        login: "Giriş Yap", register: "Kayıt Ol", searchTitle: "🔔 Kullanıcı Ara / Sohbet",
-        searchBtn: "Ara", storeTitle: "Sunucu Mağazası", buyBtn: "Satın Al", logout: "🚪 Çıkış Yap", send: "Gönder",
-        notFound: "Kullanıcı bulunamadı!", clickToChat: "Sohbet etmek için tıkla", clearChat: "Geçmişi Sil", removeContact: "Rehberden Sil"
-      },
-      az: {
-        login: "Daxil ol", register: "Qeydiyyat", searchTitle: "🔔 İstifadəçi Axtar / Söhbət",
-        searchBtn: "Axtar", storeTitle: "Server Mağazası", buyBtn: "Al", logout: "🚪 Çıxış Et", send: "Göndər",
-        notFound: "İstifadəçi tapılmadı!", clickToChat: "Söhbət üçün klikləyin", clearChat: "Tarixçəni Sil", removeContact: "Rehbərdən Sil"
-      },
-      uz: {
-        login: "Kirish", register: "Ro'yxatdan o'tish", searchTitle: "🔔 Qidiruv / Chat",
-        searchBtn: "Qidirish", storeTitle: "Server Do'koni", buyBtn: "Sotib olish", logout: "🚪 Chiqish", send: "Yuborish",
-        notFound: "Foydalanuvchi topilmadi!", clickToChat: "Yozishish uchun bosing", clearChat: "Tarixni O'chirish", removeContact: "O'chirish"
-      },
-      ru: {
-        login: "Войти", register: "Регистрация", searchTitle: "🔔 Поиск / Чат",
-        searchBtn: "Искать", storeTitle: "Магазин Сервера", buyBtn: "Купить", logout: "🚪 Выйти", send: "Отправить",
-        notFound: "Пользователь не найден!", clickToChat: "Нажмите для чата", clearChat: "Очистить историю", removeContact: "Удалить контакт"
-      },
-      en: {
-        login: "Login", register: "Register", searchTitle: "🔔 Search User / Chat",
-        searchBtn: "Search", storeTitle: "Server Store", buyBtn: "Buy Now", logout: "🚪 Logout", send: "Send",
-        notFound: "User not found!", clickToChat: "Click to chat", clearChat: "Clear History", removeContact: "Remove Contact"
-      }
-    };
-
-    function updateBadge() {
-      if (!loggedInUser) return;
-      let notifBadge = document.getElementById('notifBadge');
-      let ordersBadge = document.getElementById('ordersBadge');
-      
-      let totalUnread = 0;
-      for (let key in chats) {
-        if (key.includes(loggedInUser)) {
-          chats[key].forEach(m => {
-            if (m.sender !== loggedInUser && !m.read) totalUnread++;
-          });
-        }
-      }
-
-      if (notifBadge) {
-        if (totalUnread > 0) {
-          notifBadge.style.display = "inline-block";
-          notifBadge.innerText = totalUnread > 9 ? "9+" : totalUnread;
-        } else {
-          notifBadge.style.display = "none";
-        }
-      }
-
-      if (ordersBadge) {
-        let count = globalOrders.length;
-        if (count > 0) {
-          ordersBadge.style.display = "inline-block";
-          ordersBadge.innerText = count > 9 ? "9+" : count;
-        } else {
-          ordersBadge.style.display = "none";
-        }
-      }
-    }
-
-    function toggleDropdown() {
-      let menu = document.getElementById('dropdownMenu');
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
-
-    function switchAuthTab(tab) {
-      document.getElementById('tabLogin').classList.remove('active');
-      document.getElementById('tabRegister').classList.remove('active');
-      document.getElementById('formLogin').style.display = "none";
-      document.getElementById('formRegister').style.display = "none";
-
-      if (tab === 'login') {
-        document.getElementById('tabLogin').classList.add('active');
-        document.getElementById('formLogin').style.display = "block";
-      } else {
-        document.getElementById('tabRegister').classList.add('active');
-        document.getElementById('formRegister').style.display = "block";
-      }
-    }
-
-    function handleLogin() {
-      let u = document.getElementById('loginUser').value.trim().toLowerCase();
-      let p = document.getElementById('loginPass').value.trim();
-      if (!u || !p) return alert("Maglumatlary dolduryň!");
-
-      if (users[u]) {
-        if (users[u].password === p) {
-          loggedInUser = u;
-          onLoginSuccess();
-        } else {
-          alert("Ýalňyş şifre!");
-        }
-      } else {
-        alert("Ulanyjy tapylmady! Ilki agza boluň.");
-      }
-    }
-
-    function handleRegister() {
-      let u = document.getElementById('regUser').value.trim().toLowerCase();
-      let p = document.getElementById('regPass').value.trim();
-      if (!u || !p) return alert("Maglumatlary dolduryň!");
-
-      if (users[u]) {
-        alert("Bu ulanyjy eýýäm bar!");
-      } else {
-        users[u] = { password: p, balance: 0, requests: [], contacts: [] };
-        loggedInUser = u;
-        alert("Agza bolunduňyz we giriş edildi!");
-        onLoginSuccess();
-      }
-    }
-
-    function onLoginSuccess() {
-      hideAllPages();
-      showHomePage();
-      document.getElementById('headerBalanceBox').style.display = "flex";
-      document.getElementById('logoutBtn').style.display = "block";
-      document.getElementById('notifMenuBtn').style.display = "flex";
-      document.getElementById('myOrdersMenuBtn').style.display = "block";
-      document.getElementById('accSettingsMenuBtn').style.display = "flex";
-
-      if (loggedInUser === "rahym") {
-        document.getElementById('allAccountsMenuBtn').style.display = "flex";
-        document.getElementById('adminOrdersMenuBtn').style.display = "flex";
-      } else {
-        document.getElementById('allAccountsMenuBtn').style.display = "none";
-        document.getElementById('adminOrdersMenuBtn').style.display = "none";
-      }
-      updateUI();
-      updateBadge();
-    }
-
-    function hideAllPages() {
-      document.getElementById('storeContent').style.display = "none";
-      document.getElementById('adminAccountsPage').style.display = "none";
-      document.getElementById('chatPage').style.display = "none";
-      document.getElementById('authBox').style.display = "none";
-      document.getElementById('myOrdersPage').style.display = "none";
-      document.getElementById('adminOrdersPage').style.display = "none";
-      document.getElementById('siteAboutPage').style.display = "none";
-    }
-
-    function showHomePage() {
-      hideAllPages();
-      if (loggedInUser) {
-        document.getElementById('storeContent').style.display = "block";
-      } else {
-        document.getElementById('authBox').style.display = "block";
-      }
-      updateBadge();
-    }
-
-    function logoutUser() {
-      loggedInUser = null;
-      hideAllPages();
-      document.getElementById('authBox').style.display = "block";
-      document.getElementById('headerBalanceBox').style.display = "none";
-      document.getElementById('logoutBtn').style.display = "none";
-      document.getElementById('notifMenuBtn').style.display = "none";
-      document.getElementById('myOrdersMenuBtn').style.display = "none";
-      document.getElementById('adminOrdersMenuBtn').style.display = "none";
-      document.getElementById('allAccountsMenuBtn').style.display = "none";
-      document.getElementById('accSettingsMenuBtn').style.display = "none";
-      toggleDropdown();
-    }
-
-    function updateUI() {
-      if (!loggedInUser) return;
-      document.getElementById('userDisplay').innerText = loggedInUser;
-      document.getElementById('balanceAmount').innerText = users[loggedInUser].balance;
-    }
-
-    function openBalanceModal() { document.getElementById('balanceModal').style.display = "flex"; }
-    function openAccountSettingsModal() { 
-      document.getElementById('accountSettingsModal').style.display = "flex"; 
-      document.getElementById('newUsernameInput').value = loggedInUser;
-      toggleDropdown(); 
-    }
-    function closeModal(id) { document.getElementById(id).style.display = "none"; }
-
-    function saveAccountSettings() {
-      let newU = document.getElementById('newUsernameInput').value.trim().toLowerCase();
-      let oldP = document.getElementById('oldPassInput').value;
-      let newP = document.getElementById('newPassInput').value;
-
-      if (!newU || !oldP) return alert("Ulanyjy adyny we köne şifräni ýazyň!");
-
-      if (users[loggedInUser].password !== oldP) return alert("Köne şifre ýalňyş!");
-
-      if (newU !== loggedInUser) {
-        if (users[newU]) return alert("Bu ulanyjy ady eýýäm bar!");
-        users[newU] = users[loggedInUser];
-        delete users[loggedInUser];
-        loggedInUser = newU;
-      }
-
-      if (newP) {
-        users[loggedInUser].password = newP;
-      }
-
-      alert("Hasap maglumatlary üstünlikli üýtgedildi!");
-      closeModal('accountSettingsModal');
-      onLoginSuccess();
-    }
-
-    function requestBalance(tmt, usd) {
-      users['rahym'].requests.push({ user: loggedInUser, tmt: tmt, usd: usd });
-      alert(`${tmt} TMT (${usd}) bakiye haýyşy Rahym admine ugradyldy!`);
-      closeModal('balanceModal');
-    }
-
-    /* Site Hakkında */
-    function openSiteAboutPage() {
-      toggleDropdown();
-      hideAllPages();
-      document.getElementById('siteAboutPage').style.display = "block";
-      document.getElementById('siteAboutText').innerText = siteAboutContent;
-
-      if (loggedInUser === "rahym") {
-        document.getElementById('adminEditAboutBox').style.display = "block";
-        document.getElementById('aboutTextArea').value = siteAboutContent;
-      } else {
-        document.getElementById('adminEditAboutBox').style.display = "none";
-      }
-    }
-
-    function saveSiteAbout() {
-      let txt = document.getElementById('aboutTextArea').value;
-      siteAboutContent = txt;
-      document.getElementById('siteAboutText').innerText = txt;
-      alert("Site hakkinda yazysy üstünlikli ýatda saklanyldy!");
-    }
-
-    /* Oyuncu Siparişlerim Sayfası */
-    function openMyOrdersPage() {
-      toggleDropdown();
-      hideAllPages();
-      document.getElementById('myOrdersPage').style.display = "block";
-      renderMyOrders();
-    }
-
-    function renderMyOrders() {
-      let container = document.getElementById('myOrdersContainer');
-      let myOrders = globalOrders.filter(o => o.user === loggedInUser);
-
-      if (myOrders.length === 0) {
-        container.innerHTML = "<p>Hiç hili sargyt ýok.</p>";
-        return;
-      }
-
-      let html = "";
-      myOrders.forEach(o => {
-        html += `<div class="order-card">
-          <p><b>Önüm / Rank:</b> ${o.item} (${o.price} TMT)</p>
-          <p><b>Nick:</b> ${o.nick}</p>
-          <button onclick="cancelOrder(${o.id})" style="background:#ff4757; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Siparişi İptal Et & İade Al</button>
-        </div>`;
-      });
-      container.innerHTML = html;
-    }
-
-    function cancelOrder(id) {
-      let idx = globalOrders.findIndex(o => o.id === id);
-      if (idx !== -1) {
-        let ord = globalOrders[idx];
-        users[ord.user].balance += ord.price;
-        globalOrders.splice(idx, 1);
-        alert("Sipariş iptal edildi ve bakiye iade olundu!");
-        updateUI();
-        updateBadge();
-        renderMyOrders();
-      }
-    }
-
-    /* Admin Oyuncu Siparişleri Sayfası */
-    function openAdminOrdersPage() {
-      toggleDropdown();
-      hideAllPages();
-      document.getElementById('adminOrdersPage').style.display = "block";
-      renderAdminAllOrders();
-    }
-
-    function renderAdminAllOrders() {
-      let container = document.getElementById('adminAllOrdersContainer');
-      if (globalOrders.length === 0) {
-        container.innerHTML = "<p>Henüz sipariş yok.</p>";
-        return;
-      }
-      let html = "";
-      globalOrders.forEach(o => {
-        html += `<div class="order-card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <div>
-            <p><b>Önüm:</b> <span style="color:var(--accent-turkuaz);">${o.item}</span> (${o.price} TMT)</p>
-            <p><b>Oyuncu Adı (Nick):</b> ${o.nick}</p>
-            <p><b>Site Kullanıcı Adı:</b> ${o.user}</p>
-          </div>
-          <button onclick="acceptOrder(${o.id}, '${o.user}', '${o.item}')" style="background:#00ff88; color:#000; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Kabul Et</button>
-        </div>`;
-      });
-      container.innerHTML = html;
-    }
-
-    function acceptOrder(id, targetUser, itemName) {
-      let idx = globalOrders.findIndex(o => o.id === id);
-      if (idx !== -1) {
-        globalOrders.splice(idx, 1);
-        
-        // Oyuncuya kabul edildi mesajı gönder
-        let key = ['rahym', targetUser].sort().join('_');
-        if (!chats[key]) chats[key] = [];
-        chats[key].push({ sender: 'rahym', msg: `Siparişiniz kabul edildi: ${itemName}!`, read: false });
-
-        alert("Sipariş kabul edildi ve kullanıcıya mesaj gönderildi!");
-        renderAdminAllOrders();
-        updateBadge();
-      }
-    }
-
-    function clearAllOrders() {
-      if (confirm("Bütün oyuncu siparişleri geçmişini silmek istediğinize emin misiniz?")) {
-        globalOrders = [];
-        renderAdminAllOrders();
-        updateBadge();
-      }
-    }
-
-    /* Admin Tüm Hesaplar Sayfası */
-    function openAllAccountsPage() {
-      toggleDropdown();
-      hideAllPages();
-      document.getElementById('adminAccountsPage').style.display = "block";
-      renderAdminPanel();
-    }
-
-    function renderAdminPanel() {
-      let reqContainer = document.getElementById('adminBalanceOrdersContainer');
-      let reqs = users['rahym'].requests;
-      if (reqs.length === 0) {
-        reqContainer.innerHTML = "<p style='color:#888;'>Gelen para siparişi yok.</p>";
-      } else {
-        let rHtml = "";
-        reqs.forEach((r, idx) => {
-          rHtml += `<div class="order-card">
-            <p><b>Ulanyjy:</b> ${r.user} | <b>İsteg:</b> ${r.tmt} TMT (${r.usd})</p>
-            <button onclick="approveBalanceReq(${idx})" style="background:#00ff88; color:#000; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Onayla & Bakiyesini Ver</button>
-          </div>`;
-        });
-        reqContainer.innerHTML = rHtml;
-      }
-
-      let container = document.getElementById('accountsListContainer');
-      let html = "";
-      for (let u in users) {
-        if (u === "rahym") continue;
-        let usr = users[u];
-        html += `<div class="account-card">
-          <h3>Ulanyjy: ${u}</h3>
-          <p><b>Häzirki Bakiye:</b> ${usr.balance} TMT</p>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <input type="number" id="set_bal_${u}" placeholder="Bakiye miktar" style="padding:6px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:4px; width:120px;">
-            <button onclick="adminSetUserBalance('${u}')" style="padding:6px 12px; background:#00ff88; border:none; font-weight:bold; border-radius:4px; cursor:pointer; color:#000;">Bakiyesini Sazla</button>
-            <button onclick="deleteAccount('${u}')" class="delete-user-btn">Hesaby Poz (Sil)</button>
-          </div>
-        </div>`;
-      }
-      container.innerHTML = html || "<p>Hiç hili ulanyjy ýok.</p>";
-    }
-
-    function deleteAccount(username) {
-      if (confirm(`"${username}" hesabını tamamen silmek istediğinize emin misiniz?`)) {
-        delete users[username];
-        globalOrders = globalOrders.filter(o => o.user !== username);
-        alert(`${username} hesabı başarıyla silindi!`);
-        renderAdminPanel();
-        updateBadge();
-      }
-    }
-
-    function approveBalanceReq(idx) {
-      let r = users['rahym'].requests[idx];
-      users[r.user].balance += r.tmt;
-      users['rahym'].requests.splice(idx, 1);
-      alert(`${r.user} kullanıcısına ${r.tmt} TMT eklendi!`);
-      renderAdminPanel();
-    }
-
-    function adminSetUserBalance(u) {
-      let val = parseInt(document.getElementById(`set_bal_${u}`).value);
-      if (!isNaN(val)) {
-        users[u].balance = val;
-        alert(`${u} balansy ${val} TMT kilde sazlandy!`);
-        renderAdminPanel();
-      }
-    }
-
-    /* Chat Functions */
-    function openChatPage() {
-      toggleDropdown();
-      hideAllPages();
-      document.getElementById('chatPage').style.display = "block";
-      document.getElementById('chatSearchSection').style.display = "block";
-      document.getElementById('telegramChatBox').style.display = "none";
-    }
-
-    function searchUser() {
-      let query = document.getElementById('searchUserInput').value.trim().toLowerCase();
-      let resArea = document.getElementById('searchResultArea');
-      let t = dict[currentLang];
-      if (!query) return;
-
-      if (query === loggedInUser) {
-        resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">Öz adyňyzy gözläp bilmersiňiz!</div>`;
-        return;
-      }
-
-      if (users[query]) {
-        let key = [loggedInUser, query].sort().join('_');
-        let unread = (chats[key] || []).filter(m => m.sender !== loggedInUser && !m.read).length;
-
-        resArea.innerHTML = `<div class="search-result-card" onclick="openTelegramChatWith('${query}')">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <span style="font-size:20px;">👤</span>
-            <div>
-              <div style="font-weight:bold;">${query}</div>
-              <small style="color:#888;">${t.clickToChat}</small>
+    <div id="authContainer">
+        <h1 class="logo">
+            <span class="logo-blue">TIMOX</span><span class="logo-white">VPN</span>
+        </h1>
+
+        <div id="loginForm" class="form-box">
+            <div class="input-group">
+                <label id="lblUser">Kullanıcı Adı</label>
+                <input type="text" id="loginUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adınızı girin">
             </div>
-          </div>
-          ${unread > 0 ? `<span style="background:#ff4757; color:#fff; padding:2px 8px; border-radius:10px; font-size:12px; font-weight:bold;">${unread}</span>` : ''}
-        </div>`;
-      } else {
-        resArea.innerHTML = `<div style="padding:10px; color:#ff4757;">${t.notFound}</div>`;
-      }
-    }
 
-    function openTelegramChatWith(targetUser) {
-      activeChatTarget = targetUser;
-      document.getElementById('chatSearchSection').style.display = "none";
-      document.getElementById('telegramChatBox').style.display = "flex";
-      document.getElementById('chatTitleUser').innerText = targetUser;
+            <div class="input-group">
+                <label id="lblPass">Şifre</label>
+                <div class="password-wrapper">
+                    <input type="password" id="loginPassword" minlength="6" maxlength="20" placeholder="Şifrenizi girin">
+                    <button type="button" class="eye-btn" onclick="togglePassword('loginPassword', this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    </button>
+                </div>
+            </div>
 
-      let key = getChatKey();
-      if (chats[key]) {
-        chats[key].forEach(m => { if (m.sender !== loggedInUser) m.read = true; });
-      }
-      updateBadge();
-      renderMessages();
-    }
+            <button class="btn-submit" id="btnLogin" onclick="submitLogin()">Giriş Yap</button>
 
-    function closeTelegramChat() {
-      document.getElementById('telegramChatBox').style.display = "none";
-      document.getElementById('chatSearchSection').style.display = "block";
-      activeChatTarget = null;
-      updateBadge();
-    }
+            <p class="switch-text" id="txtNoAcc">
+                Hesabınız yok mu? 
+                <button onclick="toggleAuth('register')" class="switch-btn" id="btnRegisterTarget">Kayıt ol</button>
+            </p>
 
-    function toggleChatMenu() {
-      let menu = document.getElementById('chatDropdownMenu');
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
-
-    function getChatKey() {
-      return [loggedInUser, activeChatTarget].sort().join('_');
-    }
-
-    function renderMessages() {
-      let key = getChatKey();
-      let msgArea = document.getElementById('chatMessagesArea');
-      let msgList = chats[key] || [];
-
-      msgArea.innerHTML = msgList.map(m => `
-        <div class="message-bubble ${m.sender === loggedInUser ? 'my-message' : 'other-message'}">
-          ${m.msg}
+            <p id="loginError" class="error-message"></p>
         </div>
-      `).join('');
-      msgArea.scrollTop = msgArea.scrollHeight;
-    }
 
-    function sendChatMessage() {
-      let input = document.getElementById('chatInput');
-      let msg = input.value.trim();
-      if (!msg || !activeChatTarget) return;
+        <div id="registerForm" class="form-box hidden">
+            <div class="input-group">
+                <label id="lblRegUser">Kullanıcı Adı</label>
+                <input type="text" id="regUsername" minlength="4" maxlength="20" placeholder="Kullanıcı adı oluşturun">
+            </div>
 
-      let key = getChatKey();
-      if (!chats[key]) chats[key] = [];
+            <div class="input-group">
+                <label id="lblRegPass">Şifre</label>
+                <div class="password-wrapper">
+                    <input type="password" id="regPassword" minlength="6" maxlength="20" placeholder="Şifre oluşturun">
+                    <button type="button" class="eye-btn" onclick="togglePassword('regPassword', this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    </button>
+                </div>
+            </div>
 
-      chats[key].push({ sender: loggedInUser, msg: msg, read: false });
-      input.value = "";
-      renderMessages();
-      updateBadge();
-    }
+            <button class="btn-submit" id="btnRegSubmit" onclick="submitRegister()">Kayıt Ol</button>
 
-    function handleTyping() {
-      let indicator = document.getElementById('typingIndicator');
-      indicator.innerText = `ýazýar...`;
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(() => { indicator.innerText = ""; }, 1500);
-    }
+            <p class="switch-text" id="txtHasAcc">
+                Zaten hesabınız var mı? 
+                <button onclick="toggleAuth('login')" class="switch-btn" id="btnLoginTarget">Giriş Yap</button>
+            </p>
 
-    function clearChatHistory() {
-      let key = getChatKey();
-      chats[key] = [];
-      updateBadge();
-      renderMessages();
-      toggleChatMenu();
-    }
+            <p id="regError" class="error-message"></p>
+        </div>
+    </div>
 
-    function removeFromContacts() {
-      closeTelegramChat();
-      toggleChatMenu();
-      activeChatTarget = null;
-    }
+    <!-- HESAP İÇİ DASHBOARD EKRANI -->
+    <div id="dashboardContainer">
+        <div class="top-bar">
+            <div class="icon-btn" onclick="alert('Menü açıldı')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </div>
+            
+            <div class="lang-container">
+                <div class="lang-btn" id="currentLangBtn" onclick="toggleLangDropdown()">TR</div>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option" onclick="changeLang('RU')">RU</div>
+                    <div class="lang-option" onclick="changeLang('EN')">EN</div>
+                    <div class="lang-option" onclick="changeLang('TM')">TM</div>
+                    <div class="lang-option active" onclick="changeLang('TR')">TR</div>
+                </div>
+            </div>
+        </div>
 
-    function buyItem(name, price) {
-      if (users[loggedInUser].balance < price) return alert("Balansyňyz ýetmezlik edýär!");
-      let nick = prompt("Oýun içindäki adyňyzy (Nick) ýazyň:");
-      if (!nick) return;
+        <div class="header-title-box">
+            <h1 class="main-title" id="dashTitle">Abonelikler</h1>
+            <p class="sub-title" id="dashSub">Abonelik düğümlerinizi yönetin</p>
+        </div>
 
-      users[loggedInUser].balance -= price;
-      globalOrders.push({ id: Date.now(), user: loggedInUser, item: name, price: price, nick: nick });
-      updateUI();
-      updateBadge();
-      alert("Donat sipariş edildi!. En kisa zamanda gönderilecek!.");
-    }
+        <div class="new-sub-btn" onclick="openCreateSubPage()">
+            <span style="font-size: 18px;">+</span> <span id="btnNewSubText">Yeni abonelik</span>
+        </div>
 
-    function changeTheme(themeName) {
-      document.body.setAttribute("data-theme", themeName);
-    }
+        <div class="cards-grid">
+            <div class="card-box">
+                <div class="card-header"><span class="dot dot-blue"></span><span id="card1Title">Toplam Abonelik</span></div>
+                <div class="card-footer"><span class="card-number" id="totalSubCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div></div>
+            </div>
+            <div class="card-box">
+                <div class="card-header"><span class="dot dot-green"></span><span id="card2Title">Aktif</span></div>
+                <div class="card-footer"><span class="card-number" id="activeSubCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
+            </div>
+            <div class="card-box">
+                <div class="card-header"><span class="dot dot-orange"></span><span id="card3Title">Süresi Dolmak Üzere</span></div>
+                <div class="card-footer"><span class="card-number">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div>
+            </div>
+            <div class="card-box">
+                <div class="card-header"><span class="dot dot-purple"></span><span id="card4Title">Toplam Konfigürasyon</span></div>
+                <div class="card-footer"><span class="card-number" id="totalConfigsCount">0</span><div class="card-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div></div>
+            </div>
+        </div>
 
-    function changeLanguage() {
-      currentLang = document.getElementById('langSelect').value;
-      let t = dict[currentLang];
+        <div class="all-subs-section">
+            <div class="all-subs-header-row">
+                <div class="all-subs-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    <span id="allSubsText">All subscriptions</span>
+                </div>
+                <div class="update-btn" onclick="renderSubscriptions()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    <span id="updateBtnText">Güncelle</span>
+                </div>
+            </div>
+            
+            <div id="subscriptionsList"></div>
+        </div>
+    </div>
 
-      document.getElementById('tabLogin').innerText = t.login;
-      document.getElementById('tabRegister').innerText = t.register;
-      document.getElementById('btnDoLogin').innerText = t.login;
-      document.getElementById('btnDoRegister').innerText = t.register;
-      document.getElementById('txtStoreTitle').innerText = t.storeTitle;
-      document.getElementById('logoutBtn').innerText = t.logout;
+    <!-- YENİ ABONELİK OLUŞTURMA / DÜZENLEME SAYFASI -->
+    <div id="createSubPage">
+        <div class="top-bar">
+            <div class="icon-btn" onclick="closeCreateSubPage()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </div>
+            <h2 id="createPageTitle" style="font-size: 18px; font-weight: 700;">Yeni Abonelik</h2>
+            <div style="width: 40px;"></div>
+        </div>
 
-      let buyBtns = document.querySelectorAll('.buy-rank-btn');
-      buyBtns.forEach(b => b.innerText = t.buyBtn);
-    }
-  </script>
+        <div class="create-form">
+            <input type="hidden" id="editSubId" value="">
+            
+            <div class="input-group">
+                <label>Abonelik adı</label>
+                <input type="text" id="subNameInput" placeholder="Örn: VIP Paket">
+            </div>
+
+            <div class="input-group">
+                <label>VPN adı</label>
+                <input type="text" id="vpnNameInput" placeholder="Örn: Timox VLESS">
+            </div>
+
+            <div class="input-group">
+                <label>Web-URL</label>
+                <input type="text" id="webUrlInput" placeholder="https://...">
+            </div>
+
+            <div class="input-group">
+                <label>Support-URL</label>
+                <input type="text" id="supportUrlInput" placeholder="https://t.me/...">
+            </div>
+
+            <div class="input-group">
+                <label>Açıklama</label>
+                <textarea id="subDescInput" rows="2" placeholder="Abonelik açıklaması..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Limit</label>
+                <div class="select-button-group" id="limitGroup">
+                    <div class="select-pill active" onclick="selectLimit('5GB', this)">5GB</div>
+                    <div class="select-pill" onclick="selectLimit('10GB', this)">10GB</div>
+                    <div class="select-pill" onclick="selectLimit('50GB', this)">50GB</div>
+                    <div class="select-pill" onclick="selectLimit('100GB', this)">100GB</div>
+                    <div class="select-pill" onclick="selectLimit('Sınırsız', this)">Sınırsız</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Bitiş tarihi</label>
+                <div class="select-button-group" id="expireGroup">
+                    <div class="select-pill active" onclick="selectExpire('1gün', this)">1 gün</div>
+                    <div class="select-pill" onclick="selectExpire('3gün', this)">3 gün</div>
+                    <div class="select-pill" onclick="selectExpire('7gün', this)">7 gün</div>
+                    <div class="select-pill" onclick="selectExpire('30gün', this)">30 gün</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Konfigürasyon Kodları (ss, vless, hy2, vmess, trojan)</label>
+                <textarea id="subCodesInput" rows="4" placeholder="vless://... ss://... hy2://..."></textarea>
+            </div>
+
+            <button class="btn-submit" onclick="saveSubscription()">Kaydet</button>
+        </div>
+    </div>
+
+    <script>
+        var usersDatabase = {};
+        var currentLang = 'TR';
+        var subscriptionsData = [];
+        var selectedLimit = '5GB';
+        var selectedExpire = '1gün';
+
+        var translations = {
+            'TR': { loading: "Yükleniyor...", checking: "Kontrol ediliyor...", creating: "Hesap oluşturuluyor...", username: "Kullanıcı Adı", password: "Şifre", loginBtn: "Giriş Yap", registerBtn: "Kayıt Ol", noAcc: "Hesabınız yok mu?", hasAcc: "Zaten hesabınız var mı?", regLink: "Kayıt ol", loginLink: "Giriş Yap", dashTitle: "Abonelikler", dashSub: "Abonelik düğümlerinizi yönetin", newSub: "Yeni abonelik", c1: "Toplam Abonelik", c2: "Aktif", c3: "Süresi Dolmak Üzere", c4: "Toplam Konfigürasyon", allSubs: "Tüm abonelikler", update: "Güncelle" },
+            'EN': { loading: "Loading...", checking: "Checking...", creating: "Creating account...", username: "Username", password: "Password", loginBtn: "Login", registerBtn: "Register", noAcc: "Don't have an account?", hasAcc: "Already have an account?", regLink: "Register", loginLink: "Login", dashTitle: "Subscriptions", dashSub: "Manage your subscription nodes", newSub: "New subscription", c1: "Total Subscriptions", c2: "Active", c3: "Expiring Soon", c4: "Total Configs", allSubs: "All subscriptions", update: "Update" },
+            'RU': { loading: "Загрузка...", checking: "Проверка...", creating: "Создание аккаунта...", username: "Имя пользователя", password: "Пароль", loginBtn: "Войти", registerBtn: "Регистрация", noAcc: "Нет аккаунта?", hasAcc: "Уже есть аккаунт?", regLink: "Регистрация", loginLink: "Войти", dashTitle: "Подписки", dashSub: "Управление узлами подписки", newSub: "Новая подписка", c1: "Всего подписок", c2: "Активные", c3: "Истекающие", c4: "Всего конфигов", allSubs: "Все подписки", update: "Обновить" },
+            'TM': { loading: "Ýüklenýär...", checking: "Barlanýar...", creating: "Hasap döredilýär...", username: "Ulanyjy ady", password: "Açar söz", loginBtn: "Giriş etmek", registerBtn: "Hasaba ýazylyň", noAcc: "Hasabyňyz ýokmy?", hasAcc: "Eýýäm hasabyňyz barmy?", regLink: "Hasaba ýazylyň", loginLink: "Giriş etmek", dashTitle: "Abonentler", dashSub: "Abonent düwünleriňizi dolandyryň", newSub: "Täze abunalyk", c1: "Jemi abunalyklar", c2: "Aktif", c3: "Möhleti gutarýan", c4: "Jemi sazlamalar", allSubs: "Ähli abunalyklar", update: "Täzele" }
+        };
+
+        function changeLang(lang) {
+            currentLang = lang;
+            document.getElementById('currentLangBtn').innerText = lang;
+            document.getElementById('langDropdown').style.display = 'none';
+
+            var t = translations[lang];
+            document.getElementById('txtLoading').innerText = t.loading;
+            document.getElementById('lblUser').innerText = t.username;
+            document.getElementById('lblPass').innerText = t.password;
+            document.getElementById('btnLogin').innerText = t.loginBtn;
+            document.getElementById('txtNoAcc').childNodes[0].nodeValue = t.noAcc + " ";
+            document.getElementById('btnRegisterTarget').innerText = t.regLink;
+
+            document.getElementById('lblRegUser').innerText = t.username;
+            document.getElementById('lblRegPass').innerText = t.password;
+            document.getElementById('btnRegSubmit').innerText = t.registerBtn;
+            document.getElementById('txtHasAcc').childNodes[0].nodeValue = t.hasAcc + " ";
+            document.getElementById('btnLoginTarget').innerText = t.loginLink;
+
+            document.getElementById('dashTitle').innerText = t.dashTitle;
+            document.getElementById('dashSub').innerText = t.dashSub;
+            document.getElementById('btnNewSubText').innerText = t.newSub;
+            document.getElementById('card1Title').innerText = t.c1;
+            document.getElementById('card2Title').innerText = t.c2;
+            document.getElementById('card3Title').innerText = t.c3;
+            document.getElementById('card4Title').innerText = t.c4;
+            document.getElementById('allSubsText').innerText = t.allSubs;
+            document.getElementById('updateBtnText').innerText = t.update;
+        }
+
+        function toggleLangDropdown() {
+            var dropdown = document.getElementById('langDropdown');
+            dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.lang-container')) {
+                document.getElementById('langDropdown').style.display = 'none';
+            }
+        }
+
+        setTimeout(function() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('authContainer').style.display = 'flex';
+        }, 2000);
+
+        function togglePassword(inputId, btn) {
+            var input = document.getElementById(inputId);
+            if (input.type === "password") { input.type = "text"; btn.style.color = "#3b82f6"; }
+            else { input.type = "password"; btn.style.color = "#a1a1aa"; }
+        }
+
+        function toggleAuth(mode) {
+            var loginForm = document.getElementById('loginForm');
+            var registerForm = document.getElementById('registerForm');
+            if (mode === 'register') { loginForm.classList.add('hidden'); registerForm.classList.remove('hidden'); }
+            else { registerForm.classList.add('hidden'); loginForm.classList.remove('hidden'); }
+        }
+
+        function submitRegister() {
+            var username = document.getElementById('regUsername').value.trim();
+            var password = document.getElementById('regPassword').value.trim();
+            if (username.length < 4 || password.length < 6) { alert("Geçersiz kullanıcı adı veya şifre!"); return; }
+            usersDatabase[username] = password;
+            document.getElementById('loginUsername').value = username;
+            document.getElementById('loginPassword').value = password;
+            toggleAuth('login');
+        }
+
+        function submitLogin() {
+            var username = document.getElementById('loginUsername').value.trim();
+            var password = document.getElementById('loginPassword').value.trim();
+            if (!usersDatabase[username] || usersDatabase[username] !== password) { alert("Hatalı kullanıcı adı veya şifre!"); return; }
+            
+            document.getElementById('transitionScreen').style.display = 'flex';
+            setTimeout(function() {
+                document.getElementById('transitionScreen').style.display = 'none';
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('dashboardContainer').style.display = 'flex';
+                renderSubscriptions();
+            }, 1000);
+        }
+
+        function openCreateSubPage(subId = null) {
+            document.getElementById('editSubId').value = '';
+            document.getElementById('subNameInput').value = '';
+            document.getElementById('vpnNameInput').value = '';
+            document.getElementById('webUrlInput').value = '';
+            document.getElementById('supportUrlInput').value = '';
+            document.getElementById('subDescInput').value = '';
+            document.getElementById('subCodesInput').value = '';
+
+            if (subId !== null) {
+                var sub = subscriptionsData.find(s => s.id === subId);
+                if (sub) {
+                    document.getElementById('editSubId').value = sub.id;
+                    document.getElementById('subNameInput').value = sub.vpnName || sub.name;
+                    document.getElementById('vpnNameInput').value = sub.vpnName;
+                    document.getElementById('webUrlInput').value = sub.webUrl;
+                    document.getElementById('supportUrlInput').value = sub.supportUrl;
+                    document.getElementById('subDescInput').value = sub.desc;
+                    document.getElementById('subCodesInput').value = sub.rawCodes;
+                }
+            }
+            document.getElementById('createSubPage').style.display = 'flex';
+        }
+
+        function closeCreateSubPage() {
+            document.getElementById('createSubPage').style.display = 'none';
+        }
+
+        function selectLimit(val, el) {
+            selectedLimit = val;
+            var pills = el.parentElement.children;
+            for(let p of pills) p.classList.remove('active');
+            el.classList.add('active');
+        }
+
+        function selectExpire(val, el) {
+            selectedExpire = val;
+            var pills = el.parentElement.children;
+            for(let p of pills) p.classList.remove('active');
+            el.classList.add('active');
+        }
+
+        function saveSubscription() {
+            var editId = document.getElementById('editSubId').value;
+            var name = document.getElementById('subNameInput').value.trim() || "İsimsiz Abonelik";
+            var vpnName = document.getElementById('vpnNameInput').value.trim() || name;
+            var webUrl = document.getElementById('webUrlInput').value.trim();
+            var supportUrl = document.getElementById('supportUrlInput').value.trim();
+            var desc = document.getElementById('subDescInput').value.trim();
+            var rawCodes = document.getElementById('subCodesInput').value.trim();
+
+            if (editId !== "") {
+                var sub = subscriptionsData.find(s => s.id == editId);
+                if (sub) {
+                    sub.name = name;
+                    sub.vpnName = vpnName;
+                    sub.webUrl = webUrl;
+                    sub.supportUrl = supportUrl;
+                    sub.desc = desc;
+                    sub.rawCodes = rawCodes;
+                    if(sub.active) sub.codes = rawCodes;
+                }
+            } else {
+                // GitHub Pages tarzı sanal raw link üretimi
+                var randomHash = Math.random().toString(36).substring(2, 10);
+                var subLink = "https://timoxvpn.github.io/sub/" + randomHash + "/config.txt";
+
+                var newSub = {
+                    id: Date.now(),
+                    name: name,
+                    vpnName: vpnName,
+                    webUrl: webUrl,
+                    supportUrl: supportUrl,
+                    desc: desc,
+                    limit: selectedLimit,
+                    expire: selectedExpire,
+                    rawCodes: rawCodes,
+                    codes: rawCodes,
+                    subLink: subLink,
+                    active: true
+                };
+                subscriptionsData.push(newSub);
+            }
+
+            closeCreateSubPage();
+            renderSubscriptions();
+        }
+
+        function toggleSubStatus(id) {
+            var sub = subscriptionsData.find(s => s.id === id);
+            if (sub) {
+                sub.active = !sub.active;
+                if (!sub.active) {
+                    sub.name = "subscription disabled";
+                    sub.codes = "vless://disabled-node-config-disconnected";
+                } else {
+                    sub.name = sub.vpnName;
+                    sub.codes = sub.rawCodes;
+                }
+                renderSubscriptions();
+            }
+        }
+
+        function deleteSubscription(id) {
+            if (confirm("Bu aboneliği silmek istediğinize emin misiniz?")) {
+                subscriptionsData = subscriptionsData.filter(s => s.id !== id);
+                renderSubscriptions();
+            }
+        }
+
+        // Kopyala tuşuna basınca ham kod yerine GitHub.io tarzı bağlantı kopyalanır
+        function copySubLink(link) {
+            navigator.clipboard.writeText(link);
+            alert("Abonelik bağlantısı kopyalandı:\n" + link);
+        }
+
+        function renderSubscriptions() {
+            var listContainer = document.getElementById('subscriptionsList');
+            listContainer.innerHTML = "";
+
+            var totalActive = 0;
+            var totalConfigs = subscriptionsData.length;
+
+            subscriptionsData.forEach(sub => {
+                if (sub.active) totalActive++;
+
+                var card = document.createElement('div');
+                card.className = 'sub-item-card';
+                card.innerHTML = `
+                    <div class="sub-info">
+                        <span class="sub-name">${sub.name}</span>
+                        <span class="sub-details">Limit: ${sub.limit} | Süre: ${sub.expire}</span>
+                    </div>
+                    <div class="sub-actions">
+                        <!-- Kopyala (GitHub.io linki kopyalar) -->
+                        <div class="action-icon-btn" onclick="copySubLink('${sub.subLink}')" title="Abonelik Bağlantısını Kopyala">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </div>
+                        <!-- Düzenle (Kalem) -->
+                        <div class="action-icon-btn" onclick="openCreateSubPage(${sub.id})" title="Düzenle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </div>
+                        <!-- Sil (Çöp Kutusu) -->
+                        <div class="action-icon-btn delete" onclick="deleteSubscription(${sub.id})" title="Sil">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </div>
+                        <!-- Aç / Kapat Toggle -->
+                        <label class="switch">
+                            <input type="checkbox" ${sub.active ? 'checked' : ''} onchange="toggleSubStatus(${sub.id})">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+
+            document.getElementById('totalSubCount').innerText = subscriptionsData.length;
+            document.getElementById('activeSubCount').innerText = totalActive;
+            document.getElementById('totalConfigsCount').innerText = totalConfigs;
+        }
+    </script>
 </body>
 </html>
