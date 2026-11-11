@@ -1,6 +1,6 @@
-#profile-title: AEX • PRIME
+#profile-title: 💎TIMOX💎
 #subscription-userinfo: upload=0; download=0; total=26843545600; expire=1793472000
-#announce: Güncelleme mesajı
+#announce: test
 #support-url: https://t.me/kanal
 #profile-web-page-url: https://timox-vpn.com
 #profile-update-interval: 1
