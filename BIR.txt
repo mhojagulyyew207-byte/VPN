@@ -5,11 +5,7 @@
 #profile-web-page-url: https://timox-vpn.com
 #profile-update-interval: 1
 
-ss://...#FRANCE%20%7C%20STABLE
-vless://...#GERMANY%20%7C%20GAMING
-trojan://...#GERMANY%20%7C%20ULTRA
-vmess://...#CZECH%20%7C%20STABLE
-vless://69ff5bc5-6052-4ae9-85ce-2a03f431363a@135.106.225.99:880?encryption=mlkem768x25519plus.native.0rtt.6Hr-sa_vTzy6TgzZaMBHTb9tT8KoST0tm2GuBklPQHM&security=none&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BA%F0%9D%90%93%F0%9D%90%86%3A%20%40TIMOX
-ss://chacha20-ietf-poly1305:6Omq1zZIptZAk08iewZ6lAs_EjXodos9@139.100.236.167:770#%F0%9F%87%BA%F0%9F%87%BF%F0%9F%87%BA%F0%9F%87%BF%F0%9D%90%8E%F0%9D%90%B3%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%A4%F0%9D%90%A2%F0%9D%90%AC%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A7%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-ss://chacha20-ietf-poly1305:6Omq1zZIptZAk08iewZ6lAs_EjXodos9@139.100.236.167:770#%F0%9F%87%B7%F0%9F%87%BA%F0%9D%90%91%F0%9D%90%AE%F0%9D%90%AC%F0%9D%90%AC%F0%9D%90%A2%F0%9D%90%9A%20%7C%20%F0%9D%90%86%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9E
-vless://69ff5bc5-6052-4ae9-85ce-2a03f431363a@135.106.225.99:880?encryption=mlkem768x25519plus.native.0rtt.6Hr-sa_vTzy6TgzZaMBHTb9tT8KoST0tm2GuBklPQHM&security=none&type=tcp&headerType=none#%F0%9F%87%AE%F0%9F%87%B9%F0%9D%90%88%F0%9D%90%AD%F0%9D%90%9A%F0%9D%90%A5%F0%9D%90%B2
+ss://chacha20-ietf-poly1305:16uQ2gX5KjkR3QUoeCFSkl9fsEc-92LF@176.53.254.216:1080#%F0%9F%87%B7%F0%9F%87%BA%CA%80%E1%B4%9Css%C9%AA%E1%B4%80%20%E2%80%A2%20%C9%A2%E1%B4%80%E1%B4%8D%E1%B4%87? serverDescription=8J+SjkdhbWXwn5KO
+ss://chacha20-ietf-poly1305:16uQ2gX5KjkR3QUoeCFSkl9fsEc-92LF@176.53.254.216:1080#%F0%9F%87%B9%F0%9F%87%B7%E1%B4%9B%E1%B4%9C%CA%80%E1%B4%8B%E1%B4%87%CA%8F%20%E2%80%A2%20%C9%A2%E1%B4%80%E1%B4%8D%E1%B4%87? serverDescription=8J+SjkdhbWXwn5KO
+vless://e2380ce1-94c4-49e5-8bc4-3616f0444064@176.53.254.216:443?encryption=mlkem768x25519plus.native.0rtt.mDC__VPZQQAD3ZpPjvab2V33Hz1EmcJn6pm9l7bKmjk&security=none&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%C9%A2%E1%B4%87%CA%80%E1%B4%8D%E1%B4%80%C9%B4%CA%8F%20%E2%80%A2%20%E1%B4%9B%C9%AA%E1%B4%8B%E1%B4%9B%E1%B4%8F%E1%B4%8B?serverDescription=8J+SjlRva/Cfko4=
+vless://e2380ce1-94c4-49e5-8bc4-3616f0444064@176.53.254.216:443?encryption=mlkem768x25519plus.native.0rtt.mDC__VPZQQAD3ZpPjvab2V33Hz1EmcJn6pm9l7bKmjk&security=none&type=tcp&headerType=none#%F0%9F%87%BA%F0%9F%87%B8%E1%B4%80%E1%B4%8D%E1%B4%87%CA%80%C9%AA%E1%B4%84%E1%B4%80%20%E2%80%A2%20%CA%8F%E1%B4%8F%E1%B4%9C%E1%B4%9B%E1%B4%9C%CA%99%E1%B4%87? serverDescription=8J+SjllvdVR1YmXwn5KO
